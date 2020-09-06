@@ -88,7 +88,7 @@ static int cmd_x(char *args){
 	//char expr[32];
 	sscanf(args, "%d%x", &N, &start);
 	for(i = 0; i< N*4; i+= 4){
-		printf("0x%x :  %2x %2x %2x %2x\n",start,swaddr_read(i, 1), swaddr_read(i+1, 1),
+		printf("0x%x :  %2x %2x %2x %2x\n",i,swaddr_read(i, 1), swaddr_read(i+1, 1),
 				swaddr_read(i+2, 1), swaddr_read(i+3, 1));
 	}
 	return 0;
