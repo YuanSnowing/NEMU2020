@@ -53,7 +53,7 @@ static int cmd_info(char *args){
 	if(args[0] == 'r'){
 		int i=0;
 		for(; i<8;++i){
-			printf("$%s: %x\n", regsl[i],reg_l(i));
+			printf("$%s: %8x\n", regsl[i],reg_l(i));
 		}
 		printf("$eip: %x\n",cpu.eip);
 	}else if(args[0] == 'w'){
