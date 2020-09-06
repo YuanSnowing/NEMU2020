@@ -53,9 +53,9 @@ static int cmd_info(char *args){
 	if(args[0] == 'r'){
 		int i=0;
 		for(; i<8;++i){
-			printf("$%s: %8x\n", regsl[i],reg_l(i));
+			printf("$%s: 0x%8x\n", regsl[i],reg_l(i));
 		}
-		printf("$eip: %8x\n",cpu.eip);
+		printf("$eip: 0x%8x\n",cpu.eip);
 	}else if(args[0] == 'w'){
 		return 0;
 	}else{
@@ -88,8 +88,8 @@ static int cmd_x(char *args){
 	//char expr[32];
 	sscanf(args, "%d%x", &N, &start);
 	for(i = 0; i< N; i+= 4){
-		printf("0x%x :  %2x %2x %2x %2x\n",start,swaddr_read(start, 1), swaddr_read(start+1, 1),
-				swaddr_read(start+2, 1), swaddr_read(start+3, 1));
+		printf("0x%x :  %2x %2x %2x %2x\n",start,swaddr_read(i, 1), swaddr_read(i+1, 1),
+				swaddr_read(i+2, 1), swaddr_read(i+3, 1));
 	}
 	return 0;
 }
