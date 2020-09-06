@@ -36,6 +36,88 @@ static int cmd_q(char *args) {
 	return -1;
 }
 
+static int cmd_si(char *args){
+	int N=1;
+	if(args != NULL){
+		sscanf(args,"%d",&N);
+	}
+	cpu_exec(N);
+	return 0;
+}
+
+static int cmd_info(char *args){
+	if(args == NULL){
+		printf("parameter invalid!\n");
+		return 0;
+	}
+	if(args[0] == 'r'){
+		int i=0;
+		for(; i<8;++i){
+			printf("$%s: %x\n", regsl[i],reg_l(i));
+		}
+		printf("$eip: %x\n",cpu.eip);
+	}else if(args[0] == 'w'){
+		return 0;
+	}else{
+		printf("parameter invalid!\n");
+	}
+	return 0;
+}
+
+static int cmd_p(char* args){
+	if(args == NULL){
+		printf("parameter invalid!\n");
+		return 0;
+	}
+	bool success = false;
+	int ans = expr(args, &success);
+	if(success){
+		printf("%d\n",ans);
+	}else{
+		printf("invalid RE!\n");
+	}
+	return 0;
+}
+
+static int cmd_x(char *args){
+	if(args == NULL){
+		printf("parameter invalid!\n");
+		return 0;
+	}
+	int N,start,i;
+	//char expr[32];
+	sscanf(args, "%d%x", &N, &start);
+	for(i = 0; i< N; ++ i){
+		printf("0x%x :  %x %x %x %x\n",start,swaddr_read(start, 1), swaddr_read(start+1, 1),
+				swaddr_read(start+2, 1), swaddr_read(start+3, 1));
+	}
+	return 0;
+}
+
+static int cmd_w(char *args){
+	if(args == NULL){
+		printf("parameter invalid!\n");
+		return 0;
+	}
+	return 0;
+}
+
+static int cmd_d(char *args){
+	if(args == NULL){
+		printf("parameter invalid!\n");
+		return 0;
+	}
+	return 0;
+}
+
+static int cmd_bt(char *args){
+	if(args == NULL){
+		printf("parameter invalid!\n");
+		return 0;
+	}
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -46,7 +128,13 @@ static struct {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
-
+	{ "si", "Step instruction for N=1", cmd_si},
+	{ "info", "info of regs or watchpoints", cmd_info},
+	{ "p", "Calculate the value of the RE", cmd_p},
+	{ "x", "scan the memory, address at expr", cmd_x},
+	{ "w", "set watchpoint, pause when expr's value changes", cmd_w},
+	{ "d", "delete watchpoint numbered N", cmd_d},
+	{ "bt", "print the stack link", cmd_bt},
 	/* TODO: Add more commands */
 
 };
