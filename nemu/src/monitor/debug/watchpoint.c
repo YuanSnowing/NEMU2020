@@ -73,7 +73,7 @@ void wp_print(){
 bool wp_check(){
 	WP *tmp = head;
 	uint32_t val;
-	bool *success, ret=false;
+	bool *success=false, ret=false;
 	while(tmp != NULL){
 		val = expr(tmp->exp,success);
 		if(val != tmp->value){
