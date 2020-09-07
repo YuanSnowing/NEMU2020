@@ -147,10 +147,10 @@ int dominant(int p, int q){
 	}
 	if(flag) return p;
 	for(i = p; i <= q; ++ i){
-		if(tokens[i].type == ')') flag = 1;
-		else if(tokens[i].type == '(') flag = 0;
+		if(tokens[i].type == ')') flag = 0;
+		else if(tokens[i].type == '(') flag = 1;
 		else if(tokens[i].type == NUM) continue;
-		else if(tokens[i].value >= oppri) oppri = tokens[i].value, op = i;
+		else if(tokens[i].value >= oppri && !flag) oppri = tokens[i].value, op = i;
 	}
 #ifdef DEBUG 
 	printf("dominant end!\n"); 
