@@ -7,6 +7,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+#define TESTargs if(args == NULL){ printf("parameter invalid!\n"); return 0; }
+#define TESTsuccess if(!success) { printf("invalid RE!\n"); return 0; }
 void cpu_exec(uint32_t);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
@@ -46,10 +48,7 @@ static int cmd_si(char *args){
 }
 
 static int cmd_info(char *args){
-	if(args == NULL){
-		printf("parameter invalid!\n");
-		return 0;
-	}
+	TESTargs
 	if(args[0] == 'r'){
 		int i=0;
 		for(; i<8;++i){
@@ -57,7 +56,7 @@ static int cmd_info(char *args){
 		}
 		printf("$eip: 0x%8x\n",cpu.eip);
 	}else if(args[0] == 'w'){
-		return 0;
+		wp_print();
 	}else{
 		printf("parameter invalid!\n");
 	}
@@ -65,32 +64,23 @@ static int cmd_info(char *args){
 }
 
 static int cmd_p(char* args){
-	if(args == NULL){
-		printf("parameter invalid!\n");
-		return 0;
-	}
+	TESTargs
 	bool success = true;
 	int ans = expr(args, &success);
-	if(success){
-		printf("%d\n",ans);
-	}else{
-		printf("invalid RE!\n");
-	}
+	TESTsuccess
+	printf("%d\n",ans);
 	return 0;
 }
 
 static int cmd_x(char *args){
-	if(args == NULL){
-		printf("parameter invalid!\n");
-		return 0;
-	}
+	TESTargs
 	int N,start,i;
 	char *exp = strtok(args, " ");
 	sscanf(exp, "%d", &N);
 	exp = exp + strlen(exp) + 1;
 	bool success = true;
 	start = expr(exp, &success);
-	if(!success) printf("invalid RE!\n");
+	TESTsuccess
 	for(i = start; i< N*4+start; i+= 4){
 		printf("0x%08x: \t%02x %02x %02x %02x\n",i,swaddr_read(i, 1), swaddr_read(i+1, 1),
 				swaddr_read(i+2, 1), swaddr_read(i+3, 1));
@@ -99,26 +89,31 @@ static int cmd_x(char *args){
 }
 
 static int cmd_w(char *args){
-	if(args == NULL){
-		printf("parameter invalid!\n");
-		return 0;
-	}
+	TESTargs
+	uint32_t val;
+	bool success = true;
+	val = expr(args, &success);
+	TESTsuccess
+	WP *wp = new_wp();
+	if(wp == NULL) return 0;
+	wp->value = val;
+	strcpy(wp->exp, args);
+	printf("Set watchpoint No.%d at %s\n, current value is %d.\n",wp->NO, wp->exp, wp->value);
 	return 0;
 }
 
 static int cmd_d(char *args){
-	if(args == NULL){
-		printf("parameter invalid!\n");
-		return 0;
-	}
+	TESTargs
+	int N;
+	sscanf(args,"%d",&N);
+	WP *wp = wp_find(N);
+	if(wp == NULL) return 0;
+	free_wp(wp);
+	printf("Delete watchpoint No.%d at %s\n, current value is %d.\n",wp->NO, wp->exp, wp->value);
 	return 0;
 }
 
 static int cmd_bt(char *args){
-	if(args == NULL){
-		printf("parameter invalid!\n");
-		return 0;
-	}
 	return 0;
 }
 
