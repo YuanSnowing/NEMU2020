@@ -138,6 +138,9 @@ static bool make_token(char *e) {
 }
 
 int dominant(int p, int q){
+#ifdef DEBUG 
+	printf("dominant begin!\n"); 
+#endif
 	int i,flag=1,op=-1, oppri=-1;
 	for(i = p;i <= q; ++ i){
 		if(tokens[i].type > 2) flag = 0;
@@ -149,6 +152,9 @@ int dominant(int p, int q){
 		else if(tokens[i].type == NUM) continue;
 		else if(tokens[i].value >= oppri) oppri = tokens[i].value, op = i;
 	}
+#ifdef DEBUG 
+	printf("dominant end!\n"); 
+#endif
 	return op;
 }
 
@@ -164,6 +170,10 @@ bool check_parenthess(int p, int q){
 }
 
 int eval(int p, int q, bool *success){
+#ifdef DEBUG 
+	printf("eval: %d %d\n", p ,q); 
+#endif
+	if(success == false) return 0;
 	if(p > q){
 		success = false;
 		return 0;
@@ -202,6 +212,9 @@ uint32_t expr(char *e, bool *success) {
 		*success = false;
 		return 0;
 	}
+#ifdef DEBUG
+	printf("make token OK!\n");
+#endif
 	for(i = 0; i < nr_token; ++ i){
 		if(tokens[i].type == '(') cnt ++;
 		else if(tokens[i].type == ')') cnt --;
@@ -210,6 +223,9 @@ uint32_t expr(char *e, bool *success) {
 		success = false;
 		return 0;
 	}
+#ifdef DEBUG
+	printf("kuo hao OK!\n");
+#endif
 	int ans = eval(0,nr_token-1, success);
 	return ans;
 }
