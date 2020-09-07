@@ -16,4 +16,5 @@ WP* new_wp();
 void free_wp(WP *wp);
 WP *wp_find(int N);
 void wp_print();
+bool wp_check();
 #endif

@@ -2,7 +2,6 @@
 #include "monitor/expr.h"
 
 #define NR_WP 32
-
 static WP wp_pool[NR_WP];
 static WP *head, *free_;
 
@@ -69,4 +68,20 @@ void wp_print(){
 		tmp = tmp->next;
 	}
 	printf("Total: %d\n",tot);
+}
+
+bool wp_check(){
+	WP *tmp = head;
+	uint32_t val;
+	bool *success, ret=false;
+	while(tmp != NULL){
+		val = expr(tmp->exp,success);
+		if(val != tmp->value){
+			ret = true;
+			printf("No.%d\texpression: %s\tvalue: %d\tchanged to %d\n",tmp->NO,tmp->exp,tmp->value,val);
+			tmp->value = val;
+		}
+		tmp = tmp->next;
+	}
+	return ret;
 }

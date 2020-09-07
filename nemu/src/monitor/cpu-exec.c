@@ -72,8 +72,7 @@ void cpu_exec(volatile uint32_t n) {
 		}
 #endif
 
-		/* TODO: check watchpoints here. */
-
+		if(wp_check() == true) nemu_state = STOP;;
 
 #ifdef HAS_DEVICE
 		extern void device_update();
