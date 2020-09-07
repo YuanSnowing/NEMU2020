@@ -5,7 +5,7 @@
  */
 #include <sys/types.h>
 #include <regex.h>
-
+#define DEBUG
 enum {
 	NOTYPE = 256, EQ, HEX, NUM,REG,AND,OR,NOE,DER,
 
@@ -62,6 +62,7 @@ void init_regex() {
 
 typedef struct token {
 	int type;
+	int value;
 	char str[32];
 } Token;
 
@@ -89,11 +90,26 @@ static bool make_token(char *e) {
 				 * to record the token in the array `tokens'. For certain types
 				 * of tokens, some extra actions should be performed.
 				 */
+				int rtt = rules[i].token_type;
+				strncpy(tokens[nr_token].str,substr_start,substr_len);
+				if(rtt == NUM){
+					sscanf(tokens[nr_token].str,"%d",&tokens[nr_token].value);
+					tokens[nr_token].type = NUM;
+				}else if(rtt == HEX){
+					sscanf(tokens[nr_token].str,"%x",&tokens[nr_token].value);
+					tokens[nr_token].type = NUM;
+				}else if(rtt == REG){
+					int flag = 0, j;
+					for(j = 0;j < 4; ++ j) tokens[nr_token].str[j] = tokens[nr_token].str[j+1];
+#ifdef DEBUG
+					printf("reg str: %s\n",tokens[nr_token].str);
+					flag=1;
+#endif
+					// for(j = 0;j < 8; ++ j){
 
-				switch(rules[i].token_type) {
-					default: panic("please implement me");
+					// }
 				}
-
+				nr_token ++;
 				break;
 			}
 		}
