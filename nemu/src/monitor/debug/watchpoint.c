@@ -32,17 +32,20 @@ WP* new_wp(){
 }
 
 void free_wp(WP *wp){
-	WP *tmp = head, *pre = NULL;
-	while(tmp != NULL){
-		if(tmp == wp){
-			pre->next = tmp->next;
-			tmp->next = free_->next;
-			free_ = tmp;
-			return;
+	WP *tmp = head;
+	if(tmp == wp){
+		head = wp->next;
+	}else while(tmp != NULL){
+		if(tmp->next == wp){
+			tmp->next = tmp->next->next;
+			break;
 		}
-		pre = tmp;
 		tmp = tmp->next;
 	}
+	wp->value = 0;
+	wp->exp[0] = '\0';
+	wp->next = free_->next;
+	free_ = wp;
 	return;
 }
 
@@ -60,9 +63,9 @@ void wp_print(){
 	int tot = 0;
 	WP *tmp = head;
 	while(tmp != NULL){
-		printf("No.%d\texpression%s\tvalues%d\n",tmp->NO,tmp->exp,tmp->value);
+		printf("No.%d\texpression: %s\tvalues: %d\n",tmp->NO,tmp->exp,tmp->value);
 		tot ++;
 		tmp = tmp->next;
 	}
-	printf("Totla: %d\n",tot);
+	printf("Total: %d\n",tot);
 }

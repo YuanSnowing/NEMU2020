@@ -98,7 +98,7 @@ static int cmd_w(char *args){
 	if(wp == NULL) return 0;
 	wp->value = val;
 	strcpy(wp->exp, args);
-	printf("Set watchpoint No.%d at %s\n, current value is %d.\n",wp->NO, wp->exp, wp->value);
+	printf("Set watchpoint No.%d at %s, current value is %d.\n",wp->NO, wp->exp, wp->value);
 	return 0;
 }
 
@@ -109,7 +109,7 @@ static int cmd_d(char *args){
 	WP *wp = wp_find(N);
 	if(wp == NULL) return 0;
 	free_wp(wp);
-	printf("Delete watchpoint No.%d at %s\n, current value is %d.\n",wp->NO, wp->exp, wp->value);
+	printf("Delete watchpoint No.%d at %s, current value is %d.\n",wp->NO, wp->exp, wp->value);
 	return 0;
 }
 
