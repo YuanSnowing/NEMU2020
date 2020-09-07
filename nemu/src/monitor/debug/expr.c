@@ -7,7 +7,7 @@
 #include <regex.h>
 #define DEBUG
 enum {
-	NOTYPE = 256, EQ, HEX, NUM,REG,AND,OR,NOE,DER,
+	NOTYPE = 256, EQ, HEX, NUM,REG,AND,OR,NOE,DER,NEG,
 
 	/* TODO: Add more token types */
 
@@ -68,7 +68,20 @@ typedef struct token {
 
 Token tokens[32];
 int nr_token;
-
+bool isdanmu(){
+	if (nr_token == 0) return true;
+	if(tokens[nr_token-1].type == NUM || tokens[nr_token-1].type == ')') return false;
+	return true;
+}
+int getPri(int type){
+	if(type == '(' || type == ')') return 1;
+	if(type == '!' || type == NEG || type == DER) return 2;
+	if(type == '/' || type == '*') return 3;
+	if(type == '+' || type == '-') return 4;
+	if(type == EQ || type == NOE) return 7;
+	if(type == AND) return 11;
+	if(type == OR) return 12;
+}
 static bool make_token(char *e) {
 	int position = 0;
 	int i;
@@ -91,6 +104,7 @@ static bool make_token(char *e) {
 				 * of tokens, some extra actions should be performed.
 				 */
 				int rtt = rules[i].token_type;
+				if(rtt == NOTYPE) continue;
 				strncpy(tokens[nr_token].str,substr_start,substr_len);
 				if(rtt == NUM){
 					sscanf(tokens[nr_token].str,"%d",&tokens[nr_token].value);
@@ -103,34 +117,48 @@ static bool make_token(char *e) {
 					for(j = 0;j < 4; ++ j) tokens[nr_token].str[j] = tokens[nr_token].str[j+1];
 #ifdef DEBUG
 					printf("reg str: %s\n",tokens[nr_token].str);
-					flag=1;
 #endif
-					// for(j = 0;j < 8; ++ j){
-
-					// }
+					for(j = 0;j < 8; ++ j){
+						if(strcmp(tokens[nr_token].str, regsl[j]) == 0)
+							tokens[nr_token].value = reg_l(j), flag = 1;
+						if(strcmp(tokens[nr_token].str, regsw[j]) == 0)
+							tokens[nr_token].value = reg_w(j), flag = 1;
+						if(strcmp(tokens[nr_token].str, regsb[j]) == 0)
+							tokens[nr_token].value = reg_b(j), flag = 1;
+					}
+					if (!flag){
+						printf("invalid register: $%s\n", tokens[nr_token].str);
+						return false;
+					}else tokens[nr_token].type = NUM;
+				}else{
+					if(rtt == '-' && isdanmu()) tokens[nr_token].type = NEG;
+					else if(rtt == '*' && isdanmu()) tokens[nr_token].type = DER;
+					else tokens[nr_token].type = rtt;
+					tokens[nr_token].value = getPri(tokens[nr_token].type);
 				}
 				nr_token ++;
 				break;
 			}
 		}
-
 		if(i == NR_REGEX) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
 		}
 	}
-
 	return true; 
 }
 
 uint32_t expr(char *e, bool *success) {
+	int i, len=strlen(e);
+	for(i = 0;i < len;  ++ i){
+		if(e[i] >= 'A' && e[i] <= 'Z') e[i] += 'a'-'A';
+	}
 	if(!make_token(e)) {
 		*success = false;
 		return 0;
 	}
+	eval(0,nr_token-1);
 
-	/* TODO: Insert codes to evaluate the expression. */
-	//panic("please implement me");
 	return 0;
 }
 
