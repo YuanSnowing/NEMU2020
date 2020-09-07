@@ -15,7 +15,7 @@ static struct rule {
 	int token_type;
 } rules[] = {
 	{" +",	NOTYPE},				// spaces
-	{"0x[0-9a-f]+$", HEX},
+	{"0x[0-9a-f]+", HEX},
 	{"[0-9]+", NUM},
 	{"\\$(([a-z][a-z][a-z])|([a-z][a-z]))", REG},
 	{"\\(", '('},
