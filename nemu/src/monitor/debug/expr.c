@@ -5,7 +5,7 @@
  */
 #include <sys/types.h>
 #include <regex.h>
-#define DEBUG
+//#define DEBUG
 enum {
 	NOTYPE = 256, EQ, HEX, NUM,REG,AND,OR,NOE,DER,NEG,
 };
