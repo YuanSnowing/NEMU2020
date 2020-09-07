@@ -69,7 +69,7 @@ static int cmd_p(char* args){
 		printf("parameter invalid!\n");
 		return 0;
 	}
-	bool success = false;
+	bool success = true;
 	int ans = expr(args, &success);
 	if(success){
 		printf("%d\n",ans);
