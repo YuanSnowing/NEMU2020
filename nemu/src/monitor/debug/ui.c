@@ -109,7 +109,7 @@ static int cmd_d(char *args){
 	WP *wp = wp_find(N);
 	if(wp == NULL) return 0;
 	free_wp(wp);
-	printf("Delete watchpoint No.%d at %s, current value is %d.\n",wp->NO, wp->exp, wp->value);
+
 	return 0;
 }
 
