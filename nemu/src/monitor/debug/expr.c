@@ -165,7 +165,7 @@ bool check_parenthess(int p, int q){
 	return true;
 }
 
-uint32_t eval(int p, int q, bool *success){
+int eval(int p, int q, bool *success){
 #ifdef DEbug 
 	printf("eval: %d %d\n", p ,q); 
 #endif
@@ -180,7 +180,7 @@ uint32_t eval(int p, int q, bool *success){
 		return eval(p+1, q-1, success);
 	}else{
 		int op = dominant(p, q);
-		uint32_t val1 = 0, val2 = 0;
+		int val1 = 0, val2 = 0;
 #ifdef DEbug
 		printf("op %d\n", op);
 #endif
@@ -225,7 +225,7 @@ uint32_t expr(char *e, bool *success) {
 #ifdef DEbug
 	printf("kuo hao OK!\n");
 #endif
-	uint32_t ans = eval(0,nr_token-1, success);
+	int ans = eval(0,nr_token-1, success);
 	return ans;
 }
 
