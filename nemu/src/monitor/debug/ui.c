@@ -85,8 +85,13 @@ static int cmd_x(char *args){
 		return 0;
 	}
 	int N,start,i;
-	//char expr[32];
-	sscanf(args, "%d%x", &N, &start);
+	char *exp = strtok(args, " ");
+	sscanf(exp, "%d", &N);
+	exp = exp + strlen(exp) + 1;
+	bool success = true;
+	start = expr(exp, &success);
+	if(!success) printf("invalid RE!\n");
+	
 	for(i = start; i< N*4+start; i+= 4){
 		printf("0x%x :  %2x %2x %2x %2x\n",i,swaddr_read(i, 1), swaddr_read(i+1, 1),
 				swaddr_read(i+2, 1), swaddr_read(i+3, 1));
