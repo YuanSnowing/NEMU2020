@@ -42,6 +42,7 @@ void free_wp(WP *wp){
 		}
 		tmp = tmp->next;
 	}
+	printf("Delete watchpoint No.%d at %s, current value is %d.\n",wp->NO, wp->exp, wp->value);
 	wp->value = 0;
 	wp->exp[0] = '\0';
 	wp->next = free_->next;
