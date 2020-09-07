@@ -148,6 +148,51 @@ static bool make_token(char *e) {
 	return true; 
 }
 
+int dominant(int p, int q){
+	int i,flag=1,op=-1, oppri=-1;
+	for(i = p;i <= q; ++ i){
+		if(tokens[i].type > 2) flag = 0;
+	}
+	if(flag) return p;
+	for(i = p; i <= q; ++ i){
+		if(tokens[i].type == ')') flag = 1;
+		else if(tokens[i].type == '(') flag = 0;
+		else if(tokens[i].type == NUM) continue;
+		else if(tokens[i].value >= oppri) oppri = tokens[i].value, op = i;
+	}
+	return op;
+}
+
+int eval(int p, int q, bool *success){
+	if(p > q){
+		success = false;
+		return 0;
+	}else if (p == q){
+		if(tokens[p].type != NUM) success = false;
+		return tokens[p].value;
+	}else if (check_parenthess(p, q)){
+		return eval(p+1, q-1);
+	}else{
+		int op = dominant(p, q);
+		int val1 = 0, val2 = 0;
+		if(op != p) val1 = eval(p, op-1, success);
+		val2 = eval(op+1, q, success);
+		switch(tokens[op].type){
+			case '+': return val1+val2;
+			case '-': return val1-val2;
+			case '*': return val1*val2;
+			case '/': return val1/val2;
+			case EQ : return val1==val2;
+			case NOE: return val1!=val2;
+			case AND: return val1&&val2;
+			case OR : return val1||val2;
+			case '!': return !val2;
+			case DER: return swaddr_read(val2,4);
+			case NEG: return -val2;
+		}
+	}
+	return 0;
+}
 uint32_t expr(char *e, bool *success) {
 	int i, len=strlen(e);
 	for(i = 0;i < len;  ++ i){
@@ -157,8 +202,7 @@ uint32_t expr(char *e, bool *success) {
 		*success = false;
 		return 0;
 	}
-	eval(0,nr_token-1);
-
-	return 0;
+	int ans = eval(0,nr_token-1, success);
+	return ans;
 }
 
