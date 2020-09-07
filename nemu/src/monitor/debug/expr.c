@@ -95,6 +95,7 @@ static bool make_token(char *e) {
 				int rtt = rules[i].token_type;
 				if(rtt == NOTYPE) continue;
 				strncpy(tokens[nr_token].str,substr_start,substr_len);
+				tokens[nr_token].str[substr_len] = '\0';
 				if(rtt == NUM){
 					sscanf(tokens[nr_token].str,"%d",&tokens[nr_token].value);
 					tokens[nr_token].type = NUM;
