@@ -75,7 +75,6 @@ bool wp_check(){
 	uint32_t val;
 	bool success=true, ret=false;
 	while(tmp != NULL){
-		printf("%d %s\n",tmp->NO,tmp->exp);
 		val = expr(tmp->exp,&success);
 		if(val != tmp->value){
 			ret = true;
