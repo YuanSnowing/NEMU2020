@@ -146,6 +146,7 @@ uint32_t dominant(uint32_t p, uint32_t q){
 	}
 	if(flag) return p;
 	for(i = p; i <= q; ++ i){
+		printf("tokens value %d\n", tokens[i].value);
 		if(tokens[i].type == ')') flag = 0;
 		else if(tokens[i].type == '(') flag = 1;
 		else if(tokens[i].type == NUM) continue;
