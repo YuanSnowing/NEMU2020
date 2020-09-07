@@ -187,6 +187,9 @@ int eval(int p, int q, bool *success){
 	}else{
 		int op = dominant(p, q);
 		int val1 = 0, val2 = 0;
+#ifdef DEBUG
+		printf("op %d\n", op);
+#endif
 		if(op != p) val1 = eval(p, op-1, success);
 		val2 = eval(op+1, q, success);
 		switch(tokens[op].type){
