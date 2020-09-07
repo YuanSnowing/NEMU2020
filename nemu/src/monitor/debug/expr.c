@@ -25,7 +25,7 @@ static struct rule {
 	{" +",	NOTYPE},				// spaces
 	{"0x[0-9a-f]+$", HEX},
 	{"[0-9]+", NUM},
-	{"\\$[a-z]+[a-z]*[a-z]*", REG},
+	{"\\$(([a-z][a-z][a-z]) | ([a-z][a-z]))", REG},
 	{"\\(", '('},
 	{"\\)", ')'},
 	{"\\+", '+'},					// plus
