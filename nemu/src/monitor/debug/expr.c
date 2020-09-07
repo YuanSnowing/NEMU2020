@@ -12,7 +12,7 @@ enum {
 
 static struct rule {
 	char *regex;
-	int token_type;
+	uint32_t token_type;
 } rules[] = {
 	{" +",	NOTYPE},				// spaces
 	{"\\b0x[0-9a-f]+\\b", HEX},
@@ -39,9 +39,9 @@ static regex_t re[NR_REGEX];
  * Therefore we compile them only once before any usage.
  */
 void init_regex() {
-	int i;
+	uint32_t i;
 	char error_msg[128];
-	int ret;
+	uint32_t ret;
 
 	for(i = 0; i < NR_REGEX; i ++) {
 		ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
@@ -53,19 +53,19 @@ void init_regex() {
 }
 
 typedef struct token {
-	int type;
-	int value;
+	uint32_t type;
+	uint32_t value;
 	char str[32];
 } Token;
 
 Token tokens[32];
-int nr_token;
+uint32_t nr_token;
 bool isdanmu(){
 	if (nr_token == 0) return true;
 	if(tokens[nr_token-1].type == NUM || tokens[nr_token-1].type == ')') return false;
 	return true;
 }
-int getPri(int type){
+uint32_t getPri(uint32_t type){
 	if(type == '(' || type == ')') return 1;
 	if(type == '!' || type == NEG || type == DER) return 2;
 	if(type == '/' || type == '*') return 3;
@@ -76,8 +76,8 @@ int getPri(int type){
 	return 20;
 }
 static bool make_token(char *e) {
-	int position = 0;
-	int i;
+	uint32_t position = 0;
+	uint32_t i;
 	regmatch_t pmatch;
 	
 	nr_token = 0;
@@ -87,12 +87,12 @@ static bool make_token(char *e) {
 		for(i = 0; i < NR_REGEX; i ++) {
 			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + position;
-				int substr_len = pmatch.rm_eo;
+				uint32_t substr_len = pmatch.rm_eo;
 
 				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
-				int rtt = rules[i].token_type;
+				uint32_t rtt = rules[i].token_type;
 				if(rtt == NOTYPE) continue;
 				strncpy(tokens[nr_token].str,substr_start,substr_len);
 				if(rtt == NUM){
@@ -102,7 +102,7 @@ static bool make_token(char *e) {
 					sscanf(tokens[nr_token].str,"%x",&tokens[nr_token].value);
 					tokens[nr_token].type = NUM;
 				}else if(rtt == REG){
-					int flag = 0, j;
+					uint32_t flag = 0, j;
 					for(j = 0;j < 4; ++ j) tokens[nr_token].str[j] = tokens[nr_token].str[j+1];
 #ifdef DEBUG
 					printf("reg str: %s\n",tokens[nr_token].str);
@@ -139,8 +139,8 @@ static bool make_token(char *e) {
 	return true; 
 }
 
-int dominant(int p, int q){
-	int i,flag=1,op=-1, oppri=-1;
+uint32_t dominant(uint32_t p, uint32_t q){
+	uint32_t i,flag=1,op=-1, oppri=-1;
 	for(i = p;i <= q; ++ i){
 		if(tokens[i].value > 2 && tokens[i].type != NUM) flag = 0;
 	}
@@ -154,9 +154,9 @@ int dominant(int p, int q){
 	return op;
 }
 
-bool check_parenthess(int p, int q){
+bool check_parenthess(uint32_t p, uint32_t q){
 	if(tokens[p].type != '(' || tokens[q].type != ')') return false;
-	int cnt = 1,i;
+	uint32_t cnt = 1,i;
 	for(i = p+1; i < q; ++ i){
 		if(tokens[i].type == '(') cnt ++;
 		else if(tokens[i].type == ')') cnt --;
@@ -165,7 +165,7 @@ bool check_parenthess(int p, int q){
 	return true;
 }
 
-int eval(int p, int q, bool *success){
+uint32_t eval(uint32_t p, uint32_t q, bool *success){
 #ifdef DEBUG 
 	printf("eval: %d %d\n", p ,q); 
 #endif
@@ -179,8 +179,8 @@ int eval(int p, int q, bool *success){
 	}else if (check_parenthess(p, q)){
 		return eval(p+1, q-1, success);
 	}else{
-		int op = dominant(p, q);
-		int val1 = 0, val2 = 0;
+		uint32_t op = dominant(p, q);
+		uint32_t val1 = 0, val2 = 0;
 #ifdef DEBUG
 		printf("op %d\n", op);
 #endif
@@ -203,7 +203,7 @@ int eval(int p, int q, bool *success){
 	return 0;
 }
 uint32_t expr(char *e, bool *success) {
-	int i, len=strlen(e), cnt = 0;
+	uint32_t i, len=strlen(e), cnt = 0;
 	for(i = 0;i < len;  ++ i){
 		if(e[i] >= 'A' && e[i] <= 'Z') e[i] += 'a'-'A';
 	}
@@ -225,7 +225,7 @@ uint32_t expr(char *e, bool *success) {
 #ifdef DEBUG
 	printf("kuo hao OK!\n");
 #endif
-	int ans = eval(0,nr_token-1, success);
+	uint32_t ans = eval(0,nr_token-1, success);
 	return ans;
 }
 
