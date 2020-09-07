@@ -8,20 +8,12 @@
 #define DEBUG
 enum {
 	NOTYPE = 256, EQ, HEX, NUM,REG,AND,OR,NOE,DER,NEG,
-
-	/* TODO: Add more token types */
-
 };
 
 static struct rule {
 	char *regex;
 	int token_type;
 } rules[] = {
-
-	/* TODO: Add more rules.
-	 * Pay attention to the precedence level of different rules.
-	 */
-
 	{" +",	NOTYPE},				// spaces
 	{"0x[0-9a-f]+$", HEX},
 	{"[0-9]+", NUM},
@@ -81,6 +73,7 @@ int getPri(int type){
 	if(type == EQ || type == NOE) return 7;
 	if(type == AND) return 11;
 	if(type == OR) return 12;
+	return 20;
 }
 static bool make_token(char *e) {
 	int position = 0;
@@ -99,10 +92,6 @@ static bool make_token(char *e) {
 				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
-				/* TODO: Now a new token is recognized with rules[i]. Add codes
-				 * to record the token in the array `tokens'. For certain types
-				 * of tokens, some extra actions should be performed.
-				 */
 				int rtt = rules[i].token_type;
 				if(rtt == NOTYPE) continue;
 				strncpy(tokens[nr_token].str,substr_start,substr_len);
@@ -163,6 +152,17 @@ int dominant(int p, int q){
 	return op;
 }
 
+bool check_parenthess(int p, int q){
+	if(tokens[p].type != '(' || tokens[q].type != ')') return false;
+	int cnt = 1,i;
+	for(i = p+1; i <= q; ++ i){
+		if(tokens[i].type == '(') cnt ++;
+		else if(tokens[i].type == ')') cnt --;
+		if(cnt == 0) return false;
+	}
+	return true;
+}
+
 int eval(int p, int q, bool *success){
 	if(p > q){
 		success = false;
@@ -171,7 +171,7 @@ int eval(int p, int q, bool *success){
 		if(tokens[p].type != NUM) success = false;
 		return tokens[p].value;
 	}else if (check_parenthess(p, q)){
-		return eval(p+1, q-1);
+		return eval(p+1, q-1, success);
 	}else{
 		int op = dominant(p, q);
 		int val1 = 0, val2 = 0;
@@ -194,12 +194,20 @@ int eval(int p, int q, bool *success){
 	return 0;
 }
 uint32_t expr(char *e, bool *success) {
-	int i, len=strlen(e);
+	int i, len=strlen(e), cnt = 0;
 	for(i = 0;i < len;  ++ i){
 		if(e[i] >= 'A' && e[i] <= 'Z') e[i] += 'a'-'A';
 	}
 	if(!make_token(e)) {
 		*success = false;
+		return 0;
+	}
+	for(i = 0; i < nr_token; ++ i){
+		if(tokens[i].type == '(') cnt ++;
+		else if(tokens[i].type == ')') cnt --;
+	}
+	if(cnt != 0){
+		success = false;
 		return 0;
 	}
 	int ans = eval(0,nr_token-1, success);
