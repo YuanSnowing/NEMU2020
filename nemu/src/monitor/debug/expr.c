@@ -161,7 +161,7 @@ int dominant(int p, int q){
 bool check_parenthess(int p, int q){
 	if(tokens[p].type != '(' || tokens[q].type != ')') return false;
 	int cnt = 1,i;
-	for(i = p+1; i <= q; ++ i){
+	for(i = p+1; i < q; ++ i){
 		if(tokens[i].type == '(') cnt ++;
 		else if(tokens[i].type == ')') cnt --;
 		if(cnt == 0) return false;
