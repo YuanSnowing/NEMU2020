@@ -140,9 +140,6 @@ static bool make_token(char *e) {
 }
 
 int dominant(int p, int q){
-#ifdef DEBUG 
-	printf("dominant begin!\n"); 
-#endif
 	int i,flag=1,op=-1, oppri=-1;
 	for(i = p;i <= q; ++ i){
 		if(tokens[i].value > 2 && tokens[i].type != NUM) flag = 0;
@@ -154,9 +151,6 @@ int dominant(int p, int q){
 		else if(tokens[i].type == NUM) continue;
 		else if(tokens[i].value >= oppri && !flag) oppri = tokens[i].value, op = i;
 	}
-#ifdef DEBUG 
-	printf("dominant end!\n"); 
-#endif
 	return op;
 }
 
