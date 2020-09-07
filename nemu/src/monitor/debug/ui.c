@@ -52,9 +52,9 @@ static int cmd_info(char *args){
 	if(args[0] == 'r'){
 		int i=0;
 		for(; i<8;++i){
-			printf("$%s: 0x%8x\n", regsl[i],reg_l(i));
+			printf("$%s: 0x%08x\n", regsl[i],reg_l(i));
 		}
-		printf("$eip: 0x%8x\n",cpu.eip);
+		printf("$eip: 0x%08x\n",cpu.eip);
 	}else if(args[0] == 'w'){
 		wp_print();
 	}else{
