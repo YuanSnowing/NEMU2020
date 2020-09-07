@@ -73,9 +73,9 @@ void wp_print(){
 bool wp_check(){
 	WP *tmp = head;
 	uint32_t val;
-	bool *success=false, ret=false;
+	bool success=false, ret=false;
 	while(tmp != NULL){
-		val = expr(tmp->exp,success);
+		val = expr(tmp->exp,&success);
 		if(val != tmp->value){
 			ret = true;
 			printf("No.%d\texpression: %s\tvalue: %d\tchanged to %d\n",tmp->NO,tmp->exp,tmp->value,val);
