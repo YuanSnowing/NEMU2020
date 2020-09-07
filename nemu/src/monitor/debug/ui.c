@@ -91,7 +91,6 @@ static int cmd_x(char *args){
 	bool success = true;
 	start = expr(exp, &success);
 	if(!success) printf("invalid RE!\n");
-	
 	for(i = start; i< N*4+start; i+= 4){
 		printf("0x%08x: \t%02x %02x %02x %02x\n",i,swaddr_read(i, 1), swaddr_read(i+1, 1),
 				swaddr_read(i+2, 1), swaddr_read(i+3, 1));
