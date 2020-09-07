@@ -173,12 +173,12 @@ int eval(int p, int q, bool *success){
 #ifdef DEBUG 
 	printf("eval: %d %d\n", p ,q); 
 #endif
-	if(success == false) return 0;
+	if(*success == false) return 0;
 	if(p > q){
-		success = false;
+		*success = false;
 		return 0;
 	}else if (p == q){
-		if(tokens[p].type != NUM) success = false;
+		if(tokens[p].type != NUM) *success = false;
 		return tokens[p].value;
 	}else if (check_parenthess(p, q)){
 		return eval(p+1, q-1, success);
@@ -220,7 +220,7 @@ uint32_t expr(char *e, bool *success) {
 		else if(tokens[i].type == ')') cnt --;
 	}
 	if(cnt != 0){
-		success = false;
+		*success = false;
 		return 0;
 	}
 #ifdef DEBUG
