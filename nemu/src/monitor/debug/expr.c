@@ -15,8 +15,8 @@ static struct rule {
 	int token_type;
 } rules[] = {
 	{" +",	NOTYPE},				// spaces
-	{"0x[0-9a-f]+", HEX},
-	{"[0-9]+", NUM},
+	{"\\b0x[0-9a-f]+\\b", HEX},
+	{"\\b[0-9]+\\b", NUM},
 	{"\\$(([a-z][a-z][a-z])|([a-z][a-z]))", REG},
 	{"\\(", '('},
 	{"\\)", ')'},
@@ -115,6 +115,8 @@ static bool make_token(char *e) {
 						if(strcmp(tokens[nr_token].str, regsb[j]) == 0)
 							tokens[nr_token].value = reg_b(j), flag = 1;
 					}
+					if(strcmp(tokens[nr_token].str, "eip") == 0)
+						tokens[nr_token].value = cpu.eip, flag = 1;
 					if (!flag){
 						printf("invalid register: $%s\n", tokens[nr_token].str);
 						return false;
