@@ -5,7 +5,7 @@
  */
 #include <sys/types.h>
 #include <regex.h>
-//#define DEBUG
+//#define DEbug
 enum {
 	NOTYPE = 256, EQ, HEX, NUM,REG,AND,OR,NOE,DER,NEG,
 };
@@ -104,7 +104,7 @@ static bool make_token(char *e) {
 				}else if(rtt == REG){
 					int flag = 0, j;
 					for(j = 0;j < 4; ++ j) tokens[nr_token].str[j] = tokens[nr_token].str[j+1];
-#ifdef DEBUG
+#ifdef DEbug
 					printf("reg str: %s\n",tokens[nr_token].str);
 #endif
 					for(j = 0;j < 8; ++ j){
@@ -166,7 +166,7 @@ bool check_parenthess(int p, int q){
 }
 
 uint32_t eval(int p, int q, bool *success){
-#ifdef DEBUG 
+#ifdef DEbug 
 	printf("eval: %d %d\n", p ,q); 
 #endif
 	if(*success == false) return 0;
@@ -181,7 +181,7 @@ uint32_t eval(int p, int q, bool *success){
 	}else{
 		int op = dominant(p, q);
 		uint32_t val1 = 0, val2 = 0;
-#ifdef DEBUG
+#ifdef DEbug
 		printf("op %d\n", op);
 #endif
 		if(op != p) val1 = eval(p, op-1, success);
@@ -211,7 +211,7 @@ uint32_t expr(char *e, bool *success) {
 		*success = false;
 		return 0;
 	}
-#ifdef DEBUG
+#ifdef DEbug
 	printf("make token OK!\n");
 #endif
 	for(i = 0; i < nr_token; ++ i){
@@ -222,7 +222,7 @@ uint32_t expr(char *e, bool *success) {
 		*success = false;
 		return 0;
 	}
-#ifdef DEBUG
+#ifdef DEbug
 	printf("kuo hao OK!\n");
 #endif
 	uint32_t ans = eval(0,nr_token-1, success);
