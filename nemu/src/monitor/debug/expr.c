@@ -145,7 +145,7 @@ int dominant(int p, int q){
 #endif
 	int i,flag=1,op=-1, oppri=-1;
 	for(i = p;i <= q; ++ i){
-		if(tokens[i].type > 2 && tokens[i].type != NUM) flag = 0;
+		if(tokens[i].value > 2 && tokens[i].type != NUM) flag = 0;
 	}
 	if(flag) return p;
 	for(i = p; i <= q; ++ i){
