@@ -93,11 +93,11 @@ make_group(group7,
 
 /* TODO: Add more instructions!!! */
 
-helper_fun opcode_table [256] = {
+helper_fun opcode_table [256] = { //2^8, function pointer,某种指令的具体形式
 /* 0x00 */	inv, inv, inv, inv,
 /* 0x04 */	inv, inv, inv, inv,
 /* 0x08 */	inv, inv, inv, inv,
-/* 0x0c */	inv, inv, inv, _2byte_esc,
+/* 0x0c */	inv, inv, inv, _2byte_esc,//0x0f，梁子街指令码
 /* 0x10 */	inv, inv, inv, inv,
 /* 0x14 */	inv, inv, inv, inv,
 /* 0x18 */	inv, inv, inv, inv,
@@ -119,14 +119,14 @@ helper_fun opcode_table [256] = {
 /* 0x58 */	inv, inv, inv, inv,
 /* 0x5c */	inv, inv, inv, inv,
 /* 0x60 */	inv, inv, inv, inv,
-/* 0x64 */	inv, inv, operand_size, inv,
+/* 0x64 */	inv, inv, operand_size, inv,//0x66,
 /* 0x68 */	inv, inv, inv, inv,
 /* 0x6c */	inv, inv, inv, inv,
 /* 0x70 */	inv, inv, inv, inv,
 /* 0x74 */	inv, inv, inv, inv,
 /* 0x78 */	inv, inv, inv, inv,
 /* 0x7c */	inv, inv, inv, inv,
-/* 0x80 */	group1_b, group1_v, inv, group1_sx_v, 
+/* 0x80 */	group1_b, group1_v, inv, group1_sx_v, //ModR/M 对opcode进行扩充，指令组的形式。
 /* 0x84 */	inv, inv, inv, inv,
 /* 0x88 */	mov_r2rm_b, mov_r2rm_v, mov_rm2r_b, mov_rm2r_v,
 /* 0x8c */	inv, inv, inv, inv,
@@ -140,14 +140,14 @@ helper_fun opcode_table [256] = {
 /* 0xac */	inv, inv, inv, inv,
 /* 0xb0 */	mov_i2r_b, mov_i2r_b, mov_i2r_b, mov_i2r_b,
 /* 0xb4 */	mov_i2r_b, mov_i2r_b, mov_i2r_b, mov_i2r_b,
-/* 0xb8 */	mov_i2r_v, mov_i2r_v, mov_i2r_v, mov_i2r_v, 
-/* 0xbc */	mov_i2r_v, mov_i2r_v, mov_i2r_v, mov_i2r_v, 
+/* 0xb8 */	mov_i2r_v, mov_i2r_v, mov_i2r_v, mov_i2r_v, // 指令-形式-操作后缀
+/* 0xbc */	mov_i2r_v, mov_i2r_v, mov_i2r_v, mov_i2r_v,  // v表示操作数长度，b是byte，v是16or32
 /* 0xc0 */	group2_i_b, group2_i_v, inv, inv,
 /* 0xc4 */	inv, inv, mov_i2rm_b, mov_i2rm_v,
 /* 0xc8 */	inv, inv, inv, inv,
 /* 0xcc */	int3, inv, inv, inv,
 /* 0xd0 */	group2_1_b, group2_1_v, group2_cl_b, group2_cl_v,
-/* 0xd4 */	inv, inv, nemu_trap, inv,
+/* 0xd4 */	inv, inv, nemu_trap, inv,// defined by ourself
 /* 0xd8 */	inv, inv, inv, inv,
 /* 0xdc */	inv, inv, inv, inv,
 /* 0xe0 */	inv, inv, inv, inv,
@@ -228,7 +228,7 @@ helper_fun _2byte_opcode_table [256] = {
 };
 
 make_helper(exec) {
-	ops_decoded.opcode = instr_fetch(eip, 1);
+	ops_decoded.opcode = instr_fetch(eip, 1); //取一个字节，指令都为1-2字节 {取址}
 	return opcode_table[ ops_decoded.opcode ](eip);
 }
 
