@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #ifdef DEBUG
-#define DEbug
+//#define DEbug
 #endif
 #define KUOHAOcnt(index,cnt) if(tokens[index].type == '(') cnt ++;else if(tokens[index].type == ')') cnt --;
 enum {
