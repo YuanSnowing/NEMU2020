@@ -149,10 +149,10 @@ int dominant(int p, int q){
 	}
 	if(flag) return p;
 	for(i = p; i <= q; ++ i){
-		if(tokens[i].type == ')') flag = 0;
-		else if(tokens[i].type == '(') flag = 1;
+		if(tokens[i].type == ')') flag --;
+		else if(tokens[i].type == '(') flag ++;
 		else if(tokens[i].type == NUM) continue;
-		else if(tokens[i].value >= oppri && !flag) oppri = tokens[i].value, op = i;
+		else if(tokens[i].value >= oppri && flag == 0) oppri = tokens[i].value, op = i;
 	}
 	return op;
 }
