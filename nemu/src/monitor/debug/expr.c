@@ -12,7 +12,7 @@
 enum {
 	NOTYPE = 256, EQ, HEX, NUM,REG,AND,OR,NOE,DER,NEG,
 };
-
+bool *succ;
 static struct rule {
 	char *regex;
 	int token_type;
@@ -156,6 +156,7 @@ int dominant(int p, int q){
 		else if(tokens[i].type == NUM) continue;
 		else if(tokens[i].value >= oppri && flag == 0) oppri = tokens[i].value, op = i;
 	}
+	if(op == -1) succ = false;
 	return op;
 }
 
@@ -169,27 +170,27 @@ bool check_parenthese(int p, int q){
 	return true;
 }
 
-int eval(int p, int q, bool *success){
+int eval(int p, int q){
 #ifdef DEbug 
 	printf("eval: %d %d\n", p ,q); 
 #endif
-	if(*success == false) return 0;
+	if(*succ == false) return 0;
 	if(p > q){
-		*success = false;
+		*succ = false;
 		return 0;
 	}else if (p == q){
-		if(tokens[p].type != NUM) *success = false;
+		if(tokens[p].type != NUM) *succ = false;
 		return tokens[p].value;
 	}else if (check_parenthese(p, q)){
-		return eval(p+1, q-1, success);
+		return eval(p+1, q-1);
 	}else{
 		int op = dominant(p, q);
 		int val1 = 0, val2 = 0;
 #ifdef DEbug
 		printf("op %d\n", op);
 #endif
-		if(op != p) val1 = eval(p, op-1, success);
-		val2 = eval(op+1, q, success);
+		if(op != p) val1 = eval(p, op-1);
+		val2 = eval(op+1, q);
 		switch(tokens[op].type){
 			case '+': return val1+val2;
 			case '-': return val1-val2;
@@ -208,6 +209,7 @@ int eval(int p, int q, bool *success){
 }
 uint32_t expr(char *e, bool *success) {
 	int i, len=strlen(e), cnt = 0;
+	succ = success;
 	for(i = 0;i < len;  ++ i){
 		if(e[i] >= 'A' && e[i] <= 'Z') e[i] += 'a'-'A';
 	}
@@ -228,7 +230,7 @@ uint32_t expr(char *e, bool *success) {
 #ifdef DEbug
 	printf("kuo hao OK!\n");
 #endif
-	int ans = eval(0,nr_token-1, success);
+	int ans = eval(0,nr_token-1);
 	return ans;
 }
 
