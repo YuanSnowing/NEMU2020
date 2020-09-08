@@ -8,6 +8,7 @@
 #ifdef DEBUG
 #define DEbug
 #endif
+#define KUOHAOcnt(index,cnt) if(tokens[index].type == '(') cnt ++;else if(tokens[index].type == ')') cnt --;
 enum {
 	NOTYPE = 256, EQ, HEX, NUM,REG,AND,OR,NOE,DER,NEG,
 };
@@ -143,9 +144,10 @@ static bool make_token(char *e) {
 }
 
 int dominant(int p, int q){
-	int i,flag=1,op=-1, oppri=-1;
+	int i,flag=1,op=-1, oppri=-1,cnt=0;
 	for(i = p;i <= q; ++ i){
-		if(tokens[i].value > 2 && tokens[i].type != NUM) flag = 0;
+		KUOHAOcnt(i,cnt);
+		if(tokens[i].value > 2 && tokens[i].type != NUM && cnt==0) flag = 0;
 	}
 	if(flag) return p;
 	for(i = p; i <= q; ++ i){
@@ -161,8 +163,7 @@ bool check_parenthese(int p, int q){
 	if(tokens[p].type != '(' || tokens[q].type != ')') return false;
 	int cnt = 1,i;
 	for(i = p+1; i < q; ++ i){
-		if(tokens[i].type == '(') cnt ++;
-		else if(tokens[i].type == ')') cnt --;
+		KUOHAOcnt(i,cnt);
 		if(cnt == 0) return false;
 	}
 	return true;
@@ -218,8 +219,7 @@ uint32_t expr(char *e, bool *success) {
 	printf("make token OK!\n");
 #endif
 	for(i = 0; i < nr_token; ++ i){
-		if(tokens[i].type == '(') cnt ++;
-		else if(tokens[i].type == ')') cnt --;
+		KUOHAOcnt(i,cnt);
 	}
 	if(cnt != 0){
 		*success = false;
