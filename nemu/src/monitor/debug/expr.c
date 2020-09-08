@@ -149,8 +149,8 @@ int dominant(int p, int q){
 		KUOHAOcnt(i,cnt);
 		if(tokens[i].value > 2 && tokens[i].type != NUM && cnt==0) flag = 0;
 	}
-	printf("%d %d %d\n",p,q,op);
 	if(flag) return p;
+	printf("%d %d %d\n",p,q,op);
 	for(i = p; i <= q; ++ i){
 		if(tokens[i].type == ')') flag --;
 		else if(tokens[i].type == '(') flag ++;
