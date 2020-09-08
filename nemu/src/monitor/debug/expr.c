@@ -157,7 +157,7 @@ int dominant(int p, int q){
 	return op;
 }
 
-bool check_parenthess(int p, int q){
+bool check_parenthese(int p, int q){
 	if(tokens[p].type != '(' || tokens[q].type != ')') return false;
 	int cnt = 1,i;
 	for(i = p+1; i < q; ++ i){
@@ -179,7 +179,7 @@ int eval(int p, int q, bool *success){
 	}else if (p == q){
 		if(tokens[p].type != NUM) *success = false;
 		return tokens[p].value;
-	}else if (check_parenthess(p, q)){
+	}else if (check_parenthese(p, q)){
 		return eval(p+1, q-1, success);
 	}else{
 		int op = dominant(p, q);
