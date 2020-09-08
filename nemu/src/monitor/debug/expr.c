@@ -155,9 +155,9 @@ int dominant(int p, int q){
 		else if(tokens[i].type == '(') flag ++;
 		else if(tokens[i].type == NUM) continue;
 		else if(tokens[i].value >= oppri && flag == 0) oppri = tokens[i].value, op = i;
-		printf("haha-%d %d\n",i,op);
+		printf("haha %d %d\n",i,op);
 	}
-	if(op == -1) succ = false;
+	if(op == -1) *succ = false;
 	return op;
 }
 
