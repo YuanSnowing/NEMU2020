@@ -185,6 +185,7 @@ int eval(int p, int q){
 		return eval(p+1, q-1);
 	}else{
 		int op = dominant(p, q);
+		if(*succ == false) return 0;
 		int val1 = 0, val2 = 0;
 #ifdef DEbug
 		printf("op %d\n", op);
