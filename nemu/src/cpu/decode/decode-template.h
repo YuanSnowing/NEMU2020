@@ -9,6 +9,8 @@
 #define decode_r2rm concat(decode_r2rm_, SUFFIX)
 
 /* Ib, Iv */
+// concat(decode_i_, SUFFIX) is the name of function
+// make helper is func pointer
 make_helper(concat(decode_i_, SUFFIX)) {
 	/* eip here is pointing to the immediate */
 	op_src->type = OP_TYPE_IMM;
