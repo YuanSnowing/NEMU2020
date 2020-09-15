@@ -78,7 +78,7 @@ bool wp_check(){
 		val = expr(tmp->exp,&success);
 		if(val != tmp->value){
 			ret = true;
-			printf("No.%d\texpression: %s\tvalue: %d\tchanged to %d\n",tmp->NO,tmp->exp,tmp->value,val);
+			printf("No.%d\texpression: %s\tvalue: 0x%x\tchanged to 0x%x\n",tmp->NO,tmp->exp,tmp->value,val);
 			tmp->value = val;
 		}
 		tmp = tmp->next;
