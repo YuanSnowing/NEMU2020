@@ -15,8 +15,8 @@ make_helper(concat(call_i_, SUFFIX)) {
 	// write(target, length, content)
 	swaddr_write(reg_l(R_ESP), 4, eip+len+1);
 	// op_src->val = op_src->imm, 
-	eip += op_src->val;
-	print_asm("call 0x%x\n", eip+len+1);
+	cpu.eip += op_src->val;
+	print_asm("call 0x%x\n", cpu.eip+len+1);
 	return len+1;
 }
 #include "cpu/exec/template-end.h"
