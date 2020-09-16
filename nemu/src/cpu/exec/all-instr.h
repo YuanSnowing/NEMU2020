@@ -5,6 +5,7 @@
 #include "data-mov/push.h"
 
 #include "jmp/call.h"
+#include "jmp/je.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
