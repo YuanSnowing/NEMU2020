@@ -27,6 +27,12 @@ typedef union {
 	struct{
 		uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
 		swaddr_t eip;
+		union{
+			struct{
+				uint32_t CF:1, :1,PF:1, :1, AF:1, :1, ZF:1, SF:1, TF:1, IF:1, DF:1, OF:1, IOPL:1, NT:1, :1,RF:1, VM:1, :14; 
+			};
+			uint32_t EFLAGS;
+		};
 	};
 	
 

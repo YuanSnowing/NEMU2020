@@ -127,7 +127,7 @@ helper_fun opcode_table [256] = { //2^8, function pointer,某种指令的具体�
 /* 0x78 */	inv, inv, inv, inv,
 /* 0x7c */	inv, inv, inv, inv,
 /* 0x80 */	group1_b, group1_v, inv, group1_sx_v, //ModR/M 对opcode进行扩充，指令组的形式。
-/* 0x84 */	inv, inv, inv, inv,
+/* 0x84 */	test_r2rm_b, test_r2rm_v, inv, inv,
 /* 0x88 */	mov_r2rm_b, mov_r2rm_v, mov_rm2r_b, mov_rm2r_v,
 /* 0x8c */	inv, inv, inv, inv,
 /* 0x90 */	inv, inv, inv, inv,
