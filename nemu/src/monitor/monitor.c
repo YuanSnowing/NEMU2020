@@ -73,8 +73,11 @@ static void load_entry() {
 	assert(ret == 1);
 	fclose(fp);
 }
-
+static void init_EFLAGS(){
+	cpu.EFLAGS=2;
+}
 void restart() {
+	init_EFLAGS();
 	/* Perform some initialization to restart a program */
 #ifdef USE_RAMDISK
 	/* Read the file with name `argv[1]' into ramdisk. */
