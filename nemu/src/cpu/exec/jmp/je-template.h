@@ -6,7 +6,7 @@ static void do_execute() {
 	DATA_TYPE_S tmp = op_src->val;
     // eip+tmp + length +1
     print_asm("je %x\n", cpu.eip + tmp + DATA_BYTE + 1);
-    if(cpu.ZF) cpu.eip += tmp;
+    if(cpu.ZF == 1) cpu.eip += tmp;
 }
 
 make_instr_helper(i);
