@@ -7,6 +7,7 @@
 
 #include "jmp/call.h"
 #include "jmp/je.h"
+#include "jmp/ret.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
