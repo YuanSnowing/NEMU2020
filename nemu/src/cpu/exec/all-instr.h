@@ -10,7 +10,7 @@
 
 #include "jmp/call.h"
 #include "jmp/ret.h"
-// #include "jmp/jmp.h"
+#include "jmp/jmp.h"
 #include "jmp/jcc.h"
 
 #include "arith/dec.h"

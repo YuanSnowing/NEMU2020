@@ -80,7 +80,7 @@ make_group(group4,
 /* 0xff */
 make_group(group5,
 	inv, inv, inv, inv, 
-	inv, inv, push_rm_v, inv)
+	jmp_rm_v, inv, push_rm_v, inv)
 
 make_group(group6,
 	inv, inv, inv, inv, 
@@ -152,8 +152,8 @@ helper_fun opcode_table [256] = { //2^8, function pointer,某种指令的具体�
 /* 0xdc */	inv, inv, inv, inv,
 /* 0xe0 */	inv, inv, inv, inv,
 /* 0xe4 */	inv, inv, inv, inv,
-/* 0xe8 */	call_i_v, inv, inv, inv,
-/* 0xec */	inv, inv, inv, inv,
+/* 0xe8 */	call_i_v, jmp_i_v, inv, jmp_i_b,
+/* 0xec */	inv, inv, inv, inv,s
 /* 0xf0 */	inv, inv, inv, rep,
 /* 0xf4 */	inv, inv, group3_b, group3_v,
 /* 0xf8 */	inv, inv, inv, inv,
