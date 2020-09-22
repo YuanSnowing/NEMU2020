@@ -10,7 +10,7 @@
 
 #include "jmp/call.h"
 #include "jmp/ret.h"
-#include "jmp/jmp.h"
+// #include "jmp/jmp.h"
 #include "jmp/jcc.h"
 
 #include "arith/dec.h"
@@ -38,10 +38,10 @@
 #include "logic/setcc.h"
 
 #include "string/rep.h"
-#include "string/movs.h"
-#include "string/stos.h"
-#include "string/lods.h"
-#include "string/scas.h"
+// #include "string/movs.h"
+// #include "string/stos.h"
+// #include "string/lods.h"
+// #include "string/scas.h"
 
 #include "misc/misc.h"
 
