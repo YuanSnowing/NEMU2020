@@ -5,7 +5,7 @@
 static void do_execute() {
     op_src->val = (DATA_TYPE_S)op_src->val;
     // before push every time
-    reg_l(R_ESP) -= DATA_BYTE;
+    reg_l(R_ESP) -= 4;
 	swaddr_write(reg_l(R_ESP), 4, op_src->val);
 	print_asm("push 0x%x\n", op_src->val);
 }
