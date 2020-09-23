@@ -4,8 +4,8 @@
 
 static void do_execute() {
     if(DATA_BYTE != 1){
-        OPERAND_W(op_src, swaddr_read(REG(R_ESP), DATA_BYTE));
-        swaddr_write(REG(R_ESP), DATA_BYTE, 0);
+        OPERAND_W(op_src, MEM_R(REG(R_ESP)));
+        MEM_W(REG(R_ESP), 0);
         REG(R_ESP) += DATA_BYTE;
     }
 	print_asm_template1();
