@@ -3,19 +3,35 @@
 #define instr sub
 
 static void do_execute(){
-    DATA_TYPE result = op_dest->val - op_src->val;
-    OPERAND_W(op_dest, result);
-    int len = (DATA_BYTE << 3) -1, a,b;
-    a = (op_dest->val) >> len;
-    b = (op_src ->val) >> len;
-    cpu.ZF = !result;
-    cpu.SF = result >> len;
-	cpu.CF = op_dest->val < op_src->val;
-    cpu.OF = (a != b && b == cpu.SF);
-    result ^= result >> 4;
-    result ^= result >> 2;
-    result ^= result >> 1;
-    cpu.PF = !(result&1);
+    // DATA_TYPE result = op_dest->val - op_src->val;
+    // OPERAND_W(op_dest, result);
+    // int len = (DATA_BYTE << 3) -1, a,b;
+    // a = (op_dest->val) >> len;
+    // b = (op_src ->val) >> len;
+    // cpu.ZF = !result;
+    // cpu.SF = result >> len;
+	// cpu.CF = op_dest->val < op_src->val;
+    // cpu.OF = (a != b && b == cpu.SF);
+    // result ^= result >> 4;
+    // result ^= result >> 2;
+    // result ^= result >> 1;
+    // cpu.PF = !(result&1);
+	// print_asm_template2();
+    DATA_TYPE ret = op_dest -> val - op_src -> val;
+	OPERAND_W(op_dest, ret);
+
+	/* TODO: Update EFLAGS. */
+    cpu.ZF = !ret;
+    cpu.SF = ret >> ((DATA_BYTE << 3) - 1);
+    cpu.CF = (op_dest -> val < op_src -> val);
+    int tmp1 = (op_dest -> val) >> ((DATA_BYTE << 3) - 1);
+    int tmp2 = (op_src -> val) >> ((DATA_BYTE << 3) - 1);
+    cpu.OF = (tmp1 != tmp2 && tmp2 == cpu.SF);
+    ret ^= ret >> 4;
+    ret ^= ret >> 2;
+    ret ^= ret >> 1;
+    ret &= 1;
+    cpu.PF = !ret;
 	print_asm_template2();
 }
 
