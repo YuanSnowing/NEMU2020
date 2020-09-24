@@ -5,6 +5,7 @@
 static void do_execute() {
     if(DATA_BYTE != 1){
         OPERAND_W(op_src, swaddr_read(cpu.esp, DATA_BYTE));
+        MEM_W(REG(R_ESP),0);
         REG(R_ESP) += DATA_BYTE;
     }
 	print_asm_template1();
