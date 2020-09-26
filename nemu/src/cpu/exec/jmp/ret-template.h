@@ -8,17 +8,14 @@ make_helper(concat(ret_n_, SUFFIX)) {
 	print_asm("ret\n");
 	return 1;
 }
-
-static void do_execute() {
+make_helper(concat(ret_i_, SUFFIX)){
+	int haha = instr_fetch(eip + 1, 2);
 	cpu.eip = MEM_R(REG(R_ESP));
 	if (DATA_BYTE == 2) cpu.eip &= 0xffff;
-	int haha = op_src->val;
 	REG(R_ESP) += DATA_BYTE + haha;
-	printf("jhhajh%d\n",haha);
 	print_asm_template1();
+	return 3;
 }
-
-make_instr_helper(i);
 
 #include "cpu/exec/template-end.h"
 
