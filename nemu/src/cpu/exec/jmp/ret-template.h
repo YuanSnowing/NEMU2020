@@ -13,7 +13,7 @@ make_helper(concat(ret_i_, SUFFIX)){
 	int haha = instr_fetch(eip + 1, 2);
 	cpu.eip = MEM_R(REG(R_ESP));
 	cpu.eip &= 0xffff;
-	REG(R_ESP) += DATA_BYTE + haha;
+	REG(R_ESP) += 2 + haha;
 	print_asm_template1();
 	return 1;
 }
