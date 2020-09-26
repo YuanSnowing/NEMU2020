@@ -70,8 +70,8 @@ clean: clean-cpp
 # USERPROG := obj/testcase/movsx
 # USERPROG := obj/testcase/mul-longlong
 # USERPROG := obj/testcase/pascal
-USERPROG := obj/testcase/prime
-# USERPROG := obj/testcase/quick-sort
+# USERPROG := obj/testcase/prime
+USERPROG := obj/testcase/quick-sort
 # USERPROG := obj/testcase/select-sort
 # USERPROG := obj/testcase/shuixianhua
 # USERPROG := obj/testcase/sub-longlong
