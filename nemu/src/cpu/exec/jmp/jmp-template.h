@@ -10,7 +10,6 @@ static void do_execute() {
 	}
 	else{
 		cpu.eip = tmp - concat (decode_rm_,SUFFIX)(cpu.eip+1) -1;
-		printf("why here???\n");
 	}
 	print_asm_template1();
 }

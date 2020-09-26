@@ -12,8 +12,9 @@ make_helper(concat(ret_n_, SUFFIX)) {
 static void do_execute() {
 	cpu.eip = MEM_R(REG(R_ESP));
 	if (DATA_BYTE == 2) cpu.eip &= 0xffff;
-	REG(R_ESP) += DATA_BYTE + op_src->val;
-	printf("jhhajh%d\n",op_src->val);
+	int haha = op_src->val;
+	REG(R_ESP) += DATA_BYTE + haha;
+	printf("jhhajh%d\n",haha);
 	print_asm_template1();
 }
 
