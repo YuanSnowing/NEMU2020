@@ -12,7 +12,7 @@ make_helper(concat(ret_n_, SUFFIX)) {
 static void do_execute() {
 	cpu.eip = MEM_R(REG(R_ESP));
 	if (DATA_BYTE == 2) cpu.eip &= 0xffff;
-	REG(R_ESP) += DATA_BYTE + op_dest->val;
+	REG(R_ESP) += DATA_BYTE + op_src->val;
 	print_asm_template1();
 }
 
