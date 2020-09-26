@@ -7,7 +7,6 @@
 #include "data-mov/leave.h"
 #include "data-mov/cltd.h"
 #include "data-mov/movext.h"
-#include "data-mov/movzx.h"
 
 #include "jmp/call.h"
 #include "jmp/ret.h"
