@@ -78,9 +78,9 @@ clean: clean-cpp
 # USERPROG := obj/testcase/sum
 # USERPROG := obj/testcase/switch
 # USERPROG := obj/testcase/to-lower-case
-USERPROG := obj/testcase/wanshu
+# USERPROG := obj/testcase/wanshu
 
-# USERPROG := obj/testcase/struct
+USERPROG := obj/testcase/struct
 # USERPROG := obj/testcase/string
 # USERPROG := obj/testcase/hello-str
 
