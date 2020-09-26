@@ -80,8 +80,8 @@ clean: clean-cpp
 # USERPROG := obj/testcase/to-lower-case
 # USERPROG := obj/testcase/wanshu
 
-USERPROG := obj/testcase/struct
-# USERPROG := obj/testcase/string
+# USERPROG := obj/testcase/struct
+USERPROG := obj/testcase/string
 # USERPROG := obj/testcase/hello-str
 
 # USERPROG := obj/testcase/integral
