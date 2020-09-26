@@ -56,8 +56,8 @@ clean: clean-cpp
 # USERPROG := obj/testcase/add-longlong
 # USERPROG := obj/testcase/add
 # USERPROG := obj/testcase/bit
-USERPROG := obj/testcase/bubble-sort
-# USERPROG := obj/testcase/fact
+# USERPROG := obj/testcase/bubble-sort
+USERPROG := obj/testcase/fact
 # USERPROG := obj/testcase/fib
 # USERPROG := obj/testcase/gotbaha
 # USERPROG := obj/testcase/if-else
