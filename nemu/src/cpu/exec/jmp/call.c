@@ -14,3 +14,4 @@
 
 // reload function
 make_helper_v(call_i)
+make_helper_v(call_rm)
