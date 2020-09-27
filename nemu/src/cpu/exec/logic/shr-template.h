@@ -9,11 +9,13 @@ static void do_execute () {
 	uint8_t count = src & 0x1f;
 	dest >>= count;
 	OPERAND_W(op_dest, dest);
-
-	/* There is no need to update EFLAGS, since no other instructions 
-	 * in PA will test the flags updated by this instruction.
-	 */
-
+	cpu.CF = cpu.OF = 0;
+	cpu.ZF = !dest;
+    cpu.SF = dest >> ((DATA_BYTE << 3) - 1);
+	dest ^= dest >> 4;
+    dest ^= dest >> 2;
+    dest ^= dest >> 1;
+    cpu.PF = !(dest&1);
 	print_asm_template2();
 }
 
