@@ -1,8 +1,9 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	nemu_assert(0);
-	return 0;
+	// nemu_assert(0);
+	long long ans = (long long)a * b;
+	return ans >> 16;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
@@ -24,8 +25,18 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	 * out another way to perform the division.
 	 */
 
-	nemu_assert(0);
-	return 0;
+	// nemu_assert(0);
+	int s = 1, i = 0, ans;
+	if(a < 0) a = -a, s = -s;
+	if(b < 0) b = -b, s = -s;
+	ans = a / b;
+	a = a % b;
+	// a is res, can calculate the low 16 bits
+	for(; i < 16; ++ i){
+		a <<= 1, ans <<= 1;
+		if(a >= b) ++ ans, a -= b;
+	}
+	return s*ans;
 }
 
 FLOAT f2F(float a) {
@@ -38,14 +49,25 @@ FLOAT f2F(float a) {
 	 * stack. How do you retrieve it to another variable without
 	 * performing arithmetic operations on it directly?
 	 */
-
-	nemu_assert(0);
-	return 0;
+	// nemu_assert(0);
+	// raw float
+	int inta = *( (int *)(&a) );
+	int s = inta & 0x80000000;
+	int exp = (inta >> 23) & 0xff;
+	int res = inta & 0x007fffff;
+	if(s) s = -1;
+	if(exp == 0) return 0;
+	if(exp == 0xff) return s*0x7fffffff;
+	exp -= 134; // bias
+	res |= 1<<23; // the '1.'
+	if(exp > 0) res <<= exp;
+	if(exp < 0) res >>= exp;
+	return s*res;
 }
 
 FLOAT Fabs(FLOAT a) {
-	nemu_assert(0);
-	return 0;
+	// nemu_assert(0);
+	return a < 0 ? -a: a;
 }
 
 /* Functions below are already implemented */
