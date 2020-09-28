@@ -51,10 +51,10 @@ FLOAT f2F(float a) {
 	 */
 	// nemu_assert(0);
 	// raw float
-	int inta = *( (int *)(&a) );
+	int inta = *( (int *)&a );
 	int s = inta >> 31;
 	int exp = (inta >> 23) & 0xff;
-	int res = inta & 0x007fffff;
+	FLOAT res = inta & 0x007fffff;
 	if(s) s = -1;else s = 1;
 	if(exp == 0) return 0;
 	if(exp == 0xff) return s*0x7fffffff;
