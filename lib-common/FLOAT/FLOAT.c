@@ -51,7 +51,7 @@ FLOAT f2F(float a) {
 	 */
 	// nemu_assert(0);
 	// raw float
-	print_asm("f2F begin");
+	// print_asm("f2F begin");
 	int inta = *( (int *)&a );
 	int s = inta >> 31;
 	int exp = (inta >> 23) & 0xff;
@@ -63,7 +63,7 @@ FLOAT f2F(float a) {
 	res |= 1<<23; // the '1.'
 	if(exp > 0) res <<= exp;
 	if(exp < 0) res >>= -exp;
-	print_asm("f2F get 0x%x", s*res);
+	printf("eip: 0x%08x f2F get 0x%x", cpu.eip, s*res);
 	return s*res;
 }
 
