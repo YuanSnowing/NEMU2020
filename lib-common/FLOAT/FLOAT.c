@@ -52,7 +52,7 @@ FLOAT f2F(float a) {
 	// nemu_assert(0);
 	// raw float
 	int inta = *( (int *)(&a) );
-	int s = inta & 0x80000000;
+	int s = inta >> 31;
 	int exp = (inta >> 23) & 0xff;
 	int res = inta & 0x007fffff;
 	if(s) s = -1;else s = 1;
