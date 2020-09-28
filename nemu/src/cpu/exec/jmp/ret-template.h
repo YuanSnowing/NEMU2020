@@ -15,7 +15,7 @@ make_helper(concat(ret_i_, SUFFIX)){
 	cpu.eip &= 0xffff;
 	REG(R_ESP) += 2 + haha;
 	print_asm_template1();
-	return 1;
+	return 0;
 }
 
 #include "cpu/exec/template-end.h"
