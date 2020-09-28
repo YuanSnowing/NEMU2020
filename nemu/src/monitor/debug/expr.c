@@ -5,12 +5,13 @@
  */
 #include <sys/types.h>
 #include <regex.h>
+#include <elf.h>
 #ifdef DEBUG
 //#define DEbug
 #endif
 #define KUOHAOcnt(index,cnt) if(tokens[index].type == '(') cnt ++;else if(tokens[index].type == ')') cnt --;
 enum {
-	NOTYPE = 256, EQ, HEX, NUM,REG,AND,OR,NOE,DER,NEG,
+	NOTYPE = 256, EQ, HEX, NUM,REG,AND,OR,NOE,DER,NEG,VAR,
 };
 bool *succ;
 static struct rule {
@@ -32,6 +33,7 @@ static struct rule {
 	{"&&", AND},
 	{"\\|\\|",OR},
 	{"!",'!'},
+	{"[a-zA-Z_][A-Za-z0-9_]*", VAR},
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -68,7 +70,7 @@ bool isdanmu(){
 	if(tokens[nr_token-1].type == NUM || tokens[nr_token-1].type == ')') return false;
 	return true;
 }
-int getPri(int type){
+int getPri(int type){//found
 	if(type == '(' || type == ')') return 1;
 	if(type == '!' || type == NEG || type == DER) return 2;
 	if(type == '/' || type == '*') return 3;
@@ -78,6 +80,7 @@ int getPri(int type){
 	if(type == OR) return 12;
 	return 20;
 }
+uint32_t getVarval(char *var, bool *success);
 static bool make_token(char *e) {
 	int position = 0;
 	int i;
@@ -100,7 +103,15 @@ static bool make_token(char *e) {
 				if(rtt == NOTYPE) continue;
 				strncpy(tokens[nr_token].str,substr_start,substr_len);
 				tokens[nr_token].str[substr_len] = '\0';
-				if(rtt == NUM){
+				if(rtt == VAR){
+					bool success = true;
+					tokens[nr_token].value = getVarval(tokens[nr_token].str, &success);
+					if(!success) {
+						printf("Bad var name %s !\n", tokens[nr_token].str);
+						return false;
+					}
+					tokens[nr_token].type = NUM;
+				}else if(rtt == NUM){
 					sscanf(tokens[nr_token].str,"%d",&tokens[nr_token].value);
 					tokens[nr_token].type = NUM;
 				}else if(rtt == HEX){

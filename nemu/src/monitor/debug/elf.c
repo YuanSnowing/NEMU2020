@@ -7,7 +7,20 @@ char *exec_file = NULL;
 static char *strtab = NULL;
 static Elf32_Sym *symtab = NULL;
 static int nr_symtab_entry;
-
+uint32_t getVarval(char *var, bool *success) {
+	int i = 0;
+	for(; i < nr_symtab_entry; ++ i) {
+		// STT type numbered from 0 to 15, so &0xf
+		if ((symtab[i].st_info&0xf) == STT_OBJECT) {
+			char var_name[100];
+			// strtab = where string table begins 
+			strcpy(var_name, strtab + symtab[i].st_name);
+			if (strcmp(var_name, var) == 0) return symtab[i].st_value;
+		}
+	}
+	*success = false;
+	return 0;
+}
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;
 	Assert(argc == 2, "run NEMU with format 'nemu [program]'");
@@ -56,6 +69,7 @@ void load_elf_tables(int argc, char *argv[]) {
 	for(i = 0; i < elf->e_shnum; i ++) {
 		if(sh[i].sh_type == SHT_SYMTAB && 
 				strcmp(shstrtab + sh[i].sh_name, ".symtab") == 0) {
+
 			/* Load symbol table from exec_file */
 			symtab = malloc(sh[i].sh_size);
 			fseek(fp, sh[i].sh_offset, SEEK_SET);
