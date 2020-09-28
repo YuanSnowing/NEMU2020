@@ -14,7 +14,7 @@ make_helper(concat(ret_i_, SUFFIX)){
 	cpu.eip = MEM_R(REG(R_ESP));
 	cpu.eip &= 0xffff;
 	REG(R_ESP) += 2 + haha;
-	print_asm_template1();
+	print_asm("ret 0x%x", haha);
 	return 0;
 }
 
