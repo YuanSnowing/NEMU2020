@@ -51,18 +51,20 @@ FLOAT f2F(float a) {
 	 */
 	// nemu_assert(0);
 	// raw float
+	print_asm("f2F begin");
 	int inta = *( (int *)&a );
 	int s = inta >> 31;
 	int exp = (inta >> 23) & 0xff;
 	int res = inta & 0x007fffff;
-	// if(s) s = -1; else s = 1;
+	if(s) s = -1; else s = 1;
 	if(exp == 0) return 0;
-	if(exp == 0xff) return s?-0x7fffffff:0x7fffffff;
+	if(exp == 0xff) return s*0x7fffffff;
 	exp -= 134; // bias
 	res |= 1<<23; // the '1.'
 	if(exp > 0) res <<= exp;
 	if(exp < 0) res >>= -exp;
-	return s?-res:res;
+	print_asm("f2F get 0x%x", s*res);
+	return s*res;
 }
 
 FLOAT Fabs(FLOAT a) {
