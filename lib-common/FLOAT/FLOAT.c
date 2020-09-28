@@ -55,7 +55,7 @@ FLOAT f2F(float a) {
 	int s = inta & 0x80000000;
 	int exp = (inta >> 23) & 0xff;
 	int res = inta & 0x007fffff;
-	if(s) s = -1;
+	if(s) s = -1;else s = 1;
 	if(exp == 0) return 0;
 	if(exp == 0xff) return s*0x7fffffff;
 	exp -= 134; // bias
