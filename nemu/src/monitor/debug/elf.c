@@ -14,7 +14,7 @@ uint32_t getVarval(char *var, bool *success) {
 		if ((symtab[i].st_info&0xf) == STT_OBJECT) {
 			char var_name[100];
 			// strtab = where string table begins 
-			strcpy(var_name, strtab + symtab[i].st_name);
+			strcpy(var_name, strtab + i);
 			if (strcmp(var_name, var) == 0) return symtab[i].st_value;
 		}
 	}
