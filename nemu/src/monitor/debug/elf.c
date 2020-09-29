@@ -1,20 +1,22 @@
 #include "common.h"
 #include <stdlib.h>
 #include <elf.h>
-
 char *exec_file = NULL;
 
 static char *strtab = NULL;
 static Elf32_Sym *symtab = NULL;
 static int nr_symtab_entry;
 uint32_t getVarval(char *var, bool *success) {
-	int i = 0;
+	int i = 0, len = strlen(var);
 	for(; i < nr_symtab_entry; ++ i) {
 		// STT type numbered from 0 to 15, so &0xf
 		if ((symtab[i].st_info&0xf) == STT_OBJECT) {
-			char var_name[100];
-			// strtab = where string table begins 
-			strcpy(var_name, strtab + i);
+			char var_name[len+5];
+			// strtab = where string table begins
+			// symble table is Elf32_Sym, like :
+			/*  {st_name;st_value;st_size;st_info;st_other;st_shndx;} */
+			strncpy(var_name, strtab + symtab[i].st_name, len);
+			var_name[len] = '\0';
 			if (strcmp(var_name, var) == 0) return symtab[i].st_value;
 		}
 	}
