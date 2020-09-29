@@ -15,6 +15,7 @@ uint32_t getVarval(char *var, bool *success) {
 			// strtab = where string table begins
 			// symble table is Elf32_Sym, like :
 			/*  {st_name;st_value;st_size;st_info;st_other;st_shndx;} */
+			// st_name is name zai strtab li bian de bias
 			strncpy(var_name, strtab + symtab[i].st_name, len);
 			var_name[len] = '\0';
 			if (strcmp(var_name, var) == 0) return symtab[i].st_value;
