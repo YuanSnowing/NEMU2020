@@ -119,7 +119,7 @@ static int cmd_bt(char *args){
 	swaddr_t ebp = cpu.ebp, eip = cpu.eip;
 	char str[100];
 	for(;ebp; eip = swaddr_read(ebp+4, 4),ebp = swaddr_read(ebp, 4), ++ cnt){
-		str[0] = '\0';
+		
 		getBt(eip, str);
 		if(str[0] == '\0') break;
 		printf("#%d\t0x%08x:\t%s\targ1:0x%08x arg2:0x%08x arg3:0x%08x arg4:0x%08x\n", cnt, eip, str, 

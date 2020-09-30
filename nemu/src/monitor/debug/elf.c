@@ -35,7 +35,7 @@ void getBt(swaddr_t eip, char* str){
 			break;
 		}
 	}
-	return;
+	str[0] = '\0';
 }
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;
