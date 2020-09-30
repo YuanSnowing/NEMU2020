@@ -39,6 +39,7 @@ void getBt(swaddr_t eip, char* str){
 }
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;
+	printf("argv:%s\n",*argv);
 	Assert(argc == 2, "run NEMU with format 'nemu [program]'");
 	exec_file = argv[1];
 

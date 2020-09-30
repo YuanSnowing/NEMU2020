@@ -38,7 +38,7 @@ uint32_t loader() {
 	/* Load each program segment */
 	// panic("please implement me");
 	int i=0,phlen =elf->e_phnum;
-	ph = (void *)(buf + elf->e_phoff);
+	ph = (Elf32_Phdr *)(buf + elf->e_phoff);
 	for(; i < phlen; ++ i) {
 		/* Scan the program header table, load each segment into memory */
 		if(ph->p_type == PT_LOAD) {
@@ -46,7 +46,7 @@ uint32_t loader() {
 			/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-			ramdisk_read((void *)(ph->p_vaddr), ph->p_offset, ph->p_filesz);
+			ramdisk_read((uint8_t *)(ph->p_vaddr), ph->p_offset, ph->p_filesz);
 			 
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
