@@ -127,7 +127,8 @@ static void modify_ppfs_setargs() {
 	// jmp to jmp(f instr ends)
 	*ha = 0x30;
 	ha = (char*)(fp + 0x73);
-
+	// nop
+	*ha = 0x90;
 #if 0
 	enum {                          /* C type: */
 		PA_INT,                       /* int */
