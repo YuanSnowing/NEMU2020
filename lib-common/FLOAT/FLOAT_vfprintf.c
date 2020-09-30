@@ -17,7 +17,7 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	 */
 
 	char buf[80];
-	int sign = f >> 31;
+	int sign = (f >> 31)&0x1;
 	if(sign) f = (~f)+1;
 	int zs = f >> 16;
 	int xs = 0, i = 15, ac = 1e8, len = 0;
@@ -120,7 +120,7 @@ static void modify_ppfs_setargs() {
 	// where ppfs is
 	int fp = (int)(&_ppfs_setargs);
 	// lea begins (below is f instr)
-	int *ha = (char*)(fp + 0x71);
+	char *ha = (char*)(fp + 0x71);
 	// == jmp
 	*ha = 0xeb;
 	ha = (char*)(fp + 0x72);
