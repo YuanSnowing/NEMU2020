@@ -18,6 +18,7 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 
 	char buf[80];
 	int sign = f >> 31;
+	printf("0x%x",sign);
 	sign &= 1;
 	if(sign) f = (~f)+1;
 	int zs = f >> 16;
