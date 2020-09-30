@@ -114,13 +114,12 @@ static int cmd_d(char *args){
 }
 void getBt(swaddr_t eip, char* str);
 static int cmd_bt(char *args){
-	printf("hahahahah");
 	int cnt = 1;
 	swaddr_t ebp = cpu.ebp, eip = cpu.eip;
 	char str[100];
 	for(;ebp; eip = swaddr_read(ebp+4, 4),ebp = swaddr_read(ebp, 4), ++ cnt){
-		
 		getBt(eip, str);
+		printf("hahahahah:%s\n",str);
 		if(str[0] == '\0') break;
 		printf("#%d\t0x%08x:\t%s\targ1:0x%08x arg2:0x%08x arg3:0x%08x arg4:0x%08x\n", cnt, eip, str, 
 			swaddr_read(ebp+8,4), swaddr_read(ebp+12,4), swaddr_read(ebp+16,4), swaddr_read(ebp+20,4));
