@@ -17,7 +17,7 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	 */
 
 	char buf[80];
-	unsigned int sign = f >> 31;
+	unsigned int sign = (unsigned int)(f) >> 31;
 	// sign &= 1;
 	if(sign) f = (~f)+1;
 	int zs = f >> 16;
