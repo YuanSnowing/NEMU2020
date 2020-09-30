@@ -22,12 +22,6 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	int zs = f >> 16;
 	int xs = 0, i = 15, ac = 1e8, len = 0;
 	for(; i>=0; -- i){
-		ac >>= 1;char buf[80];
-	int sign = f >> 31;
-	if(sign) f = (~f)+1;
-	int zs = f >> 16;
-	int xs = 0, i = 15, ac = 1e8, len = 0;
-	for(; i>=0; -- i){
 		ac >>= 1;
 		if((f>>i) & 1) xs += ac;
 	}
