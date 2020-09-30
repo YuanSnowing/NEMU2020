@@ -1,6 +1,7 @@
 #include "common.h"
 #include <stdlib.h>
 #include <elf.h>
+
 char *exec_file = NULL;
 
 static char *strtab = NULL;
@@ -23,6 +24,18 @@ uint32_t getVarval(char *var, bool *success) {
 	}
 	*success = false;
 	return 0;
+}
+
+void getBt(swaddr_t eip, char* str){
+	int i;
+	for (i = 0; i < nr_symtab_entry; ++ i) {
+		// in fun && type is func
+		if ((symtab[i].st_value <= eip && symtab[i].st_info&0xf) == STT_FUNC && symtab[i].st_value+symtab[i].st_size >= eip) {
+			strcpy(str, strtab + symtab[i].st_name);
+			break;
+		}
+	}
+	return;
 }
 void load_elf_tables(int argc, char *argv[]) {
 	int ret;

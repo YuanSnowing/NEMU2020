@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
+#include <elf.h>
 #define TESTargs if(args == NULL){ printf("parameter invalid!\n"); return 0; }
 #define TESTsuccess if(!success) { printf("invalid RE!\n"); return 0; }
 void cpu_exec(uint32_t);
@@ -112,8 +112,18 @@ static int cmd_d(char *args){
 
 	return 0;
 }
-
+void getBt(swaddr_t eip, char* str);
 static int cmd_bt(char *args){
+	int cnt = 1;
+	swaddr_t ebp = cpu.ebp, eip = cpu.eip;
+	char str[100];
+	for(;ebp; eip = swaddr_read(ebp+4, 4),ebp = swaddr_read(ebp, 4), ++ cnt){
+		str[0] = '\0';
+		getBt(eip, str);
+		if(str[0] == '\0') break;
+		printf("#%d\t0x%08x:\t%s\targ1:0x%08x arg2:0x%08x arg3:0x%08x arg4:0x%08x\n", cnt, eip, str, 
+			swaddr_read(ebp+8,4), swaddr_read(ebp+12,4), swaddr_read(ebp+16,4), swaddr_read(ebp+20,4));
+	}
 	return 0;
 }
 
