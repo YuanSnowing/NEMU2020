@@ -20,7 +20,7 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	int sign = f >> 31;
 	if(sign) f = (~f)+1;
 	int zs = f >> 16;
-	int xs = 0, i = 15, ac = 100000000, len = 0;
+	int xs = 0, i = 15, ac = 1e8, len = 0;
 	for(; i>=0; -- i){
 		ac >>= 1;
 		if((f>>i) & 1) xs += ac;
@@ -42,7 +42,7 @@ static void modify_vfprintf() {
 	 * hijack.
 	 */
 	int pf = (int)(& _vfprintf_internal);
-	mprotect((void*)((pf+0x306-100) & 0xfffff000), 4096*2, PROT_READ|PROT_WRITE|PROT_EXEC);
+	//mprotect((void*)((pf+0x306-100) & 0xfffff000), 4096*2, PROT_READ|PROT_WRITE|PROT_EXEC);
 
 	// call format
 	int* p = (int *)(pf+0x306+1);
