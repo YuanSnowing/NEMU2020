@@ -114,6 +114,7 @@ static int cmd_d(char *args){
 }
 void getBt(swaddr_t eip, char* str);
 static int cmd_bt(char *args){
+	printf("hahahahah");
 	int cnt = 1;
 	swaddr_t ebp = cpu.ebp, eip = cpu.eip;
 	char str[100];
