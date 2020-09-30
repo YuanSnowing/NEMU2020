@@ -21,17 +21,23 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	if(sign) f = (~f)+1;
 	int zs = f >> 16;
 	int xs = 0, i = 15, ac = 1e8, len = 0;
-	for(; i>=0; -- i){
-		ac >>= 1;
-		if((f>>i) & 1) xs += ac;
-	}
-	// liu wei
-	while(xs > 999999) xs /= 10;
-	if(sign){
-		len = sprintf(buf, "-%d.%06d", zs, xs);
-	}else{
-		len = sprintf(buf, "%d.%06d", zs, xs);
-	}
+	// for(; i>=0; -- i){
+	// 	ac >>= 1;char buf[80];
+	// int sign = f >> 31;
+	// if(sign) f = (~f)+1;
+	// int zs = f >> 16;
+	// int xs = 0, i = 15, ac = 1e8, len = 0;
+	// for(; i>=0; -- i){
+	// 	ac >>= 1;
+	// 	if((f>>i) & 1) xs += ac;
+	// }
+	// // liu wei
+	// while(xs > 999999) xs /= 10;
+	// if(sign){
+	// 	len = sprintf(buf, "-%d.%06d", zs, xs);
+	// }else{
+	// 	len = sprintf(buf, "%d.%06d", zs, xs);
+	// }
 	return __stdio_fwrite(buf, len, stream);
 }
 
