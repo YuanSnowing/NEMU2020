@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "FLOAT.h"
+#include <sys/mman.h>
 
 extern char _vfprintf_internal;
 extern char _fpmaxtostr;
@@ -26,6 +27,28 @@ static void modify_vfprintf() {
 	 * is the code section in _vfprintf_internal() relative to the
 	 * hijack.
 	 */
+	int pf = (int)(& _vfprintf_internal);
+	mprotect((void*)((pf+0x306-100) & 0xfffff000), 4096*2, PROT_READ|PROT_WRITE|PROT_EXEC);
+
+	// call format
+	int* p = (int *)(pf+0x306+1);
+	*p += (int)format_FLOAT - (int)(&_fpmaxtostr);
+
+	// prameter
+	// fstpt -> pushl m
+	char *ha = (char*)(pf + 0x306 -0xa); // fstpt
+	*ha = 0xff; // pushl m
+	ha += 4;
+	*ha = 0x32; // ModR\M 00 110 010
+	ha += 4;
+	*ha = 0x90; //nop ,wu le
+
+	// sub c -> sub 8
+	ha = (char *)(pf+0x306-0xb);
+	*ha = 8;
+	
+
+
 
 #if 0
 	else if (ppfs->conv_num <= CONV_A) {  /* floating point */
