@@ -23,7 +23,7 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	int xs = 0, i = 15, ac = 1e8, len = 0;
 	for(; i>=0; -- i){
 		ac >>= 1;
-		if(f&(1<<i)) xs += ac;
+		if((f>>i) & 1) xs += ac;
 	}
 	// liu wei
 	while(xs > 999999) xs /= 10;
