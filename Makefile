@@ -54,7 +54,7 @@ clean: clean-cpp
 ##### some convinient rules #####
 
 # USERPROG := obj/testcase/add-longlong
-# USERPROG := obj/testcase/add
+USERPROG := obj/testcase/add
 # USERPROG := obj/testcase/bit
 # USERPROG := obj/testcase/bubble-sort
 # USERPROG := obj/testcase/fact
@@ -87,7 +87,7 @@ clean: clean-cpp
 # USERPROG := obj/testcase/integral
 # USERPROG := obj/testcase/quadratic-eq
 # USERPROG := obj/testcase/HDUtest
-USERPROG := obj/testcase/print-FLOAT
+# USERPROG := obj/testcase/print-FLOAT
 
 # USERPROG := obj/testcase/hello
 # USERPROG := obj/testcase/hello-inline-asm
