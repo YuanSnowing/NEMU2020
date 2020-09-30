@@ -34,7 +34,7 @@ void getBt(swaddr_t eip, char* str){
 		if (symtab[i].st_value <= eip && symtab[i].st_value+symtab[i].st_size >= eip && (symtab[i].st_info&0xf) == STT_FUNC ) {
 			strcpy(str, strtab + symtab[i].st_name);
 			printf("str:%s\n",str);
-			break;
+			return;
 		}
 	}
 	str[0] = '\0';

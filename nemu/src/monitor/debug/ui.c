@@ -116,9 +116,8 @@ void getBt(swaddr_t eip, char* str);
 static int cmd_bt(char *args){
 	int cnt = 1;
 	swaddr_t ebp = cpu.ebp, eip = cpu.eip;
-	
+	char str[100];
 	for(;ebp; eip = swaddr_read(ebp+4, 4),ebp = swaddr_read(ebp, 4), ++ cnt){
-		char str[100];
 		getBt(eip, str);
 		printf("hahahahah:%s\n",str);
 		if(str[0] == '\0') break;
