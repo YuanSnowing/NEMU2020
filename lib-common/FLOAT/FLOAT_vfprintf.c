@@ -117,6 +117,16 @@ static void modify_ppfs_setargs() {
 	 * Below is the code section in _vfprintf_internal() relative to
 	 * the modification.
 	 */
+	// where ppfs is
+	int fp = (int)(&_ppfs_setargs);
+	// lea begins (below is f instr)
+	char *ha = (char*)(fp + 0x71);
+	// == jmp
+	*ha = 0xeb;
+	ha = (char*)(fp + 0x72);
+	// jmp to jmp(f instr ends)
+	*ha = 0x30;
+	ha = (char*)(fp + 0x73);
 
 #if 0
 	enum {                          /* C type: */
