@@ -17,7 +17,21 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	 */
 
 	char buf[80];
-	int len = sprintf(buf, "0x%08x", f);
+	int sign = f >> 31;
+	if(sign) f = (~f)+1;
+	int zs = f >> 16;
+	int xs = 0, i = 15, ac = 1e8, len = 0;
+	for(; i>=0; -- i){
+		ac >>= 1;
+		if((f>>i) & 1) xs += ac;
+	}
+	// liu wei
+	while(xs > 999999) xs /= 10;
+	if(sign){
+		len = sprintf(buf, "-%d.%06d", zs, xs);
+	}else{
+		len = sprintf(buf, "%d.%06d", zs, xs);
+	}
 	return __stdio_fwrite(buf, len, stream);
 }
 
@@ -28,7 +42,7 @@ static void modify_vfprintf() {
 	 * hijack.
 	 */
 	int pf = (int)(& _vfprintf_internal);
-	mprotect((void*)((pf+0x306-100) & 0xfffff000), 4096*2, PROT_READ|PROT_WRITE|PROT_EXEC);
+	// mprotect((void*)((pf+0x306-100) & 0xfffff000), 4096*2, PROT_READ|PROT_WRITE|PROT_EXEC);
 
 	// call format
 	int* p = (int *)(pf+0x306+1);
@@ -38,16 +52,24 @@ static void modify_vfprintf() {
 	// fstpt -> pushl m
 	char *ha = (char*)(pf + 0x306 -0xa); // fstpt
 	*ha = 0xff; // pushl m
-	ha += 4;
+	ha = (char *)(pf+0x306-0x9);
 	*ha = 0x32; // ModR\M 00 110 010
-	ha += 4;
+	ha = (char *)(pf+0x306-0x8);
 	*ha = 0x90; //nop ,wu le
 
 	// sub c -> sub 8
 	ha = (char *)(pf+0x306-0xb);
-	*ha = 8;
-	
+	*ha = 0x08;
 
+	// erase the float instr
+	ha = (char *)(pf+0x306-0x22);
+	*ha = 0x90;
+	ha = (char *)(pf+0x306-0x21);
+	*ha = 0x90;
+	ha = (char *)(pf+0x306-0x1d);
+	*ha = 0x90;
+	ha = (char *)(pf+0x306-0x1e);
+	*ha = 0x90;
 
 
 #if 0
