@@ -120,7 +120,7 @@ static void modify_ppfs_setargs() {
 	// where ppfs is
 	int fp = (int)(&_ppfs_setargs);
 	// lea begins (below is f instr)
-	char *ha = (char*)(fp + 0x71);
+	int *ha = (char*)(fp + 0x71);
 	// == jmp
 	*ha = 0xeb;
 	ha = (char*)(fp + 0x72);
