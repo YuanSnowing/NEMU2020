@@ -81,13 +81,13 @@ clean: clean-cpp
 # USERPROG := obj/testcase/wanshu
 
 # USERPROG := obj/testcase/struct
-# USERPROG := obj/testcase/string
+USERPROG := obj/testcase/string
 # USERPROG := obj/testcase/hello-str
 
 # USERPROG := obj/testcase/integral
 # USERPROG := obj/testcase/quadratic-eq
 # USERPROG := obj/testcase/HDUtest
-USERPROG := obj/testcase/print-FLOAT
+# USERPROG := obj/testcase/print-FLOAT
 
 # USERPROG := obj/testcase/hello
 # USERPROG := obj/testcase/hello-inline-asm
