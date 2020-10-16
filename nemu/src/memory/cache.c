@@ -41,13 +41,23 @@ void write_cache(hwaddr_t addr,size_t len, uint32_t data){
     uint32_t gid = (addr >> CACHE_BLOCK_BIT) & ((1 << CACHE_GROUP_BIT_L1) - 1);
     int i, g_size =  (1 << CACHE_WAY_BIT_L1); // group size
 
+    uint32_t bia = addr & (g_size - 1);
+
     gid = gid * g_size;
     for(i = gid; i < gid + g_size; ++ i){
         if(tag == L1_Cache[i].tag && L1_Cache[i].valid){
             // hit, write through, 把数据同时写到Cache和内存中；
-
+            if(bia + len <= g_size){
+                dram_write(addr, len, data);
+                L1_Cache[i].block[bia] = data;
+                return;
+            }else{ // two block +
+                write_cache(addr, g_size-bia, data);
+                write_cache(addr+g_size-bia, len-g_size+bia, data >> (g_size-bia) );
+                return;
+            }
         }
     }
     // not hit, No write allocate：直接把要写的数据写入到内存中。
-
+    dram_write(addr, len, data);
 }
