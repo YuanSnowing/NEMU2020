@@ -11,20 +11,23 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
     int id, ling=0;
 	uint32_t bia = addr & (CACHE_BLOCK_SIZE - 1);
 	uint8_t ret[2 * BURST_LEN];
-	id = read_cache(addr);
-	memcpy(ret, L1_Cache[id].block + bia, len);
+	
 	if(bia + len > CACHE_BLOCK_SIZE){// two block +
+		id = read_cache(addr);
 		memcpy(ret, L1_Cache[id].block + bia, CACHE_BLOCK_SIZE - bia);
 		id = read_cache(addr + CACHE_BLOCK_SIZE - bia);
 		memcpy(ret + CACHE_BLOCK_SIZE - bia, L1_Cache[id].block, len - (CACHE_BLOCK_SIZE - bia));
 		printf("ret two block!\n");
+	}else{
+		id = read_cache(addr);
+		memcpy(ret, L1_Cache[id].block + bia, len);
 	}
 	// unalign_rw(addr, len);
-	uint32_t retu = unalign_rw(ret+ling, 4);
-	printf("ret is %d\n", retu & (~0u >> ((4 - len) << 3)));
+	uint32_t retu = unalign_rw(ret+ling, 4) & (~0u >> ((4 - len) << 3));
+	printf("ret is %d\n", retu);
 	printf("ret should be %d\n", dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
 	
-	return retu & (~0u >> ((4 - len) << 3));
+	return retu;
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
 ///////////////////////
