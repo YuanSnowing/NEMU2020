@@ -6,9 +6,12 @@
 void dram_write(hwaddr_t addr, size_t len, uint32_t data);
 void snow_ddr3_read(hwaddr_t addr, void* data);
 void init_cache(){
-    int i = 0;
-    for(; i < CACHE_SIZE_L1 / CACHE_BLOCK_SIZE; ++ i){
+    int i;
+    for(i = 0; i < CACHE_SIZE_L1 / CACHE_BLOCK_SIZE; ++ i){
         L1_Cache[i].valid = 0;
+    }
+    for(i = 0; i < CACHE_SIZE_L2 / CACHE_BLOCK_SIZE; ++ i){
+        L2_Cache[i].valid = L2_Cache[i].dirty = 0;
     }
 }
 
