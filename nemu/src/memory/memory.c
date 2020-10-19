@@ -7,8 +7,8 @@ void dram_write(hwaddr_t, size_t, uint32_t);
 /* Memory accessing interfaces */
 ///////////////////////////////////////////////////////
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-    int g_size =  (1 << CACHE_WAY_BIT_L1), id, ling=0; // group size
-	uint32_t bia = addr & (g_size - 1);
+    int id, ling=0;
+	uint32_t bia = addr & (CACHE_BLOCK_SIZE - 1);
 	uint8_t ret[4];
 	id = read_cache(addr);
 	memcpy(ret, L1_Cache[id].block + bia, len);
