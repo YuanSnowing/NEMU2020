@@ -85,14 +85,14 @@ void write_L2(hwaddr_t addr,size_t len, uint32_t data){
     for(i = gid; i < gid + CACHE_WAY_SIZE_L2; ++ i){
         if(tag == L2_Cache[i].tag && L2_Cache[i].valid){
             // hit, write through, 把数据同时写到Cache和内存中；
+            L2_Cache[i].dirty = 1;
             if(bia + len <= CACHE_BLOCK_SIZE){
                 memcpy(L2_Cache[i].block + bia, &data, len);
-                return;
             }else{ // two block +
                 write_L2(addr, CACHE_BLOCK_SIZE-bia, data);
                 write_L2(addr+CACHE_BLOCK_SIZE-bia, len-CACHE_BLOCK_SIZE+bia, data >> (CACHE_BLOCK_SIZE-bia) );
-                return;
             }
+            return;
         }
     }
     // not hit, write allocate
