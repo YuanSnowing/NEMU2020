@@ -13,9 +13,9 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	id = read_cache(addr);
 	memcpy(ret, L1_Cache[id].block + bia, len);
 	if(bia + len > CACHE_BLOCK_SIZE){// two block +
-		memcpy(ret, L1_Cache[id].block+bia, CACHE_BLOCK_SIZE-bia);
-		id = read_cache(addr+CACHE_BLOCK_SIZE-bia);
-		memcpy(ret + CACHE_BLOCK_SIZE-bia, L1_Cache[id].block, len-(CACHE_BLOCK_SIZE-bia));
+		memcpy(ret, L1_Cache[id].block + bia, CACHE_BLOCK_SIZE - bia);
+		id = read_cache(addr + CACHE_BLOCK_SIZE - bia);
+		memcpy(ret + CACHE_BLOCK_SIZE - bia, L1_Cache[id].block, len - (CACHE_BLOCK_SIZE - bia));
 		printf("ret two block!\n");
 	}
 	// unalign_rw(addr, len);

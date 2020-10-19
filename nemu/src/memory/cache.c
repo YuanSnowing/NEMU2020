@@ -28,8 +28,9 @@ int read_cache(hwaddr_t addr){
     // not hit
     srand(time(0));
     int id = gid + rand() % g_size;
-    for(i = 0; i < CACHE_BLOCK_SIZE / 8; ++ i){
-        L1_Cache[id].block[i] = dram_read((addr >> CACHE_BLOCK_BIT << CACHE_BLOCK_BIT) + 8 * i, 8);
+    addr = addr >> CACHE_BLOCK_BIT << CACHE_BLOCK_BIT;
+    for(i = 0; i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
+        L1_Cache[id].block[i] = dram_read(addr + BURST_LEN * i, BURST_LEN * i);
     }
     L1_Cache[id].tag = tag;
     L1_Cache[id].valid = 1;
