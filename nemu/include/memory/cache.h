@@ -17,9 +17,10 @@ hwaddr_write()函数, 让它们读写 cache, 当 cache 缺失时才读写 DRAM�
 #define CACHE_BLOCK_SIZE 64
 
 #define CACHE_WAY_BIT_L1 3
+#define CACHE_WAY_SIZE_L1 (1<<CACHE_WAY_BIT_L1)
 #define CACHE_GROUP_BIT_L1 7
+#define CACHE_GROUP_SIZE_L1 (1<<CACHE_GROUP_BIT_L1)
 #define CACHE_SIZE_L1 (64 * 1024)
-
 
 typedef struct{
     bool valid;
