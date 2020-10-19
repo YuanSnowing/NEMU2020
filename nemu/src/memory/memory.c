@@ -17,6 +17,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 		id = read_cache(addr+g_size-bia);
 		ret <<= g_size-bia;
 		ret += L1_Cache[gid].block[id];
+		printf("ret two block!\n");
 	}
 	// unalign_rw(addr, len);
 	// return (uint32_t)(unalign_rw(ret, 4) & (~0u >> ((4 - len) << 3)));
