@@ -3,7 +3,6 @@
 #include <time.h>
 #include <stdlib.h>
 
-uint32_t dram_read(hwaddr_t addr, size_t len);
 void dram_write(hwaddr_t addr, size_t len, uint32_t data);
 void snow_ddr3_read(hwaddr_t addr, void* data);
 void init_cache(){
@@ -31,7 +30,6 @@ int read_cache(hwaddr_t addr){
     addr = (addr >> CACHE_BLOCK_BIT) << CACHE_BLOCK_BIT;
     for(i = 0; i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
         snow_ddr3_read(addr+BURST_LEN*i, L1_Cache[id].block + BURST_LEN * i);
-        // L1_Cache[id].block[i] = (uint8_t)dram_read(addr + BURST_LEN * i, BURST_LEN);
     }
     L1_Cache[id].tag = tag;
     L1_Cache[id].valid = 1;
@@ -51,7 +49,7 @@ void write_cache(hwaddr_t addr,size_t len, uint32_t data){
             // hit, write through, 把数据同时写到Cache和内存中；
             if(bia + len <= CACHE_BLOCK_SIZE){
                 dram_write(addr, len, data);
-                L1_Cache[i].block[bia] = data;
+                memcpy(L1_Cache[i].block + bia, &data, len);
                 return;
             }else{ // two block +
                 write_cache(addr, CACHE_BLOCK_SIZE-bia, data);
