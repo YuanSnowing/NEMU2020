@@ -31,5 +31,6 @@ Cache L1_Cache[CACHE_BLOCK_SIZE * CACHE_SIZE_L1];
 
 void init_cache();
 int read_cache(hwaddr_t addr);
+void write_cache(hwaddr_t addr,size_t len, uint32_t data);
 
 #endif
