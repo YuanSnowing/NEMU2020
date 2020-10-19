@@ -17,22 +17,22 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 		memcpy(ret, L1_Cache[id].block + bia, CACHE_BLOCK_SIZE - bia);
 		id = read_cache(addr + CACHE_BLOCK_SIZE - bia);
 		memcpy(ret + CACHE_BLOCK_SIZE - bia, L1_Cache[id].block, len - (CACHE_BLOCK_SIZE - bia));
-		printf("ret two block!\n");
+		// printf("ret two block!\n");
 	}else{
 		id = read_cache(addr);
 		memcpy(ret, L1_Cache[id].block + bia, len);
 	}
 	// unalign_rw(addr, len);
 	uint32_t retu = unalign_rw(ret+ling, 4) & (~0u >> ((4 - len) << 3));
-	printf("ret is %d\n", retu);
-	printf("ret should be %d\n", dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
+	// printf("ret is %d\n", retu);
+	// printf("ret should be %d\n", dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
 	
 	return retu;
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
 ///////////////////////
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
-	printf("write %d\n", data);
+	// printf("write %d\n", data);
 	write_cache(addr, len, data);
 	// dram_write(addr, len, data);
 }
