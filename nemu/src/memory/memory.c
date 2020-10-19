@@ -7,23 +7,22 @@ void dram_write(hwaddr_t, size_t, uint32_t);
 /* Memory accessing interfaces */
 ///////////////////////////////////////////////////////
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-    uint32_t gid = (addr >> CACHE_BLOCK_BIT) & ((1 << CACHE_GROUP_BIT_L1) - 1);
-    int g_size =  (1 << CACHE_WAY_BIT_L1), id, ret; // group size
+    int g_size =  (1 << CACHE_WAY_BIT_L1), id, ling=0; // group size
 	uint32_t bia = addr & (g_size - 1);
-	gid = gid * g_size;
+	uint8_t ret[4];
 	id = read_cache(addr);
-	ret = L1_Cache[gid].block[id];
-	if(bia + len > g_size){// two block +
-		id = read_cache(addr+g_size-bia);
-		ret <<= g_size-bia;
-		ret += L1_Cache[gid].block[id];
+	memcpy(ret, L1_Cache[id].block + bia, len);
+	if(bia + len > CACHE_BLOCK_SIZE){// two block +
+		memcpy(ret, L1_Cache[id].block+bia, CACHE_BLOCK_SIZE-bia);
+		id = read_cache(addr+CACHE_BLOCK_SIZE-bia);
+		memcpy(ret + CACHE_BLOCK_SIZE-bia, L1_Cache[id].block, len-(CACHE_BLOCK_SIZE-bia));
 		printf("ret two block!\n");
 	}
 	// unalign_rw(addr, len);
-	// return (uint32_t)(unalign_rw(ret, 4) & (~0u >> ((4 - len) << 3)));
-	printf("ret is %d\n", ret);
-	printf("ret should be %d\n", dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
-	return ret & (~0u >> ((4 - len) << 3));
+	uint32_t retu = unalign_rw(ret+ling, 4);
+	return retu & (~0u >> ((4 - len) << 3));
+	// printf("ret is %d\n", ret);
+	// printf("ret should be %d\n", dram_read(addr, len) & (~0u >> ((4 - len) << 3)));
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
 ///////////////////////

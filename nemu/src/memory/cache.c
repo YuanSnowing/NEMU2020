@@ -47,13 +47,13 @@ void write_cache(hwaddr_t addr,size_t len, uint32_t data){
     for(i = gid; i < gid + g_size; ++ i){
         if(tag == L1_Cache[i].tag && L1_Cache[i].valid){
             // hit, write through, 把数据同时写到Cache和内存中；
-            if(bia + len <= g_size){
+            if(bia + len <= CACHE_BLOCK_SIZE){
                 dram_write(addr, len, data);
                 L1_Cache[i].block[bia] = data;
                 return;
             }else{ // two block +
-                write_cache(addr, g_size-bia, data);
-                write_cache(addr+g_size-bia, len-g_size+bia, data >> (g_size-bia) );
+                write_cache(addr, CACHE_BLOCK_SIZE-bia, data);
+                write_cache(addr+CACHE_BLOCK_SIZE-bia, len-CACHE_BLOCK_SIZE+bia, data >> (CACHE_BLOCK_SIZE-bia) );
                 return;
             }
         }
