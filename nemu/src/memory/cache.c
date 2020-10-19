@@ -8,7 +8,7 @@ void dram_write(hwaddr_t addr, size_t len, uint32_t data);
 
 void init_cache(){
     int i = 0;
-    for(; i < CACHE_SIZE_L1/CACHE_BLOCK_SIZE; ++ i){
+    for(; i < CACHE_SIZE_L1 / CACHE_BLOCK_SIZE; ++ i){
         L1_Cache[i].valid = 0;
     }
 }

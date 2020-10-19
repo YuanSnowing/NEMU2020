@@ -27,7 +27,7 @@ typedef struct{
     uint8_t block[CACHE_BLOCK_SIZE];
 }Cache;
 
-Cache L1_Cache[CACHE_BLOCK_SIZE * CACHE_SIZE_L1];
+Cache L1_Cache[CACHE_SIZE_L1 / CACHE_BLOCK_SIZE];
 
 void init_cache();
 int read_cache(hwaddr_t addr);
