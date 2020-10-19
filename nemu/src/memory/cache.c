@@ -5,7 +5,7 @@
 
 uint32_t dram_read(hwaddr_t addr, size_t len);
 void dram_write(hwaddr_t addr, size_t len, uint32_t data);
-
+void snow_ddr3_read(hwaddr_t addr, void* data);
 void init_cache(){
     int i = 0;
     for(; i < CACHE_SIZE_L1 / CACHE_BLOCK_SIZE; ++ i){
@@ -30,7 +30,8 @@ int read_cache(hwaddr_t addr){
     int id = gid + rand() % CACHE_WAY_SIZE_L1;
     addr = (addr >> CACHE_BLOCK_BIT) << CACHE_BLOCK_BIT;
     for(i = 0; i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
-        L1_Cache[id].block[i] = (uint8_t)dram_read(addr + BURST_LEN * i, BURST_LEN);
+        snow_ddr3_read(addr+BURST_LEN*i, L1_Cache[id].block + BURST_LEN * i);
+        // L1_Cache[id].block[i] = (uint8_t)dram_read(addr + BURST_LEN * i, BURST_LEN);
     }
     L1_Cache[id].tag = tag;
     L1_Cache[id].valid = 1;
