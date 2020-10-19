@@ -28,6 +28,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 }
 ///////////////////////
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
+	printf("write %d\n", data);
 	write_cache(addr, len, data);
 	// dram_write(addr, len, data);
 }
