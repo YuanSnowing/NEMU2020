@@ -41,7 +41,7 @@ void write_cache(hwaddr_t addr,size_t len, uint32_t data){
     uint32_t gid = (addr >> CACHE_BLOCK_BIT) & ((1 << CACHE_GROUP_BIT_L1) - 1);
     int i, g_size =  (1 << CACHE_WAY_BIT_L1); // group size
 
-    uint32_t bia = addr & (g_size - 1);
+    uint32_t bia = addr & (CACHE_BLOCK_SIZE - 1);
 
     gid = gid * g_size;
     for(i = gid; i < gid + g_size; ++ i){
