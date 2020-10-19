@@ -99,7 +99,6 @@ void write_L2(hwaddr_t addr,size_t len, uint32_t data){
     int id = read_L2(addr);
     L2_Cache[id].dirty = 1;
     memcpy(L2_Cache[id].block + bia, &data, len);
-    dram_write(addr, len, data);
 }
 
 
