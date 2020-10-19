@@ -24,9 +24,9 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	}
 	// unalign_rw(addr, len);
 	uint32_t retu = unalign_rw(ret+ling, 4) & (~0u >> ((4 - len) << 3));
-	printf("ret is %d\n", retu);
-	uint32_t ans = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	printf("ret should be %d\n", ans);
+	// printf("ret is %d\n", retu);
+	// uint32_t ans = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	// printf("ret should be %d\n", ans);
 	// assert(ans == retu);
 	return retu;
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
