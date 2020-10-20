@@ -17,10 +17,10 @@ void init_cache(){
 }
 int read_L2(hwaddr_t addr){
     uint32_t tag = (addr >> (CACHE_BLOCK_BIT + CACHE_GROUP_BIT_L2));
-    uint32_t gid = (addr >> CACHE_BLOCK_BIT) & (CACHE_GROUP_SIZE_L2 - 1);
-    int i;
+    uint32_t gidd = (addr >> CACHE_BLOCK_BIT) & (CACHE_GROUP_SIZE_L2 - 1);
+    int i, gid;
 
-    gid = gid * CACHE_WAY_SIZE_L2;
+    gid = gidd * CACHE_WAY_SIZE_L2;
     for(i = gid; i < gid + CACHE_WAY_SIZE_L2; ++ i){
         if(tag == L2_Cache[i].tag && L2_Cache[i].valid){
             return i;
