@@ -32,12 +32,12 @@ int read_L2(hwaddr_t addr){
     int id = gid + rand() % CACHE_WAY_SIZE_L2;
     addr = (addr >> CACHE_BLOCK_BIT) << CACHE_BLOCK_BIT;
     // write back
-    if(L2_Cache[id].valid && L2_Cache[id].dirty){
-        uint8_t ret[2 * BURST_LEN];
-        memset(ret, 1, sizeof ret);
-        uint32_t st = (L2_Cache[id].tag << (CACHE_GROUP_BIT_L2+CACHE_BLOCK_BIT)) | (gid << CACHE_BLOCK_BIT);
-        for(i = 0; i < CACHE_BLOCK_SIZE/BURST_LEN; ++ i){
-            snow_ddr3_write(st + BURST_LEN*i, L2_Cache[id].block + BURST_LEN*i, ret);
+    if (L2_Cache[i].valid == 1 && L2_Cache[i].dirty == 1){
+        uint8_t ret[BURST_LEN << 1]; 
+        memset(ret,1,sizeof ret);
+        uint32_t st = (L2_Cache[i].tag << (CACHE_GROUP_BIT_L2 + CACHE_BLOCK_BIT)) | (gid << CACHE_BLOCK_BIT);
+        for (i = 0;i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
+            snow_ddr3_write(st + BURST_LEN * i, L2_Cache[i].block + BURST_LEN * i,ret);
         }
     }
     // update
