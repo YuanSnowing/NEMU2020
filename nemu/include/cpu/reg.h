@@ -14,27 +14,32 @@ enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
  * For more details about the register encoding scheme, see i386 manual.
  */
 
-typedef union {
-	struct{
-		union {
-			uint32_t _32;
-			uint16_t _16;
-			uint8_t _8[2];
-		} gpr[8];
+typedef struct{
+	// regs
+	union{
+		struct{
+			union {
+				uint32_t _32;
+				uint16_t _16;
+				uint8_t _8[2];
+			} gpr[8];
+		};
+		struct{
+			uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
+		};
+	};
+	// Eflags
+	union{
+		struct{
+			uint32_t CF:1, :1,PF:1, :1, AF:1, :1, ZF:1, SF:1, TF:1, IF:1, DF:1, OF:1, IOPL:1, NT:1, :1,RF:1, VM:1, :14; 
+		};
+		uint32_t EFLAGS;
 	};
 
-	/* Do NOT change the order of the GPRs' definitions. */
-	struct{
-		uint32_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
-		union{
-			struct{
-				uint32_t CF:1, :1,PF:1, :1, AF:1, :1, ZF:1, SF:1, TF:1, IF:1, DF:1, OF:1, IOPL:1, NT:1, :1,RF:1, VM:1, :14; 
-			};
-			uint32_t EFLAGS;
-		};
-		swaddr_t eip;
-	};
+	swaddr_t eip;
 	
+
+
 
 } CPU_state;
 
