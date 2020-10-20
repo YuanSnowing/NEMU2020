@@ -18,7 +18,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
     int id, ling=0;
 	uint32_t bia = addr & (CACHE_BLOCK_SIZE - 1);
 	uint8_t ret[2 * BURST_LEN];
-	swaddr_write
+	// swaddr_write
 	if(bia + len > CACHE_BLOCK_SIZE){// two block +
 		id = read_cache(addr);
 		memcpy(ret, L1_Cache[id].block + bia, CACHE_BLOCK_SIZE - bia);
@@ -61,7 +61,7 @@ uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg) {
 	return lnaddr_read(lnaddr, len);
 }
 
-void swaddr_write(swaddr_t addr, size_t len, uint32_t data, uint8 sreg) {
+void swaddr_write(swaddr_t addr, size_t len, uint32_t data, uint8_t sreg) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif

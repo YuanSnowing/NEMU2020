@@ -60,7 +60,7 @@ make_helper(mov_sreg2rm){
 	uint8_t sreg = (modrm >> 3) & 7;
 	uint8_t reg = (modrm & 7);
 	cpu.sreg[sreg].selector = reg_l(reg);
-	sreg_set(sreg_num);
+	sreg_set(sreg);
 	print_asm("mov %s sreg%d", REG_NAME(reg), sreg);
 	return 2;
 }

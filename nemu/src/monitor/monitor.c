@@ -86,7 +86,7 @@ void restart() {
 	init_EFLAGS();
 	init_cache();
 	init_cr0();
-	init_cs()
+	init_cs();
 	/* Perform some initialization to restart a program */
 #ifdef USE_RAMDISK
 	/* Read the file with name `argv[1]' into ramdisk. */

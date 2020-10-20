@@ -7,7 +7,7 @@
 enum { R_EAX, R_ECX, R_EDX, R_EBX, R_ESP, R_EBP, R_ESI, R_EDI };
 enum { R_AX, R_CX, R_DX, R_BX, R_SP, R_BP, R_SI, R_DI };
 enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
-
+enum { R_CS, R_DS, R_ES, R_SS};
 /* TODO: Re-organize the `CPU_state' structure to match the register
  * encoding scheme in i386 instruction format. For example, if we
  * access cpu.gpr[3]._16, we will get the `bx' register; if we access
@@ -70,8 +70,14 @@ typedef struct{
 	};
 	union{
 		struct{
-			uint32_t b2: 8,a: 1;,type: 3,s:	1,dpl: 2,p:	,lim2: 4;
-			uint32_t avl: 1,: 1,x: 1, g: 1,b3: 8;
+			uint32_t b2: 8,
+			 a: 1,
+			 type: 3,
+			 s:	1, 
+			 dpl: 2,
+			 p: 1,
+			 lim2: 4;
+			uint32_t avl: 1, : 1,x: 1, g: 1,b3: 8;
 		};
 		uint32_t p2;
 	};
