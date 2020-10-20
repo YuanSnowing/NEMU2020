@@ -116,15 +116,14 @@ void write_cache(hwaddr_t addr,size_t len, uint32_t data){
                 dram_write(addr, len, data);
                 memcpy(L1_Cache[i].block + bia, &data, len);
                 write_L2(addr, len, data);
-                return;
             }else{ // two block +
                 dram_write(addr,CACHE_BLOCK_SIZE - bia, data);
-                write_L2(addr,CACHE_BLOCK_SIZE - bia, data);
                 memcpy(L1_Cache[i].block+bia, &data, CACHE_BLOCK_SIZE-bia);
+                write_L2(addr,CACHE_BLOCK_SIZE - bia, data);
                 // overleft
                 write_cache(addr+CACHE_BLOCK_SIZE-bia, len-CACHE_BLOCK_SIZE+bia, data >> (CACHE_BLOCK_SIZE-bia) );
-                return;
             }
+            return;
         }
     }
     // not hit, write allocate
