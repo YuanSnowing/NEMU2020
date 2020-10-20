@@ -35,8 +35,9 @@ int read_L2(hwaddr_t addr){
         uint8_t ret[2 * BURST_LEN];
         memset(ret, 1, sizeof ret);
         uint32_t st = (L2_Cache[i].tag << (CACHE_GROUP_BIT_L2 + CACHE_BLOCK_BIT)) | (g << CACHE_BLOCK_BIT);
-        for(i = 0; i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
-            snow_ddr3_write(st + BURST_LEN * i, L2_Cache[id].block + BURST_LEN * i, ret);
+        int j;
+        for(j = 0; j < CACHE_BLOCK_SIZE / BURST_LEN; ++ j){
+            snow_ddr3_write(st + BURST_LEN * j, L2_Cache[id].block + BURST_LEN * j, ret);
         }
     }
     // update
