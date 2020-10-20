@@ -36,7 +36,7 @@ make_helper(ljmp){
 	}
 
     print_asm("ljmp 0x%x 0x%x",instr_fetch(cpu.eip+1 + 4, 2),instr_fetch(cpu.eip+1, 4));
-    return 6;    
+    return 7;    
 }
 #endif
 
