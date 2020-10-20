@@ -44,6 +44,7 @@ int read_L2(hwaddr_t addr){
     for(i = 0; i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
         snow_ddr3_read(bst + BURST_LEN * i, L2_Cache[id].block + BURST_LEN * i);
     }
+    printf("i value %d",i);
     L2_Cache[id].tag = tag;
     L2_Cache[id].valid = 1;
     L2_Cache[id].dirty = 0;
