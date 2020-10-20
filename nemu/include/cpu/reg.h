@@ -56,8 +56,8 @@ typedef struct{
 		};
 		struct{
 			S_reg cs, ds, es, ss;
-		}
-	}
+		};
+	};
 	
 } CPU_state;
 

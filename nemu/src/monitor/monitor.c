@@ -77,7 +77,7 @@ static void init_EFLAGS(){
 	cpu.EFLAGS=2;
 }
 static void init_cr0(){
-	cpu.cr0.protect_enable = 0;//real mode
+	cpu.cr0.protect_enable = 0; // real mode
 }
 
 void restart() {
