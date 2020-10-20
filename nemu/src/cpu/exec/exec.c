@@ -98,8 +98,8 @@ helper_fun opcode_table [256] = { //2^8, function pointer,某种指令的具体�
 /* 0x04 */	add_i2a_b, add_i2a_v, inv, inv,
 /* 0x08 */	or_r2rm_b, or_r2rm_v, or_rm2r_b, or_rm2r_v,
 /* 0x0c */	or_i2a_b, or_i2a_v, inv, _2byte_esc,//0x0f，梁子街指令码
-/* 0x10 */	inv, adc_r2rm_v, inv, inv,
-/* 0x14 */	inv, inv, inv, inv,
+/* 0x10 */	inv, adc_r2rm_v, adc_rm2r_b, adc_rm2r_v,
+/* 0x14 */	adc_i2a_b, adc_i2a_v, inv, inv,
 /* 0x18 */	sbb_r2rm_b, sbb_r2rm_v, sbb_rm2r_b, sbb_rm2r_v,
 /* 0x1c */	sbb_i2a_b, sbb_i2a_v, inv, inv,
 /* 0x20 */	and_r2rm_b, and_r2rm_v, and_rm2r_b, and_rm2r_v,
