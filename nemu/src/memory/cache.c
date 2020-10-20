@@ -31,7 +31,7 @@ int read_L2(hwaddr_t addr){
     // not hit
     int id = g + rand() % CACHE_WAY_SIZE_L2;
     // write back
-    // i = id; //?why this can make it right?
+    i = id; //?why this can make it right?
     if(L2_Cache[id].valid && L2_Cache[id].dirty){
         uint8_t ret[BURST_LEN * 2];
         uint32_t st = (L2_Cache[i].tag << (CACHE_GROUP_BIT_L2 + CACHE_BLOCK_BIT)) | (gid << CACHE_BLOCK_BIT);
