@@ -88,7 +88,7 @@ void write_L2(hwaddr_t addr,size_t len, uint32_t data){
             if(bia + len <= CACHE_BLOCK_SIZE){
                 memcpy(L2_Cache[i].block + bia, &data, len);
             }else{ // two block +
-                write_L2(addr, CACHE_BLOCK_SIZE-bia, data);
+                memcpy(L2_Cache[i].block+bia, &data, CACHE_BLOCK_SIZE-bia);
                 write_L2(addr+CACHE_BLOCK_SIZE-bia, len-CACHE_BLOCK_SIZE+bia, data >> (CACHE_BLOCK_SIZE-bia) );
             }
             return;
@@ -118,7 +118,10 @@ void write_cache(hwaddr_t addr,size_t len, uint32_t data){
                 write_L2(addr, len, data);
                 return;
             }else{ // two block +
-                write_cache(addr, CACHE_BLOCK_SIZE-bia, data);
+                dram_write(addr,CACHE_BLOCK_SIZE - bia, data);
+                write_L2(addr,CACHE_BLOCK_SIZE - bia, data);
+                memcpy(L1_Cache[i].block+bia, &data, CACHE_BLOCK_SIZE-bia);
+                // overleft
                 write_cache(addr+CACHE_BLOCK_SIZE-bia, len-CACHE_BLOCK_SIZE+bia, data >> (CACHE_BLOCK_SIZE-bia) );
                 return;
             }
