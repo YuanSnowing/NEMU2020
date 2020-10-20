@@ -2,7 +2,7 @@
 
 make_helper(concat(scas_, SUFFIX)) {
 	swaddr_t a = REG(R_EAX);
-	swaddr_t b = MEM_R(reg_l(R_EDI));
+	swaddr_t b = MEM_R(reg_l(R_EDI), R_ES);
 	uint32_t result = a-b;
 	if (cpu.DF == 0) reg_l(R_EDI) += DATA_BYTE;
 	else reg_l(R_EDI) -= DATA_BYTE;

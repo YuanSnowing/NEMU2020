@@ -4,11 +4,11 @@
 
 static void do_execute() {
 	if (op_src -> size == 2)
-		cpu.gdtr.base = swaddr_read(op_src -> addr + 2,3);
+		cpu.gdtr.base = swaddr_read(op_src -> addr + 2,3,0);
 	else{
-		cpu.gdtr.base = swaddr_read(op_src -> addr + 2,4);
+		cpu.gdtr.base = swaddr_read(op_src -> addr + 2,4,0);
 	}
-    cpu.gdtr.limit = swaddr_read(op_src -> addr,2);
+    cpu.gdtr.limit = swaddr_read(op_src -> addr,2,0);
 	print_asm_template1();
 }
 

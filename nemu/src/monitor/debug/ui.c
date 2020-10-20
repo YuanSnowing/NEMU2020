@@ -82,8 +82,8 @@ static int cmd_x(char *args){
 	start = expr(exp, &success);
 	TESTsuccess
 	for(i = start; i< N*4+start; i+= 4){
-		printf("0x%08x: \t%02x %02x %02x %02x\n",i,swaddr_read(i, 1), swaddr_read(i+1, 1),
-				swaddr_read(i+2, 1), swaddr_read(i+3, 1));
+		printf("0x%08x: \t%02x %02x %02x %02x\n",i,swaddr_read(i, 1, R_DS), swaddr_read(i+1, 1, R_DS),
+				swaddr_read(i+2, 1, R_DS), swaddr_read(i+3, 1, R_DS));
 	}
 	return 0;
 }
@@ -117,11 +117,11 @@ static int cmd_bt(char *args){
 	int cnt = 1;
 	swaddr_t ebp = cpu.ebp, eip = cpu.eip;
 	char str[100];
-	for(;ebp; eip = swaddr_read(ebp+4, 4),ebp = swaddr_read(ebp, 4), ++ cnt){
+	for(;ebp; eip = swaddr_read(ebp+4, 4, R_SS),ebp = swaddr_read(ebp, 4, R_SS), ++ cnt){
 		getBt(eip, str);
 		if(str[0] == '\0') break;
 		printf("#%d\t0x%08x:\t%s\targ1:0x%08x arg2:0x%08x arg3:0x%08x arg4:0x%08x\n", cnt, eip, str, 
-			swaddr_read(ebp+8,4), swaddr_read(ebp+12,4), swaddr_read(ebp+16,4), swaddr_read(ebp+20,4));
+			swaddr_read(ebp+8,4,R_SS), swaddr_read(ebp+12,4,R_SS), swaddr_read(ebp+16,4,R_SS), swaddr_read(ebp+20,4,R_SS));
 	}
 	return 0;
 }
