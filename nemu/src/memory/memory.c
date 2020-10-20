@@ -1,6 +1,7 @@
 #include "common.h"
 #include "burst.h"
 #include "memory/cache.h"
+#include "cpu/reg.h"
 
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
@@ -17,7 +18,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
     int id, ling=0;
 	uint32_t bia = addr & (CACHE_BLOCK_SIZE - 1);
 	uint8_t ret[2 * BURST_LEN];
-	
+	swaddr_write
 	if(bia + len > CACHE_BLOCK_SIZE){// two block +
 		id = read_cache(addr);
 		memcpy(ret, L1_Cache[id].block + bia, CACHE_BLOCK_SIZE - bia);

@@ -61,7 +61,28 @@ typedef struct{
 	
 } CPU_state;
 
+typedef struct{
+	union{
+		struct{
+			uint16_t lim1, b1;
+		};
+		uint32_t p1;
+	};
+	union{
+		struct{
+			uint32_t b2: 8,a: 1;,type: 3,s:	1,dpl: 2,p:	,lim2: 4;
+			uint32_t avl: 1,: 1,x: 1, g: 1,b3: 8;
+		};
+		uint32_t p2;
+	};
+}Sreg_info;
+
+Sreg_info sreg_info;
+
+
 extern CPU_state cpu;
+
+void sreg_set(uint8_t);
 
 static inline int check_reg_index(int index) {
 	assert(index >= 0 && index < 8);
