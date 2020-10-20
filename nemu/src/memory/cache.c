@@ -31,10 +31,9 @@ int read_L2(hwaddr_t addr){
     // not hit
     int id = g + rand() % CACHE_WAY_SIZE_L2;
     // write back
-    i = id; //?why this can make it right?
     if(L2_Cache[id].valid && L2_Cache[id].dirty){
         uint8_t ret[BURST_LEN * 2];
-        uint32_t st = (L2_Cache[i].tag << (CACHE_GROUP_BIT_L2 + CACHE_BLOCK_BIT)) | (gid << CACHE_BLOCK_BIT);
+        uint32_t st = (L2_Cache[id].tag << (CACHE_GROUP_BIT_L2 + CACHE_BLOCK_BIT)) | (gid << CACHE_BLOCK_BIT);
         memset(ret,1,sizeof ret);
         for (i = 0;i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
             snow_ddr3_write(st + BURST_LEN * i, L2_Cache[id].block + BURST_LEN * i,ret);
