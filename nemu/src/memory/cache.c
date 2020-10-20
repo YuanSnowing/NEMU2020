@@ -17,7 +17,7 @@ void init_cache(){
 }
 int read_L2(hwaddr_t addr){
     uint32_t tag = (addr >> (CACHE_BLOCK_BIT + CACHE_GROUP_BIT_L2));
-    int gid = (addr >> CACHE_BLOCK_BIT) & (CACHE_GROUP_SIZE_L2 - 1);
+    uint32_t gid = (addr >> CACHE_BLOCK_BIT) & (CACHE_GROUP_SIZE_L2 - 1);
     int i;
 
     gid = gid * CACHE_WAY_SIZE_L2;
