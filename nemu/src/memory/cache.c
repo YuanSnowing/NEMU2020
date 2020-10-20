@@ -14,6 +14,7 @@ void init_cache(){
     for(i = 0; i < CACHE_SIZE_L2 / CACHE_BLOCK_SIZE; ++ i){
         L2_Cache[i].valid = L2_Cache[i].dirty = 0;
     }
+    srand(time(0));
 }
 int read_L2(hwaddr_t addr){
     uint32_t tag = (addr >> (CACHE_BLOCK_BIT + CACHE_GROUP_BIT_L2));
@@ -28,21 +29,20 @@ int read_L2(hwaddr_t addr){
     }
 
     // not hit
-    srand(time(0));
     int id = gid + rand() % CACHE_WAY_SIZE_L2;
     addr = (addr >> CACHE_BLOCK_BIT) << CACHE_BLOCK_BIT;
     // write back
-    if (L2_Cache[i].valid == 1 && L2_Cache[i].dirty == 1){
-        uint8_t ret[BURST_LEN << 1]; 
-        memset(ret,1,sizeof ret);
-        uint32_t st = (L2_Cache[i].tag << (CACHE_GROUP_BIT_L2 + CACHE_BLOCK_BIT)) | (gid << CACHE_BLOCK_BIT);
-        for (i = 0;i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
-            snow_ddr3_write(st + BURST_LEN * i, L2_Cache[id].block + BURST_LEN * i,ret);
+    if(L2_Cache[id].valid && L2_Cache[id].dirty){
+        uint8_t ret[2 * BURST_LEN];
+        memset(ret, 1, sizeof ret);
+        uint32_t st = (L2_Cache[id].tag << (CACHE_GROUP_BIT_L2+CACHE_BLOCK_BIT)) | (gid << CACHE_BLOCK_BIT);
+        for(i = 0; i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
+            snow_ddr3_write(st + BURST_LEN * i, L2_Cache[id].block + BURST_LEN * i, ret);
         }
     }
     // update
     for(i = 0; i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
-        snow_ddr3_read(addr+BURST_LEN*i, L2_Cache[id].block + BURST_LEN * i);
+        snow_ddr3_read(addr + BURST_LEN * i, L2_Cache[id].block + BURST_LEN * i);
     }
     L2_Cache[id].tag = tag;
     L2_Cache[id].valid = 1;
@@ -62,7 +62,6 @@ int read_cache(hwaddr_t addr){
     }
 
     // not hit
-    srand(time(0));
     int id = gid + rand() % CACHE_WAY_SIZE_L1;
     int ans = read_L2(addr);
     memcpy(L1_Cache[id].block, L2_Cache[ans].block, CACHE_BLOCK_SIZE);
