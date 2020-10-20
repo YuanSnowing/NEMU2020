@@ -19,8 +19,8 @@ void init_cache(){
 int read_L2(hwaddr_t addr){
     uint32_t tag = (addr >> (CACHE_BLOCK_BIT + CACHE_GROUP_BIT_L2));
     uint32_t gid = (addr >> CACHE_BLOCK_BIT) & (CACHE_GROUP_SIZE_L2 - 1);
+    uint32_t bst = (addr >> CACHE_BLOCK_BIT) << CACHE_BLOCK_BIT;
     int i;
-
     gid = gid * CACHE_WAY_SIZE_L2;
     for(i = gid; i < gid + CACHE_WAY_SIZE_L2; ++ i){
         if(tag == L2_Cache[i].tag && L2_Cache[i].valid){
@@ -30,7 +30,6 @@ int read_L2(hwaddr_t addr){
 
     // not hit
     int id = gid + rand() % CACHE_WAY_SIZE_L2;
-    addr = (addr >> CACHE_BLOCK_BIT) << CACHE_BLOCK_BIT;
     // write back
     if(L2_Cache[id].valid && L2_Cache[id].dirty){
         uint8_t ret[2 * BURST_LEN];
@@ -42,7 +41,7 @@ int read_L2(hwaddr_t addr){
     }
     // update
     for(i = 0; i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
-        snow_ddr3_read(addr + BURST_LEN * i, L2_Cache[id].block + BURST_LEN * i);
+        snow_ddr3_read(bst + BURST_LEN * i, L2_Cache[id].block + BURST_LEN * i);
     }
     L2_Cache[id].tag = tag;
     L2_Cache[id].valid = 1;
