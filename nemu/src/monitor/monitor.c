@@ -76,9 +76,14 @@ static void load_entry() {
 static void init_EFLAGS(){
 	cpu.EFLAGS=2;
 }
+static void init_cr0(){
+	cpu.cr0.protect_enable = 0;//real mode
+}
+
 void restart() {
 	init_EFLAGS();
 	init_cache();
+	init_cr0();
 	/* Perform some initialization to restart a program */
 #ifdef USE_RAMDISK
 	/* Read the file with name `argv[1]' into ramdisk. */
