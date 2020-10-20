@@ -21,20 +21,20 @@ int read_L2(hwaddr_t addr){
     uint32_t gid = (addr >> CACHE_BLOCK_BIT) & (CACHE_GROUP_SIZE_L2 - 1);
     uint32_t bst = (addr >> CACHE_BLOCK_BIT) << CACHE_BLOCK_BIT;
     int i;
-    gid = gid * CACHE_WAY_SIZE_L2;
-    for(i = gid; i < gid + CACHE_WAY_SIZE_L2; ++ i){
+    int g = gid * CACHE_WAY_SIZE_L2;
+    for(i = g; i < g + CACHE_WAY_SIZE_L2; ++ i){
         if(tag == L2_Cache[i].tag && L2_Cache[i].valid){
             return i;
         }
     }
 
     // not hit
-    int id = gid + rand() % CACHE_WAY_SIZE_L2;
+    int id = g + rand() % CACHE_WAY_SIZE_L2;
     // write back
     if(L2_Cache[id].valid && L2_Cache[id].dirty){
         uint8_t ret[2 * BURST_LEN];
         memset(ret, 1, sizeof ret);
-        uint32_t st = (L2_Cache[id].tag << (CACHE_GROUP_BIT_L2+CACHE_BLOCK_BIT)) | (gid << CACHE_BLOCK_BIT);
+        uint32_t st = (L2_Cache[id].tag << (CACHE_GROUP_BIT_L2+CACHE_BLOCK_BIT)) | (g << CACHE_BLOCK_BIT);
         for(i = 0; i < CACHE_BLOCK_SIZE / BURST_LEN; ++ i){
             snow_ddr3_write(st + BURST_LEN * i, L2_Cache[id].block + BURST_LEN * i, ret);
         }
@@ -53,15 +53,15 @@ int read_cache(hwaddr_t addr){
     uint32_t gid = (addr >> CACHE_BLOCK_BIT) & (CACHE_GROUP_SIZE_L1 - 1);
     int i;
 
-    gid = gid * CACHE_WAY_SIZE_L1;
-    for(i = gid; i < gid + CACHE_WAY_SIZE_L1; ++ i){
+    int g = gid * CACHE_WAY_SIZE_L1;
+    for(i = g; i < g + CACHE_WAY_SIZE_L1; ++ i){
         if(tag == L1_Cache[i].tag && L1_Cache[i].valid){
             return i;
         }
     }
 
     // not hit
-    int id = gid + rand() % CACHE_WAY_SIZE_L1;
+    int id = g + rand() % CACHE_WAY_SIZE_L1;
     int ans = read_L2(addr);
     memcpy(L1_Cache[id].block, L2_Cache[ans].block, CACHE_BLOCK_SIZE);
 
@@ -74,12 +74,11 @@ int read_cache(hwaddr_t addr){
 void write_L2(hwaddr_t addr,size_t len, uint32_t data){
     uint32_t tag = (addr >> (CACHE_BLOCK_BIT + CACHE_GROUP_BIT_L2));
     uint32_t gid = (addr >> CACHE_BLOCK_BIT) & (CACHE_GROUP_SIZE_L2 - 1);
-    int i;
+    int i, g = gid * CACHE_WAY_SIZE_L2;
 
     uint32_t bia = addr & (CACHE_BLOCK_SIZE - 1);
 
-    gid = gid * CACHE_WAY_SIZE_L2;
-    for(i = gid; i < gid + CACHE_WAY_SIZE_L2; ++ i){
+    for(i = g; i < g + CACHE_WAY_SIZE_L2; ++ i){
         if(tag == L2_Cache[i].tag && L2_Cache[i].valid){
             // hit, write through, 把数据同时写到Cache和内存中；
             L2_Cache[i].dirty = 1;
@@ -102,12 +101,11 @@ void write_L2(hwaddr_t addr,size_t len, uint32_t data){
 void write_cache(hwaddr_t addr,size_t len, uint32_t data){
     uint32_t tag = (addr >> (CACHE_BLOCK_BIT + CACHE_GROUP_BIT_L1));
     uint32_t gid = (addr >> CACHE_BLOCK_BIT) & (CACHE_GROUP_SIZE_L1 - 1);
-    int i;
+    int i, g = gid * CACHE_WAY_SIZE_L1;
 
     uint32_t bia = addr & (CACHE_BLOCK_SIZE - 1);
 
-    gid = gid * CACHE_WAY_SIZE_L1;
-    for(i = gid; i < gid + CACHE_WAY_SIZE_L1; ++ i){
+    for(i = g; i < g + CACHE_WAY_SIZE_L1; ++ i){
         if(tag == L1_Cache[i].tag && L1_Cache[i].valid){
             // hit, write through, 把数据同时写到Cache和内存中；
             if(bia + len <= CACHE_BLOCK_SIZE){
