@@ -76,7 +76,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
 #endif
-printf("ln:%x\n",addr);
+// printf("ln:%x\n",addr);
 	uint32_t bia = addr & 0xfff; //low 12 bit
 	if(bia + len - 1 > 0xfff){ // cross page boundary
 		Assert(0, "kua ye le");
