@@ -30,7 +30,7 @@ make_helper(concat(mov_moffs2a_, SUFFIX)) {
 #if DATA_BYTE == 4
 
 make_helper(mov_cr2r){
-	uint8_t modrm= instr_fetch(eip + 1,1);
+	uint8_t modrm = instr_fetch(eip + 1,1);
 	uint8_t cr = (modrm >> 3) & 7;
 	uint8_t reg = modrm & 7;
 	if(cr == 0) {
@@ -41,7 +41,7 @@ make_helper(mov_cr2r){
 }
 
 make_helper(mov_r2cr){
-	uint8_t modrm= instr_fetch(eip + 1,1);
+	uint8_t modrm = instr_fetch(eip + 1,1);
 	uint8_t cr = (modrm >> 3) & 7;
 	uint8_t reg = modrm & 7;
 	if(cr == 0) {
