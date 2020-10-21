@@ -54,7 +54,7 @@ clean: clean-cpp
 ##### some convinient rules #####
 
 # USERPROG := obj/testcase/add-longlong
-USERPROG := obj/testcase/add
+# USERPROG := obj/testcase/add
 # USERPROG := obj/testcase/bit
 # USERPROG := obj/testcase/bubble-sort
 # USERPROG := obj/testcase/fact
@@ -80,7 +80,7 @@ USERPROG := obj/testcase/add
 # USERPROG := obj/testcase/to-lower-case
 # USERPROG := obj/testcase/wanshu
 
-# USERPROG := obj/testcase/struct
+USERPROG := obj/testcase/struct
 # USERPROG := obj/testcase/string
 # USERPROG := obj/testcase/hello-str
 
