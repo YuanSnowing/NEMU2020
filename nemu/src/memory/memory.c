@@ -114,7 +114,7 @@ uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg) {
 	assert(len == 1 || len == 2 || len == 4);
 #endif
 	lnaddr_t lnaddr = seg_translate(addr, len, sreg);
-	if(lnaddr == 0x8137) printf("here here~1\n");
+	if(lnaddr == 0x8137) printf("here here~1\n 0x%x", addr);
 	return lnaddr_read(lnaddr, len);
 }
 
