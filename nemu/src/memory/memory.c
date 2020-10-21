@@ -35,7 +35,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	// uint32_t ans = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	// printf("ret should be %d\n", ans);
 	// assert(ans == retu);
-	printf("tot_time : %d\n", tot_time);
+	// printf("tot_time : %d\n", tot_time);
 	return retu;
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 }
