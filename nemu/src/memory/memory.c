@@ -65,7 +65,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	dir.val = hwaddr_read(tmp, 4);
 	// printf("dir this position!");
 	// get page 
-	if(dir.p != 1)printf("hahah? 0x%x", addr);
+	if(dir.p != 1)printf("hahah? 0x%x", tmp);
 	tmp = (dir.addr << 12) + (b << 2);
 	sec.val =  hwaddr_read(tmp, 4);
 	// printf("secval %d\n", sec.val);
