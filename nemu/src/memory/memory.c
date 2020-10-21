@@ -66,7 +66,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	// Assert(tmp != 0x149000,"snow?");
 	// printf("dir this position!");
 	// get page 
-	if(tmp == 0x149000)printf("hahah? 0x%x", addr);
+	// if(tmp == 0x149000)printf("hahah? 0x%x", addr);
 	tmp = (dir.addr << 12) + (b << 2);
 	sec.val =  hwaddr_read(tmp, 4);
 	// printf("secval %d\n", sec.val);
