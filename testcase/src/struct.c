@@ -7,7 +7,7 @@ struct dummy {
 	char pad2[N];
 } d;
 
-struct dummy fun(struct dummy a) {nemu_assert(0);
+struct dummy fun(struct dummy a) {
 	return a;
 }
 
