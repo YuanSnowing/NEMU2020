@@ -82,9 +82,16 @@ typedef struct{
 		uint32_t p2;
 	};
 }Sreg_info;
-
 Sreg_info sreg_info;
 
+typedef struct {
+	union {
+		struct {
+			uint32_t p:1, rw:1, us:1, :2, a:1, d:1, :2, ava:3, addr:20;
+		};
+		uint32_t val;
+	};
+}Page_info;
 
 extern CPU_state cpu;
 

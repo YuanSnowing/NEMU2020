@@ -7,29 +7,7 @@ uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
 
 
-lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg){
-	if (cpu.cr0.protect_enable == 0) return addr;
-	return cpu.sreg[sreg].base + addr;
-}
 
-hwaddr_t page_translate(lnaddr_t addr){
-	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
-	// dir yebiao, sec yebiao
-	Page_info dir, sec;
-	// addr: dirctionary | page | offset
-	uint32_t a,b,c, tmp;
-
-	uint32_t tmp = (cpu.cr3.page_directory_base << 12) + ((addr >> 22) << 2);
-	
-	dir.val = hwaddr_read(tmp, 4);
-
-	tmp = (dir.addr << 12) + (((addr >> 12) & 0x3ff) << 2);
-	sec.val =  hwaddr_read(tmp, 4);
-	// test valid
-	Assert(dir.p == 1, "first present");
-	Assert(sec.p == 1, "second present");
-	return (sec.addrrt << 12) + (addr & 0xfff);
-}
 
 
 /* Memory accessing interfaces */
@@ -66,6 +44,34 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	// dram_write(addr, len, data);
 }
 /////////////////////////////////////////////////////
+
+
+lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg){
+	if (cpu.cr0.protect_enable == 0) return addr;
+	return cpu.sreg[sreg].base + addr;
+}
+
+hwaddr_t page_translate(lnaddr_t addr){
+	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
+	// dir yebiao, sec yebiao
+	Page_info dir, sec;
+	// addr: dirctionary | page | offset
+	uint32_t a,b,c, tmp;
+	a = addr >> 22, b = (addr >> 12) & 0x3ff, c = addr & 0xfff;
+	// get dir
+	tmp = (cpu.cr3.page_directory_base << 12) + (a << 2);
+	dir.val = hwaddr_read(tmp, 4);
+	// get page 
+	tmp = (dir.addr << 12) + (b >> 2);
+	sec.val =  hwaddr_read(tmp, 4);
+	// test valid
+	Assert(dir.p == 1, "dirctionary present");
+	Assert(sec.p == 1, "second present");
+	return (sec.addr << 12) + c;
+}
+
+
+
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 #ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
