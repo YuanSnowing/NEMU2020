@@ -10,7 +10,7 @@ make_helper(concat(movs_n_,SUFFIX)){
         reg_l(R_EDI) -= DATA_BYTE;
         reg_l(R_ESI) -= DATA_BYTE;
     }
-    print_asm("movs\n");
+    print_asm("movs");
     return 1;
 }
 
