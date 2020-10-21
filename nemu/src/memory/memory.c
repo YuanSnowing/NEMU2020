@@ -12,6 +12,26 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg){
 	return cpu.sreg[sreg].base + addr;
 }
 
+hwaddr_t page_translate(lnaddr_t addr){
+	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
+	// dir yebiao, sec yebiao
+	Page_info dir, sec;
+	// addr: dirctionary | page | offset
+	uint32_t a,b,c, tmp;
+
+	uint32_t tmp = (cpu.cr3.page_directory_base << 12) + ((addr >> 22) << 2);
+	
+	dir.val = hwaddr_read(tmp, 4);
+
+	tmp = (dir.addr << 12) + (((addr >> 12) & 0x3ff) << 2);
+	sec.val =  hwaddr_read(tmp, 4);
+	// test valid
+	Assert(dir.p == 1, "first present");
+	Assert(sec.p == 1, "second present");
+	return (sec.addrrt << 12) + (addr & 0xfff);
+}
+
+
 /* Memory accessing interfaces */
 ///////////////////////////////////////////////////////
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
@@ -47,13 +67,31 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 }
 /////////////////////////////////////////////////////
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
+#ifdef DEBUG
 	assert(len == 1 || len == 2 || len == 4);
-	
-	return hwaddr_read(addr, len);
+#endif
+	uint32_t bia = addr & 0xfff; //low 12 bit
+	if(bia + len - 1 > 0xfff){ // cross page boundary
+		assert(0);
+	}else{
+		hwaddr_t hwaddr = page_translate(addr);
+		return hwaddr_read(hwaddr, len);
+	}
+	// return hwaddr_read(addr, len);
 }
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
-	hwaddr_write(addr, len, data);
+#ifdef DEBUG
+	assert(len == 1 || len == 2 || len == 4);
+#endif
+	uint32_t bia = addr & 0xfff; //low 12 bit
+	if(bia + len - 1 > 0xfff){ // cross page boundary
+		assert(0);
+	}else{
+		hwaddr_t hwaddr = page_translate(addr);
+		hwaddr_write(hwaddr, len, data);
+	}
+	// hwaddr_write(addr, len, data);
 }
 
 uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg) {
