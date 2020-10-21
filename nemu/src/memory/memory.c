@@ -69,6 +69,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	sec.val =  hwaddr_read(tmp, 4);
 	// printf("secval %d\n", sec.val);
 	// test valid
+	if(dir.p == 0) printf("hahah? 0x%x", dir.val);
 	Assert(dir.p == 1, "dirctionary present");
 	Assert(sec.p == 1, "second present");
 	return (sec.addr << 12) + c;
