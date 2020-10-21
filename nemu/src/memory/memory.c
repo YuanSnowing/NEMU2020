@@ -63,6 +63,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	// get dir
 	tmp = (cpu.cr3.page_directory_base << 12) + (a << 2);
 	dir.val = hwaddr_read(tmp, 4);
+	Assert(tmp != 0x149000,"snow?");
 	// printf("dir this position!");
 	// get page 
 	if(dir.p != 1)printf("hahah? 0x%x", tmp);
