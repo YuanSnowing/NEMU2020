@@ -52,6 +52,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg){
 }
 
 hwaddr_t page_translate(lnaddr_t addr){
+	printf("hahahh?\n");
 	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
 	// dir yebiao, sec yebiao
 	Page_info dir, sec;
@@ -62,6 +63,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	tmp = (cpu.cr3.page_directory_base << 12) + (a << 2);
 	dir.val = hwaddr_read(tmp, 4);
 	// get page 
+	
 	tmp = (dir.addr << 12) + (b >> 2);
 	sec.val =  hwaddr_read(tmp, 4);
 	printf("secval %d\n", sec.val);
