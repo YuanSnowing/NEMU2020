@@ -52,9 +52,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg){
 }
 
 hwaddr_t page_translate(lnaddr_t addr){
-	// printf("hahahh?\n");
 	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
-	// printf("here!\n");
 	// dir yebiao, sec yebiao
 	Page_info dir, sec;
 	// addr: dirctionary | page | offset
@@ -63,15 +61,10 @@ hwaddr_t page_translate(lnaddr_t addr){
 	// get dir
 	tmp = (cpu.cr3.page_directory_base << 12) + (a << 2);
 	dir.val = hwaddr_read(tmp, 4);
-	// Assert(tmp != 0x149000,"snow?");
-	// printf("dir this position!");
 	// get page 
-	// if(tmp == 0x149000)printf("hahah? 0x%x", addr);
 	tmp = (dir.addr << 12) + (b << 2);
 	sec.val =  hwaddr_read(tmp, 4);
-	// printf("secval %d\n", sec.val);
 	// test valid
-	
 	Assert(dir.p == 1, "dirctionary present");
 	Assert(sec.p == 1, "second present");
 	return (sec.addr << 12) + c;
@@ -114,7 +107,7 @@ uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg) {
 	assert(len == 1 || len == 2 || len == 4);
 #endif
 	lnaddr_t lnaddr = seg_translate(addr, len, sreg);
-	if(lnaddr == 0x8137) printf("here here~1\n 0x%x", addr);
+	// if(lnaddr == 0x8137) printf("here here~1\n 0x%x", addr);
 	return lnaddr_read(lnaddr, len);
 }
 
