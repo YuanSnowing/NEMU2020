@@ -37,7 +37,7 @@ make_helper(mov_cr2r){
 		reg_l(reg) = cpu.cr0.val;
 		print_asm("mov cr0 %%%s",REG_NAME(reg));
 	}else if(cr == 3){
-		reg_l(reg) = cpu.cr0.val;
+		reg_l(reg) = cpu.cr3.val;
 		print_asm("mov cr3 %%%s",REG_NAME(reg));
 	}
 	return 2;
