@@ -2,7 +2,7 @@
 #include "burst.h"
 #include <time.h>
 #include <stdlib.h>
-
+int tot_time;
 void dram_write(hwaddr_t addr, size_t len, uint32_t data);
 void snow_ddr3_read(hwaddr_t addr, void* data);
 void snow_ddr3_write(hwaddr_t addr, void *data, uint8_t *mask);
@@ -14,6 +14,7 @@ void init_cache(){
     for(i = 0; i < CACHE_SIZE_L2 / CACHE_BLOCK_SIZE; ++ i){
         L2_Cache[i].valid = L2_Cache[i].dirty = 0;
     }
+    tot_time = 0;
     srand(time(0));
 }
 int read_L2(hwaddr_t addr){
@@ -24,10 +25,11 @@ int read_L2(hwaddr_t addr){
     int g = gid * CACHE_WAY_SIZE_L2;
     for(i = g; i < g + CACHE_WAY_SIZE_L2; ++ i){
         if(tag == L2_Cache[i].tag && L2_Cache[i].valid){
+            tot_time += 20;
             return i;
         }
     }
-
+    tot_time += 200;
     // not hit
     int id = g + rand() % CACHE_WAY_SIZE_L2;
     // write back
@@ -57,6 +59,7 @@ int read_cache(hwaddr_t addr){
     int g = gid * CACHE_WAY_SIZE_L1;
     for(i = g; i < g + CACHE_WAY_SIZE_L1; ++ i){
         if(tag == L1_Cache[i].tag && L1_Cache[i].valid){
+            tot_time += 2;
             return i;
         }
     }
