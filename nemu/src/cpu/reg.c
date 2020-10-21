@@ -46,12 +46,12 @@ void sreg_set(uint8_t id){
 	uint16_t idx = cpu.sreg[id].selector >> 3;//index of sreg
 
 	lnaddr_t chart_addr = cpu.gdtr.base + (idx << 3);//chart addr
-	sreg_info->p1 = lnaddr_read(chart_addr, 4);
-	sreg_info->p2 = lnaddr_read(chart_addr + 4, 4);
+	sreg_info.p1 = lnaddr_read(chart_addr, 4);
+	sreg_info.p2 = lnaddr_read(chart_addr + 4, 4);
 
-	cpu.sreg[id].base = sreg_info->b1 + (sreg_info->b2 << 16) + (sreg_info->b3 << 24);
-	cpu.sreg[id].limit = sreg_info->lim1 + (sreg_info->lim2 << 16) + (0xfff << 24);
-	if (sreg_info->g == 1) {	//g=0,1b; g=1,4kb, 2^12
+	cpu.sreg[id].base = sreg_info.b1 + (sreg_info.b2 << 16) + (sreg_info.b3 << 24);
+	cpu.sreg[id].limit = sreg_info.lim1 + (sreg_info.lim2 << 16) + (0xfff << 24);
+	if (sreg_info.g == 1) {	//g=0,1b; g=1,4kb, 2^12
 		cpu.sreg[id].limit <<= 12;
 	}	
 
