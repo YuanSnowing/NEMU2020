@@ -87,6 +87,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 	if(bia + len - 1 > 0xfff){ // cross page boundary
 		Assert(0, "kua ye le");
 	}else{
+		if(addr == 0x8137) printf("here here~1\n");
 		hwaddr_t hwaddr = page_translate(addr);
 		return hwaddr_read(hwaddr, len);
 	}
@@ -101,6 +102,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 	if(bia + len - 1 > 0xfff){ // cross page boundary
 		Assert(0, "kua ye le");
 	}else{
+		if(addr == 0x8137) printf("here here~2\n");
 		hwaddr_t hwaddr = page_translate(addr);
 		hwaddr_write(hwaddr, len, data);
 	}
