@@ -6,8 +6,8 @@
 	start:
 	# Set up a stack for C code.
 		movl $0, %ebp
-		; movl $(128 << 20), %esp
-		movl $0x4000000 %esp
+		movl $(128 << 20), %esp
+		; movl $0x4000000 %esp
 		jmp init				# never return
 
 #else
