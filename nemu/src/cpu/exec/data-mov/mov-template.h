@@ -48,6 +48,7 @@ make_helper(mov_r2cr){
 		cpu.cr0.val = reg_l(reg);
 		print_asm("mov %%%s cr0",REG_NAME(reg));
 	}
+	printf("mov r2cr\n");
 	return 2;
 }
 
