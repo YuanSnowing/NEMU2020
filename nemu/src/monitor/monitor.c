@@ -78,6 +78,7 @@ static void init_EFLAGS(){
 }
 static void init_cr0(){
 	cpu.cr0.protect_enable = 0; // real mode
+	cpu.cr0.paging = 0;
 }
 static void init_cs(){
 	cpu.cs.base = 0, cpu.cs.limit = 0xffffffff;
