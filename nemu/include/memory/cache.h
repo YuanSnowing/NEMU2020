@@ -30,7 +30,7 @@ typedef struct{
     uint32_t tag;
     uint8_t block[CACHE_BLOCK_SIZE];
 }Cache;
-
+int tot_time;
 Cache L1_Cache[CACHE_SIZE_L1 / CACHE_BLOCK_SIZE];
 Cache L2_Cache[CACHE_SIZE_L2 / CACHE_BLOCK_SIZE];
 void init_cache();

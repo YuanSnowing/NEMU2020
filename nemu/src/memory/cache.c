@@ -2,7 +2,7 @@
 #include "burst.h"
 #include <time.h>
 #include <stdlib.h>
-int tot_time;
+
 void dram_write(hwaddr_t addr, size_t len, uint32_t data);
 void snow_ddr3_read(hwaddr_t addr, void* data);
 void snow_ddr3_write(hwaddr_t addr, void *data, uint8_t *mask);
