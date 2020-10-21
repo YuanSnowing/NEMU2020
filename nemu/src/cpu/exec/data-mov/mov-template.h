@@ -36,6 +36,9 @@ make_helper(mov_cr2r){
 	if(cr == 0) {
 		reg_l(reg) = cpu.cr0.val;
 		print_asm("mov cr0 %%%s",REG_NAME(reg));
+	}else if(cr == 3){
+		reg_l(reg) = cpu.cr0.val;
+		print_asm("mov cr3 %%%s",REG_NAME(reg));
 	}
 	return 2;
 }
@@ -47,6 +50,9 @@ make_helper(mov_r2cr){
 	if(cr == 0) {
 		cpu.cr0.val = reg_l(reg);
 		print_asm("mov %%%s cr0",REG_NAME(reg));
+	}else if(cr == 3){
+		cpu.cr3.val = reg_l(reg);
+		print_asm("mov %%%s cr3",REG_NAME(reg));
 	}
 	// printf("mov r2cr\n");
 	return 2;
