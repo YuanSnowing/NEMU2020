@@ -34,7 +34,7 @@ make_helper(ljmp){
 	if (sreg_info.g == 1) {	//g=0,1b; g=1,4kb, 2^12
 		cpu.cs.limit <<= 12;
 	}
-
+	printf("get here!\n");
     print_asm("ljmp 0x%x 0x%x",instr_fetch(cpu.eip+1 + 4, 2),instr_fetch(cpu.eip+1, 4));
     return 7;    
 }
