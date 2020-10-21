@@ -52,7 +52,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg){
 }
 
 hwaddr_t page_translate(lnaddr_t addr){
-	printf("hahahh?\n");
+	// printf("hahahh?\n");
 	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
 	// dir yebiao, sec yebiao
 	Page_info dir, sec;
