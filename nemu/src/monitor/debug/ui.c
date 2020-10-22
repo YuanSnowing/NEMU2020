@@ -10,7 +10,7 @@
 #define TESTargs if(args == NULL){ printf("parameter invalid!\n"); return 0; }
 #define TESTsuccess if(!success) { printf("invalid RE!\n"); return 0; }
 void cpu_exec(uint32_t);
-
+hwaddr_t page_translate(lnaddr_t addr);
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -126,6 +126,15 @@ static int cmd_bt(char *args){
 	return 0;
 }
 
+
+static int cmd_page(char* args){
+	TESTargs
+	uint32_t addr;
+	sscanf(args, "%x", &addr);
+	printf("Addr is 0x%08x\n",page_translate(addr));
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -143,6 +152,7 @@ static struct {
 	{ "w", "set watchpoint, pause when expr's value changes", cmd_w},
 	{ "d", "delete watchpoint numbered N", cmd_d},
 	{ "bt", "print the stack link", cmd_bt},
+	{ "page", "addr->page", cmd_page},
 	/* TODO: Add more commands */
 
 };
