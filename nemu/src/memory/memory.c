@@ -65,7 +65,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	tmp = (dir.addr << 12) + (b << 2);
 	sec.val =  hwaddr_read(tmp, 4);
 	// test valid
-	Assert(dir.p == 1, "dirctionary present");
+	Assert(dir.p == 1, "dir present");
 	Assert(sec.p == 1, "second present");
 	return (sec.addr << 12) + c;
 }
@@ -84,11 +84,11 @@ hwaddr_t cmd_page_translate(lnaddr_t addr){
 	sec.val =  hwaddr_read(tmp, 4);
 	// test valid
 	if(dir.p != 1) {
-		printf("dictionary present should not be 0!\n");
+		printf("This is not a valid page!\n");
 		return 0;
 	}
 	if(sec.p != 1) {
-		printf("second present should not be 0!\n");
+		printf("This is not a valid page!\n");
 		return 0;
 	}
 	return (sec.addr << 12) + c;
