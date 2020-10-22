@@ -22,7 +22,7 @@ void create_video_mapping() {
 	ed = st + SCR_SIZE/PAGE_SIZE;
 	if(SCR_SIZE%PAGE_SIZE) ed ++;
 	// fill PTEs
-	for (i = st; i < ed; ++ i) {
+	for (i = st; i <= ed; ++ i) {
 		ptable[i].val = make_pte(i << 12);
 	}
 	
