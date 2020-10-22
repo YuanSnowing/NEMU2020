@@ -69,7 +69,30 @@ hwaddr_t page_translate(lnaddr_t addr){
 	Assert(sec.p == 1, "second present");
 	return (sec.addr << 12) + c;
 }
-
+hwaddr_t cmd_page_translate(lnaddr_t addr){
+	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
+	// dir yebiao, sec yebiao
+	Page_info dir, sec;
+	// addr: dirctionary | page | offset
+	uint32_t a,b,c, tmp;
+	a = addr >> 22, b = (addr >> 12) & 0x3ff, c = addr & 0xfff;
+	// get dir
+	tmp = (cpu.cr3.page_directory_base << 12) + (a << 2);
+	dir.val = hwaddr_read(tmp, 4);
+	// get page 
+	tmp = (dir.addr << 12) + (b << 2);
+	sec.val =  hwaddr_read(tmp, 4);
+	// test valid
+	if(dir.p == 1) {
+		printf("dictionary present should not be 0!\n");
+		return 0;
+	}
+	if(sec.p == 1) {
+		printf("second present should not be 0!\n");
+		return 0;
+	}
+	return (sec.addr << 12) + c;
+}
 
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
