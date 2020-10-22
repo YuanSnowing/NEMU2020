@@ -7,7 +7,7 @@
 
 /* Use the function to get the start address of user page directory. */
 PDE* get_updir();						// kernel page directory
-static PTE ptable[1024] align_to_page;		// kernel page tables
+static PTE ptable[5000] align_to_page;		// kernel page tables
 void create_video_mapping() {
 	/* TODO: create an identical mapping from virtual memory area 
 	 * [0xa0000, 0xa0000 + SCR_SIZE) to physical memory area 
