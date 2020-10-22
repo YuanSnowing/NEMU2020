@@ -32,8 +32,8 @@ make_helper(nemu_trap) {
 		   	break;
 
 		default:{
-			if(cpu.eax == 0) printf("\33[1;31mnemu: HIT GOOD TRAP\33[0m at eip = 0x%08x\n\n", cpu.eip);
-			else printf("\33[1;35mnemu: HIT BAD TRAP\33[0m at eip = 0x%08x\n\n", cpu.eip);
+			if(cpu.eax == 0) printf("\33[1;32mnemu: HIT GOOD TRAP\33[0m at eip = 0x%08x\n\n", cpu.eip);
+			else printf("\33[1;31mnemu: HIT BAD TRAP\33[0m at eip = 0x%08x\n\n", cpu.eip);
 			nemu_state = END;
 		}
 	}
