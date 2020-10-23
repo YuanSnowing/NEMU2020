@@ -20,10 +20,15 @@ int read_tlb(lnaddr_t addr){
 }
 
 void write_tlb(lnaddr_t addr, hwaddr_t haaddr){
-    int tag = addr >> TLB_BIAS_BIT;
+    int tag = addr >> TLB_BIAS_BIT, i;
     haaddr >>= TLB_BIAS_BIT;
-    int i = rand()%TLB_SIZE;
-    tlb[i].tag = tag, tlb[i].data = haaddr;
-    tlb[i].valid = 1;
+    for(i = 0; i < TLB_SIZE; ++ i){
+        if(!tlb[i].valid){
+            tlb[i].tag = tag, tlb[i].data = haaddr, tlb[i].valid = 1;
+        }
+    }
+
+    i = rand()%TLB_SIZE;
+    tlb[i].tag = tag, tlb[i].data = haaddr, tlb[i].valid = 1;
     return;
 }

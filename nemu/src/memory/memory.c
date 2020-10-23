@@ -60,7 +60,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 
 	int id = read_tlb(addr);
 	if(id != -1){
-		printf("hit !%d\n", id);
+		// printf("hit !%d\n", id);
 		return (tlb[id].data << TLB_BIAS_BIT) + c;
 	}
 	// dir yebiao, sec yebiao
