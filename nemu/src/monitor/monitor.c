@@ -86,6 +86,7 @@ static void init_cs(){
 void restart() {
 	init_EFLAGS();
 	init_cache();
+	init_tlb();
 	init_cr0();
 	init_cs();
 	/* Perform some initialization to restart a program */

@@ -10,7 +10,7 @@ void init_tlb(){
     }
     srand(time(0));
 }
-hwaddr_t read_tlb(hwaddr_t addr){
+int read_tlb(lnaddr_t addr){
     int tag = addr >> TLB_BIAS_BIT;
     int i;
     for(i = 0; i < TLB_SIZE; ++ i){
@@ -19,7 +19,7 @@ hwaddr_t read_tlb(hwaddr_t addr){
     return -1; // not hit
 }
 
-void write_tlb(hwaddr_t addr, hwaddr_t haaddr){
+void write_tlb(lnaddr_t addr, hwaddr_t haaddr){
     int tag = addr >> TLB_BIAS_BIT;
     haaddr >>= TLB_BIAS_BIT;
     int i = rand()%TLB_SIZE;

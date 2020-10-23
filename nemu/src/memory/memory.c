@@ -1,6 +1,7 @@
 #include "common.h"
 #include "burst.h"
 #include "memory/cache.h"
+#include "memory/tlb.h"
 #include "cpu/reg.h"
 
 uint32_t dram_read(hwaddr_t, size_t);
@@ -53,11 +54,17 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg){
 
 hwaddr_t page_translate(lnaddr_t addr){
 	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
-	// dir yebiao, sec yebiao
-	Page_info dir, sec;
 	// addr: dirctionary | page | offset
 	uint32_t a,b,c, tmp;
 	a = addr >> 22, b = (addr >> 12) & 0x3ff, c = addr & 0xfff;
+
+	int id = read_tlb(addr);
+	if(id != -1){
+		return (tlb[id].data << TLB_BIAS_BIT) + c;
+	}
+	// dir yebiao, sec yebiao
+	Page_info dir, sec;
+	
 	// get dir
 	tmp = (cpu.cr3.page_directory_base << 12) + (a << 2);
 	dir.val = hwaddr_read(tmp, 4);
@@ -67,6 +74,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	// test valid
 	Assert(dir.p == 1, "dir present");
 	Assert(sec.p == 1, "second present");
+	write_tlb(addr, (sec.addr << 12) + c);
 	return (sec.addr << 12) + c;
 }
 hwaddr_t cmd_page_translate(lnaddr_t addr){

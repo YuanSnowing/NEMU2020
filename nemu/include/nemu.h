@@ -2,8 +2,9 @@
 #define __NEMU_H__
 
 #include "common.h"
-#include "memory/memory.h"
 #include "cpu/reg.h"
+#include "memory/memory.h"
 #include "memory/cache.h"
+#include "memory/tlb.h"
 
 #endif

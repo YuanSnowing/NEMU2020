@@ -25,7 +25,7 @@ typedef struct{
 }TLB;
 TLB tlb[TLB_SIZE];
 void init_tlb();
-hwaddr_t read_tlb(hwaddr_t addr);
-void write_tlb(hwaddr_t addr, hwaddr_t haaddr);
+int read_tlb(lnaddr_t addr);
+void write_tlb(lnaddr_t addr, hwaddr_t haaddr);
 
 #endif
