@@ -13,7 +13,7 @@ void init_page(void) {
 	CR0 cr0;
 	CR3 cr3;
 	printf("hhhhhhhhhhh\n");
-	printf("%x\n",&cr0);
+	// printf("%x\n",&cr0);
 	PDE *pdir = (PDE *)va_to_pa(kpdir);
 	PTE *ptable = (PTE *)va_to_pa(kptable);
 	uint32_t pdir_idx;
