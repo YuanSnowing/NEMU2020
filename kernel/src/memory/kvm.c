@@ -14,6 +14,7 @@ void init_page(void) {
 	CR3 cr3;
 	// printf("hhhhhhhhhhh\n");
 	// printf("%x\n",&cr0);
+
 	PDE *pdir = (PDE *)va_to_pa(kpdir);
 	PTE *ptable = (PTE *)va_to_pa(kptable);
 	uint32_t pdir_idx;
@@ -66,6 +67,7 @@ void init_page(void) {
 	cr0.val = read_cr0();
 	cr0.paging = 1;
 	write_cr0(cr0.val);
+	 printf("%x\n",&cr0);
 }
 
 /* GDT in the kernel's memory, whose virtual memory is greater than 0xC0000000. */
