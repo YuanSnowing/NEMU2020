@@ -87,7 +87,6 @@ video_mapping_write_test();
 	/* Load the program. */
 
 	uint32_t eip = loader();
-	assert(0);
 video_mapping_read_test();
 video_mapping_clear();
 	
@@ -100,7 +99,7 @@ video_mapping_clear();
 	/* Clear the test data we just written in the video memory. */
 	video_mapping_clear();
 #endif
-
+assert(0);
 #ifdef IA32_PAGE
 	/* Set the %esp for user program, which is one of the
 	 * convention of the "advanced" runtime environment. */
