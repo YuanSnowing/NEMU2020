@@ -7,10 +7,6 @@
 uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
 
-
-
-
-
 /* Memory accessing interfaces */
 ///////////////////////////////////////////////////////
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
@@ -74,6 +70,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	tmp = (dir.addr << 12) + (b << 2);
 	sec.val =  hwaddr_read(tmp, 4);
 	// test valid
+	printf("time to re!!!!\n  addr 0x%x\n", addr);
 	Assert(dir.p == 1, "dir present");
 	Assert(sec.p == 1, "second present");
 	write_tlb(addr, (sec.addr << 12) + c);

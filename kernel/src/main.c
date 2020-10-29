@@ -1,6 +1,5 @@
 #include "common.h"
 #include "memory.h"
-
 void init_page();
 void init_serial();
 void init_ide();
@@ -32,7 +31,8 @@ void init() {
 
 	/* After paging is enabled, transform %esp to virtual address. */
 	// printf("hhahaha?\n");
-	// asm volatile("addl %0, %%esp" : : "i"(KOFFSET));
+	asm volatile("addl %0, %%esp" : : "i"(KOFFSET));
+	assert(0);
 #endif
 
 	/* Jump to init_cond() to continue initialization. */
