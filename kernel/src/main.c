@@ -31,8 +31,8 @@ void init() {
 
 	/* After paging is enabled, transform %esp to virtual address. */
 	// printf("hhahaha?\n");
-	asm volatile("addl %0, %%esp" : : "i"(KOFFSET));
-	assert(0);
+	// asm volatile("addl %0, %%esp" : : "i"(KOFFSET));
+	// assert(0);
 #endif
 
 	/* Jump to init_cond() to continue initialization. */
