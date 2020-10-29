@@ -32,7 +32,7 @@ void init() {
 	init_page();
 
 	/* After paging is enabled, transform %esp to virtual address. */
-	printf("hhahaha?\n");
+	// printf("hhahaha?\n");
 	asm volatile("addl %0, %%esp" : : "i"(KOFFSET));
 #endif
 
