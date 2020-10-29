@@ -84,11 +84,11 @@ void init_cond() {
 #endif
 video_mapping_write_test();
 	/* Load the program. */
-
+assert(0);
 	uint32_t eip = loader();
 video_mapping_read_test();
 video_mapping_clear();
-		assert(0);
+		
 #if defined(IA32_PAGE) && defined(HAS_DEVICE)
 	/* Read data in the video memory to check whether 
 	 * the test data is written sucessfully.
