@@ -70,7 +70,7 @@ void init_cond() {
 #ifdef IA32_PAGE
 	/* Initialize the memory manager. */
 	init_mm();
-	assert(0);
+	
 #endif
 
 	/* Output a welcome message.
@@ -108,7 +108,7 @@ video_mapping_clear();
 	/* Keep the `bt' command happy. */
 	asm volatile("movl $0, %ebp");
 	asm volatile("subl $16, %esp");
-
+	assert(0);
 	/* Here we go! */
 	((void(*)(void))eip)();
 
