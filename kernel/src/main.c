@@ -112,9 +112,9 @@ video_mapping_clear();
 
 	/* Here we go! */
 	((void(*)(void))eip)();
-	assert(0);
+	
 	HIT_GOOD_TRAP;
-
+assert(0);
 	panic("should not reach here");
 }
 
