@@ -114,7 +114,7 @@ video_mapping_clear();
 	((void(*)(void))eip)();
 	
 	HIT_GOOD_TRAP;
-assert(0);
+
 	panic("should not reach here");
 }
 
