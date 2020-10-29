@@ -1,5 +1,5 @@
 #include "cpu/exec/template-start.h"
-
+#include "memory/tlb.h"
 #define instr mov
 
 static void do_execute() {
@@ -51,6 +51,7 @@ make_helper(mov_r2cr){
 		cpu.cr0.val = reg_l(reg);
 		print_asm("mov %%%s cr0",REG_NAME(reg));
 	}else if(cr == 3){
+		init_tlb();
 		cpu.cr3.val = reg_l(reg);
 		print_asm("mov %%%s cr3",REG_NAME(reg));
 	}
