@@ -85,6 +85,7 @@ assert(0);
 #endif
 video_mapping_write_test();
 	/* Load the program. */
+	assert(0);
 	uint32_t eip = loader();
 video_mapping_read_test();
 video_mapping_clear();
