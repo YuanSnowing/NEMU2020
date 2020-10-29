@@ -72,7 +72,7 @@ void init_cond() {
 	init_mm();
 	
 #endif
-
+assert(0);
 	/* Output a welcome message.
 	 * Note that the output is actually performed only when
 	 * the serial port is available in NEMU.
@@ -108,7 +108,7 @@ video_mapping_clear();
 	/* Keep the `bt' command happy. */
 	asm volatile("movl $0, %ebp");
 	asm volatile("subl $16, %esp");
-	assert(0);
+	
 	/* Here we go! */
 	((void(*)(void))eip)();
 
