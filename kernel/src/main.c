@@ -85,7 +85,7 @@ void init_cond() {
 video_mapping_write_test();
 	/* Load the program. */
 
-	uint32_t eip = loader();assert(0);
+	uint32_t eip = loader();
 video_mapping_read_test();
 video_mapping_clear();
 		
