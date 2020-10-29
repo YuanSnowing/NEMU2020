@@ -48,6 +48,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 
 
 lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg){
+	printf("hahah");
 	if (cpu.cr0.protect_enable == 0) return addr;
 	return cpu.sreg[sreg].base + addr;
 }
