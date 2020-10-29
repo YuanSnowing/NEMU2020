@@ -99,13 +99,13 @@ video_mapping_clear();
 	/* Clear the test data we just written in the video memory. */
 	video_mapping_clear();
 #endif
-assert(0);
+
 #ifdef IA32_PAGE
 	/* Set the %esp for user program, which is one of the
 	 * convention of the "advanced" runtime environment. */
 	asm volatile("movl %0, %%esp" : : "i"(KOFFSET));
 #endif
-
+assert(0);
 	/* Keep the `bt' command happy. */
 	asm volatile("movl $0, %ebp");
 	asm volatile("subl $16, %esp");
