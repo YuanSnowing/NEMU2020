@@ -54,7 +54,7 @@ clean: clean-cpp
 ##### some convinient rules #####
 
 # USERPROG := obj/testcase/add-longlong
-USERPROG := obj/testcase/add
+# USERPROG := obj/testcase/add
 # USERPROG := obj/testcase/bit
 # USERPROG := obj/testcase/bubble-sort
 # USERPROG := obj/testcase/fact
@@ -64,7 +64,7 @@ USERPROG := obj/testcase/add
 # USERPROG := obj/testcase/leap-year
 # USERPROG := obj/testcase/matrix-mul-small
 # USERPROG := obj/testcase/matrix-mul
-# USERPROG := obj/testcase/max
+USERPROG := obj/testcase/max
 # USERPROG := obj/testcase/min3
 # USERPROG := obj/testcase/mov-c
 # USERPROG := obj/testcase/movsx
