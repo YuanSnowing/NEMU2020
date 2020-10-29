@@ -7,7 +7,7 @@ static void do_execute() {
     // before push every time
     reg_l(R_ESP) -= 4;
 	swaddr_write(reg_l(R_ESP), 4, op_src->val, R_SS);
-	print_asm("push 0x%x", op_src->val);
+	print_asm_template1();
 }
 
 // decode
