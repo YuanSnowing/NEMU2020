@@ -1,6 +1,6 @@
 #include "cpu/exec/helper.h"
 #include "cpu/decode/modrm.h"
-
+#include "intr.c"
 make_helper(nop) {
 	print_asm("nop");
 	return 1;
@@ -34,4 +34,12 @@ make_helper(cld){
 	cpu.DF = 0;
 	print_asm("cld");
 	return 1;
+}
+
+make_helper(inti) {
+	int NO = instr_fetch(eip + 1, 1);
+	cpu.eip += 2;
+	print_asm("int %x",NO);
+	raise_intr(NO);
+	return 0;
 }
