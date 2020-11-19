@@ -54,7 +54,7 @@ clean: clean-cpp
 ##### some convinient rules #####
 
 # USERPROG := obj/testcase/add-longlong
-USERPROG := obj/testcase/add
+# USERPROG := obj/testcase/add
 # USERPROG := obj/testcase/bit
 # USERPROG := obj/testcase/bubble-sort
 # USERPROG := obj/testcase/fact
@@ -90,7 +90,7 @@ USERPROG := obj/testcase/add
 # USERPROG := obj/testcase/print-FLOAT
 
 # USERPROG := obj/testcase/hello
-# USERPROG := obj/testcase/hello-inline-asm
+USERPROG := obj/testcase/hello-inline-asm
 # ENTRY := $(USERPROG)
 ENTRY := $(kernel_BIN)
 entry: $(ENTRY)
