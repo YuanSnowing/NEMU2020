@@ -145,7 +145,7 @@ helper_fun opcode_table [256] = { //2^8, function pointer,某种指令的具体�
 /* 0xc0 */	group2_i_b, group2_i_v, ret_i_v, ret_n_v,
 /* 0xc4 */	inv, inv, mov_i2rm_b, mov_i2rm_v,
 /* 0xc8 */	inv, leave, inv, inv,
-/* 0xcc */	int3, inv, inv, inv,
+/* 0xcc */	int3, inti, inv, inv,
 /* 0xd0 */	group2_1_b, group2_1_v, group2_cl_b, group2_cl_v,
 /* 0xd4 */	inv, inv, nemu_trap, inv,// defined by ourself
 /* 0xd8 */	inv, inv, inv, inv,
