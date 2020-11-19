@@ -8,6 +8,7 @@
 #include "data-mov/cltd.h"
 #include "data-mov/movext.h"
 #include "data-mov/lgdt.h"
+#include "data-mov/lidt.h"
 
 #include "jmp/call.h"
 #include "jmp/ret.h"

@@ -58,6 +58,9 @@ typedef struct{
 			S_reg es, cs, ss, ds;
 		};
 	};
+	struct{
+		uint32_t base, limit;
+	}idtr;
 	
 } CPU_state;
 
