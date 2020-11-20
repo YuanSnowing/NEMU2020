@@ -1,35 +1,30 @@
 #include <setjmp.h>
 #include "cpu/reg.h"
 jmp_buf jbuf;
+static inline void push(int val){
+	printf("val:::%x\n", val);
+	reg_l(R_ESP) -= 4;
+	swaddr_write(reg_l(R_ESP),4,val,R_SS);
+}
 void raise_intr(uint8_t NO){
 	/* TODO: Trigger an interrupt/exception with NO
 	 * use NO to index the IDT
 	 */
 
-	Assert((NO<<3) <= cpu.idtr.limit, "Interrupt id to0 large");
-	printf("NO: %x\n", NO);
-	Gate_info gate;
-	idt_des = &gate;
-	
-   	lnaddr_t pid = cpu.idtr.base + (NO<<3);
-   	idt_des->fst = lnaddr_read(pid, 4);
-	idt_des->sec = lnaddr_read(pid+4, 4);
-	
-	reg_l(R_ESP) -= 4;
-	swaddr_write(reg_l(R_ESP), 4, cpu.EFLAGS, R_SS);
+	Assert((NO<<3)<=cpu.idtr.limit,"Interrupt NO too large!");
+	Gate_info gat;
+	idt_des = &gat;
 
-	reg_l(R_ESP) -= 4;
-	swaddr_write(reg_l(R_ESP), 4, cpu.cs.selector, R_SS);
+	lnaddr_t addr = cpu.idtr.base + (NO << 3);
+	idt_des -> fst = lnaddr_read(addr,4);
+	idt_des -> sec = lnaddr_read(addr+4,4);
 	
-	reg_l(R_ESP) -= 4;
-	swaddr_write(reg_l(R_ESP), 4, cpu.eip, R_SS);
+	push(cpu.EFLAGS);
+	push(cpu.cs.selector);
+	push(cpu.eip);
 	cpu.cs.selector = idt_des -> segment;
-
-	Assert(((cpu.cs.selector>>3)<<3)<= cpu.gdtr.limit, "segment out limit");
-
-	cpu.eip = cpu.cs.base + idt_des -> offset_15_0 + ((idt_des -> offset_31_16) << 16);
-	
 	sreg_set(R_CS);
-	/* Jump back to cpu_exec() */
+	cpu.eip = cpu.cs.base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16);
+	 /* Jump back to cpu_exec() */
     longjmp(jbuf, 1);
 }
