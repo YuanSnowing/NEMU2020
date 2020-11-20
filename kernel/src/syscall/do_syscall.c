@@ -14,8 +14,7 @@ static void sys_ioctl(TrapFrame *tf) {
 	tf->eax = fs_ioctl(tf->ebx, tf->ecx, (void *)tf->edx);
 }
 static void sys_write(TrapFrame *tf){
-	asm volatile(".byte 0xd6" : 
-	: "a"(2),"c"(tf->ecx),"d"(tf->edx));
+	asm volatile(".byte 0xd6" : : "a"(2),"c"(tf->ecx),"d"(tf->edx));
 	tf->eax=0;
 }
 void do_syscall(TrapFrame *tf) {
