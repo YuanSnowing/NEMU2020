@@ -96,6 +96,33 @@ typedef struct {
 	};
 }Page_info;
 
+typedef struct{
+	union {
+		struct {
+			uint32_t offset_15_0:16, segment:16;
+			uint32_t pad0:8, type:4, system:1,privilege_level:2, present:1;
+			uint32_t offset_31_16:16;
+		};
+		struct {
+			uint32_t fst;
+			uint32_t sec;
+		};
+	};
+}Gate_info;
+Gate_info *idt_des;
+
+
+
+
+
+
+
+
+
+
+
+
+
 extern CPU_state cpu;
 
 void sreg_set(uint8_t);

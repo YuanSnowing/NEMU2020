@@ -35,11 +35,37 @@ make_helper(cld){
 	print_asm("cld");
 	return 1;
 }
-
-make_helper(inti) {
+extern Gate_info *idt_des;
+make_helper(intr) {
 	int NO = instr_fetch(eip + 1, 1);
 	cpu.eip += 2;
 	print_asm("int %x",NO);
 	raise_intr(NO);
 	return 0;
+}
+int get(){
+	uint32_t hah = swaddr_read (reg_l(R_ESP) , 4, R_SS);
+	reg_l(R_ESP) += 4;
+	return hah;
+}
+make_helper(iret){
+	if (cpu.cr0.protect_enable == 0)
+	{
+		cpu.eip = get();
+		cpu.cs.selector = get ();
+		cpu.EFLAGS = get ();
+	}
+	else{
+		cpu.eip = get();
+		cpu.cs.selector = get ();
+		cpu.EFLAGS = get();
+		sreg_set(R_CS);
+	}
+	print_asm("iret");
+	return 0;
+}
+
+make_helper(cli){
+	cpu.IF = 0;
+	return 1;
 }
