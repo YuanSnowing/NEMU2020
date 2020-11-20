@@ -35,7 +35,7 @@ void irq_handle(TrapFrame *tf) {
 	 */
 
 	// asm volatile(".byte 0xd6" : : "a"(2),"c"(tf->ecx),"d"(tf->edx));
-	panic("Have you re-organized the `TrapFrame' structure?");
+	// panic("Have you re-organized the `TrapFrame' structure?");
 
 	int irq = tf->irq;
 
