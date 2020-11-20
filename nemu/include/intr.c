@@ -25,9 +25,7 @@ void raise_intr(uint8_t NO){
 	swaddr_write(reg_l(R_ESP), 4, cpu.eip, R_SS);
 	cpu.cs.selector = idt_des -> segment;
 
-	Assert(((cpu.cs.selector>>3)<<3) 
-	<= cpu.gdtr.limit, 
-	"segment out limit %d, %d", ((cpu.cs.selector>>3)<<3), cpu.gdtr.limit);
+	Assert(((cpu.cs.selector>>3)<<3)<= cpu.gdtr.limit, "segment out limit");
 
 	cpu.eip = cpu.cs.base + idt_des -> offset_15_0 + ((idt_des -> offset_31_16) << 16);
 	
