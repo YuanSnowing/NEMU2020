@@ -11,12 +11,12 @@ static void push(uint32_t val){
 #endif
 
 make_helper(concat(pusha_,SUFFIX)){
-    printf("pusha");
+    
     DATA_TYPE tmp = REG(R_ESP);
     push(REG(R_EAX));
     push(REG(R_ECX));
     push(REG(R_EDX));
-    push(REG(R_EBX));
+    push(REG(R_EBX));printf("pusha");
     push(tmp);
     push(REG(R_EBP));
     push(REG(R_ESI));
