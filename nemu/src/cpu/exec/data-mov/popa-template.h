@@ -5,8 +5,8 @@
 #ifndef voidpopa
 #define voidpopa
 static uint32_t pop(){
-    uint32_t ret = swaddr_read(reg_l(R_ESP),DATA_BYTE, R_SS);
-    reg_l(R_ESP) += DATA_BYTE;
+    uint32_t ret = swaddr_read(REG(R_ESP),DATA_BYTE, R_SS);
+    REG(R_ESP) += DATA_BYTE;
     return ret;
 }
 #endif
