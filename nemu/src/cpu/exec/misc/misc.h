@@ -8,4 +8,8 @@ make_helper(std);
 make_helper(cld);
 
 make_helper(inti);
+make_helper(iret);
+make_helper(cli);
+make_helper(pusha);
+make_helper(popa);
 #endif
