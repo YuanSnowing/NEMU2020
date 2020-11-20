@@ -5,7 +5,7 @@
 static void do_execute() {
 	if (op_src -> size == 2)
 		cpu.idtr.base = swaddr_read(op_src -> addr + 2,3,R_DS);
-	else{
+	else if (op_src->size == 4){
 		cpu.idtr.base = swaddr_read(op_src -> addr + 2,4,R_DS);
 	}
     cpu.idtr.limit = swaddr_read(op_src -> addr,2,R_DS);
