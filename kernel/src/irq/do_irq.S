@@ -32,7 +32,7 @@
 asm_do_irq:
 	pushal
 
-	pushl %esp		# ???   shifenguiyi
+	pushl %esp		# ???
 	call irq_handle
 	
 	addl $4, %esp

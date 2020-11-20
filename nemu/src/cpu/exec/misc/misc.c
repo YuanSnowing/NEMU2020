@@ -1,5 +1,6 @@
 #include "cpu/exec/helper.h"
 #include "cpu/decode/modrm.h"
+#include "cpu/reg.h"
 #include "intr.c"
 make_helper(nop) {
 	print_asm("nop");
@@ -35,38 +36,40 @@ make_helper(cld){
 	print_asm("cld");
 	return 1;
 }
-extern Gate_info *idt_des;
+
+void raise_intr(uint8_t);
 make_helper(intr) {
 	int NO = instr_fetch(eip + 1, 1);
-	// printf("NO %x", NO);
 	cpu.eip += 2;
 	print_asm("int %x",NO);
 	raise_intr(NO);
 	return 0;
 }
-int get(){
-	uint32_t hah = swaddr_read (reg_l(R_ESP) , 4, R_SS);
-	reg_l(R_ESP) += 4;
-	return hah;
+
+
+uint32_t pop(){
+    int ret = swaddr_read(reg_l(R_ESP),4, R_SS);
+    reg_l(R_ESP) += 4;
+    return ret;
 }
-make_helper(iret){
-	if (cpu.cr0.protect_enable == 0)
-	{
-		cpu.eip = get();
-		cpu.cs.selector = get ();
-		cpu.EFLAGS = get ();
-	}
-	else{
-		cpu.eip = get();
-		cpu.cs.selector = get ();
-		cpu.EFLAGS = get();
+
+make_helper(iret) {
+	if (cpu.cr0.protect_enable == 0){
+		cpu.eip = pop();
+		cpu.cs.selector = pop();
+		cpu.EFLAGS = pop();
+	}else{
+		cpu.eip = pop();
+		cpu.cs.selector = pop();
+		cpu.EFLAGS = pop();
 		sreg_set(R_CS);
 	}
 	print_asm("iret");
 	return 0;
 }
 
-make_helper(cli){
+make_helper(cli) {
 	cpu.IF = 0;
+	print_asm("cli");
 	return 1;
 }

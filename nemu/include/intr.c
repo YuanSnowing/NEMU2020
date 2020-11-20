@@ -2,16 +2,15 @@
 #include "cpu/reg.h"
 jmp_buf jbuf;
 static inline void push(int val){
-	printf("val:::%x\n", val);
+	// printf("val:%x\n",val);
 	reg_l(R_ESP) -= 4;
-	swaddr_write(reg_l(R_ESP),4,val,R_SS);
+	swaddr_write(reg_l(R_ESP),4,val, R_SS);
 }
 void raise_intr(uint8_t NO){
-	/* TODO: Trigger an interrupt/exception with NO
-	 * use NO to index the IDT
+	/* TODO: Trigger an interrupt/exception with ``NO''.
+	 * That is, use ``NO'' to index the IDT.
 	 */
-
-	Assert((NO<<3)<=cpu.idtr.limit,"Interrupt NO too large!");
+	Assert((NO<<3)<=cpu.idtr.limit,"Interrupt NO tooo large!");
 	Gate_info gat;
 	idt_des = &gat;
 
@@ -22,10 +21,12 @@ void raise_intr(uint8_t NO){
 	push(cpu.EFLAGS);
 	push(cpu.cs.selector);
 	push(cpu.eip);
-	cpu.cs.selector = idt_des -> segment;
+
+	cpu.cs.selector = idt_des -> selector;
+
 	sreg_set(R_CS);
-	printf("eip to %x\n", cpu.cs.base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16));
-	cpu.eip = cpu.cs.base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16);
+	// printf("eip to %x\n", cpu.cs.base + idt_desc -> offset1 + (idt_desc -> offset2 << 16));
+	cpu.eip = cpu.cs.base + idt_des -> offset1 + (idt_des -> offset2 << 16);
 	 /* Jump back to cpu_exec() */
     longjmp(jbuf, 1);
 }

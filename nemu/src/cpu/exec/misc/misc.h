@@ -1,6 +1,8 @@
 #ifndef __MISC_H__
 #define __MISC_H__
 
+extern Gate_info *idt_desc;
+
 make_helper(nop);
 make_helper(int3);
 make_helper(lea);

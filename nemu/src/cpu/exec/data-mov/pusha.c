@@ -8,4 +8,4 @@
 #include "pusha-template.h"
 #undef DATA_BYTE
 
-make_helper_v(pusha);
+make_helper_v(pusha)
