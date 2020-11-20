@@ -5,10 +5,10 @@ void add_irq_handle(int, void (*)(void));
 uint32_t mm_brk(uint32_t);
 int fs_ioctl(int, uint32_t, void *);
 
-// static void sys_write(TrapFrame *tf){
-// 	asm volatile(".byte 0xd6" : : "a"(2),"c"(tf->ecx),"d"(tf->edx));
-// 	tf->eax = tf->edx;
-// }
+static void sys_write(TrapFrame *tf){
+	asm volatile(".byte 0xd6" : : "a"(2),"c"(tf->ecx),"d"(tf->edx));
+	tf->eax = tf->edx;
+}
 
 
 static void sys_brk(TrapFrame *tf) {
@@ -20,6 +20,7 @@ static void sys_ioctl(TrapFrame *tf) {
 }
 
 void do_syscall(TrapFrame *tf) {
+	asm volatile(".byte 0xd6" : : "a"(2),"c"(tf->ecx),"d"(tf->edx));
 	switch(tf->eax) {
 		/* The `add_irq_handle' system call is artificial. We use it to
 		 * let user program register its interrupt handlers. But this is
@@ -33,8 +34,7 @@ void do_syscall(TrapFrame *tf) {
 			break;
 
 		case SYS_brk: sys_brk(tf); break;
-		case SYS_write: asm volatile(".byte 0xd6" : : "a"(2),"c"(tf->ecx),"d"(tf->edx));
-	tf->eax = tf->edx;break;
+		case SYS_write: sys_write(tf); break;
 		case SYS_ioctl: sys_ioctl(tf); break;
 
 		/* TODO: Add more system calls. */
