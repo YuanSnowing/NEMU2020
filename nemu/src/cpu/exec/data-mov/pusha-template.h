@@ -5,6 +5,7 @@
 #ifndef mypush
 #define mypush
 static void push(uint32_t val){
+    printf("push %x\n", val);
     reg_l(R_ESP) -= DATA_BYTE;
     swaddr_write(reg_l(R_ESP),DATA_BYTE,val,R_SS);
 }
