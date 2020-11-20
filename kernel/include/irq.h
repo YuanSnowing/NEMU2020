@@ -10,8 +10,8 @@
 
 typedef struct TrapFrame {
 	uint32_t edi, esi, ebp, old_esp, ebx, edx, ecx, eax;
-	uint32_t eip, error_code, eflags, cs;
 	int32_t irq;
+	uint32_t eip, error_code, eflags, cs;
 } TrapFrame;
 
 #endif
