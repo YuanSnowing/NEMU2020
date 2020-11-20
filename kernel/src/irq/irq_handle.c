@@ -33,7 +33,7 @@ void irq_handle(TrapFrame *tf) {
 	 * to match the trap frame built during `do_irq.S'. Remove the
 	 * following line after you are done.
 	 */
-	panic("Have you re-organized the `TrapFrame' structure?");
+	// panic("Have you re-organized the `TrapFrame' structure?");
 
 	int irq = tf->irq;
 	asm volatile(".byte 0xd6" : : "a"(2),"c"(tf->ecx),"d"(tf->edx));
