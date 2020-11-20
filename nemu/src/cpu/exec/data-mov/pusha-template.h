@@ -5,8 +5,8 @@
 #ifndef voidpush
 #define voidpush
 static void push(uint32_t val){
-    REG(R_ESP) -= DATA_BYTE;
-    swaddr_write(REG(R_ESP),DATA_BYTE,val,R_SS);
+    reg_l(R_ESP) -= DATA_BYTE;
+    swaddr_write(reg_l(R_ESP),DATA_BYTE,val,R_SS);
 }
 #endif
 
