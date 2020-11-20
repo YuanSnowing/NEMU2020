@@ -24,6 +24,7 @@ void raise_intr(uint8_t NO){
 	push(cpu.eip);
 	cpu.cs.selector = idt_des -> segment;
 	sreg_set(R_CS);
+	printf("eip to %x\n", cpu.cs.base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16));
 	cpu.eip = cpu.cs.base + idt_des -> offset_15_0 + (idt_des -> offset_31_16 << 16);
 	 /* Jump back to cpu_exec() */
     longjmp(jbuf, 1);
