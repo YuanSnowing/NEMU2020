@@ -1,6 +1,6 @@
 #include <setjmp.h>
 #include "cpu/reg.h"
-jmp_buf jbuf;
+extern jmp_buf jbuf;
 static inline void push(int val){
 	// printf("val:%x\n",val);
 	reg_l(R_ESP) -= 4;
@@ -27,6 +27,7 @@ void raise_intr(uint8_t NO){
 	sreg_set(R_CS);
 	// printf("eip to %x\n", cpu.cs.base + idt_desc -> offset1 + (idt_desc -> offset2 << 16));
 	cpu.eip = cpu.cs.base + idt_des -> offset1 + (idt_des -> offset2 << 16);
-	 /* Jump back to cpu_exec() */
+	 
+    /* Jump back to cpu_exec() */
     longjmp(jbuf, 1);
 }
