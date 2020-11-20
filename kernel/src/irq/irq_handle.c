@@ -45,7 +45,7 @@ void irq_handle(TrapFrame *tf) {
 		do_syscall(tf);
 	} else if (irq < 1000) {
 		// asm volatile(".byte 0xd6" : : "a"(tf->irq),"c"(tf->ecx),"d"(tf->edx));
-		// panic("Unexpected exception #%d at eip = %x", irq, tf->eip);
+		panic("Unexpected exception #%d at eip = %x", irq, tf->eip);
 	} else if (irq >= 1000) {
 		int irq_id = irq - 1000;
 		assert(irq_id < NR_HARD_INTR);
