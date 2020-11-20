@@ -70,8 +70,8 @@ hwaddr_t page_translate(lnaddr_t addr){
 	tmp = (dir.addr << 12) + (b << 2);
 	sec.val =  hwaddr_read(tmp, 4);
 	// test valid
-	// printf("eip:0x%x\n", cpu.eip);
-	// printf("time to re!!!!\n  addr 0x%x\n", addr);
+	printf("eip:0x%x\n", cpu.eip);
+	printf("time to re!!!!\n  addr 0x%x\n", addr);
 	Assert(dir.p == 1, "dir present");
 	Assert(sec.p == 1, "second present");
 	write_tlb(addr, (sec.addr << 12) + c);
