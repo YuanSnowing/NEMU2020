@@ -7,7 +7,7 @@ void raise_intr(uint8_t NO){
 	 */
 
 	Assert((NO<<3) <= cpu.idtr.limit, "Interrupt id to0 large");
-	// printf("NO: %d\n", NO);
+	printf("NO: %d\n", NO);
 	Gate_info gate;
 	idt_des = &gate;
 	

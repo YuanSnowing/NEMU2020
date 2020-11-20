@@ -38,7 +38,7 @@ make_helper(cld){
 extern Gate_info *idt_des;
 make_helper(intr) {
 	int NO = instr_fetch(eip + 1, 1);
-	printf("NO %x", NO);
+	// printf("NO %x", NO);
 	cpu.eip += 2;
 	print_asm("int %x",NO);
 	raise_intr(NO);
