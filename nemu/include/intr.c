@@ -27,7 +27,7 @@ void raise_intr(uint8_t NO){
 
 	sreg_set(R_CS);
     // printf("hahahahah");
-	// printf("eip to %x\n", cpu.cs.base + idt_desc -> offset1 + (idt_desc -> offset2 << 16));
+	printf("eip to %x\n", cpu.cs.base + idt_des -> offset1 + (idt_des -> offset2 << 16));
 	cpu.eip = cpu.cs.base + idt_des -> offset1 + (idt_des -> offset2 << 16);
 	 
     /* Jump back to cpu_exec() */
