@@ -32,9 +32,7 @@ void do_syscall(TrapFrame *tf) {
 
 		/* TODO: Add more system calls. */
 
-		default: printf("hahahah");
-				 panic("Unhandled system call: id = %d, eip = 0x%08x", tf->eax, tf->eip);
-				 printf("cannot");
+		default: panic("Unhandled system call: id = %d, eip = 0x%08x", tf->eax, tf->eip);
 	}
 }
 
