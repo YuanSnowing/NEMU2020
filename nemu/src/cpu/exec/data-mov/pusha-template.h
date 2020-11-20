@@ -5,12 +5,13 @@
 #ifndef mypush
 #define mypush
 static void push(uint32_t val){
-    REG(R_ESP) -= DATA_BYTE;
-    swaddr_write(REG(R_ESP),DATA_BYTE,val,R_SS);
+    reg_l(R_ESP) -= DATA_BYTE;
+    swaddr_write(reg_l(R_ESP),DATA_BYTE,val,R_SS);
 }
 #endif
 
 make_helper(concat(pusha_,SUFFIX)){
+
     DATA_TYPE tmp = REG(R_ESP);
     push(REG(R_EAX));
     push(REG(R_ECX));
