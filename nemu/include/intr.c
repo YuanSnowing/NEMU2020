@@ -10,25 +10,25 @@ void raise_intr(uint8_t NO){
 	/* TODO: Trigger an interrupt/exception with ``NO''.
 	 * That is, use ``NO'' to index the IDT.
 	 */
-	// Assert((NO<<3)<=cpu.idtr.limit,"Interrupt NO tooo large!");
+	Assert((NO<<3)<=cpu.idtr.limit,"Interrupt NO tooo large!");
     
-	// Gate_info gat;
-	// idt_des = &gat;
+	Gate_info gat;
+	idt_des = &gat;
 
-	// lnaddr_t addr = cpu.idtr.base + (NO << 3);
-	// idt_des -> fst = lnaddr_read(addr,4);
-	// idt_des -> sec = lnaddr_read(addr+4,4);
+	lnaddr_t addr = cpu.idtr.base + (NO << 3);
+	idt_des -> fst = lnaddr_read(addr,4);
+	idt_des -> sec = lnaddr_read(addr+4,4);
 	
-	// push(cpu.EFLAGS);
-	// push(cpu.cs.selector);
-	// push(cpu.eip);
+	push(cpu.EFLAGS);
+	push(cpu.cs.selector);
+	push(cpu.eip);
     
-	// cpu.cs.selector = idt_des -> selector;
+	cpu.cs.selector = idt_des -> selector;
 
-	// sreg_set(R_CS);
-    // // printf("hahahahah");
-	// // printf("eip to %x\n", cpu.cs.base + idt_des -> offset1 + (idt_des -> offset2 << 16));
-	// cpu.eip = cpu.cs.base + idt_des -> offset1 + (idt_des -> offset2 << 16);
+	sreg_set(R_CS);
+    // printf("hahahahah");
+	// printf("eip to %x\n", cpu.cs.base + idt_des -> offset1 + (idt_des -> offset2 << 16));
+	cpu.eip = cpu.cs.base + idt_des -> offset1 + (idt_des -> offset2 << 16);
 	 
     /* Jump back to cpu_exec() */
     longjmp(jbuf, 1);
