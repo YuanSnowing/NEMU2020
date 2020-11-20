@@ -12,8 +12,8 @@ static void push(uint32_t val){
 
 make_helper(concat(pusha_,SUFFIX)){
     
-    DATA_TYPE tmp = REG(R_ESP);printf("pusha");
-    push(REG(R_EAX));
+    DATA_TYPE tmp = REG(R_ESP);
+    push(REG(R_EAX));printf("pusha");
     push(REG(R_ECX));
     push(REG(R_EDX));
     push(REG(R_EBX));
