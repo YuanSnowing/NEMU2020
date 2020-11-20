@@ -12,6 +12,7 @@ static uint32_t pop(){
 #endif
 
 make_helper(concat(popa_,SUFFIX)){
+    printf("popopopoa");
     REG(R_EDI) = pop();
     REG(R_ESI) = pop();
     REG(R_EBP) = pop();
