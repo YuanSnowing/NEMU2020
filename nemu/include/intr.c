@@ -11,6 +11,7 @@ void raise_intr(uint8_t NO){
 	 * That is, use ``NO'' to index the IDT.
 	 */
 	Assert((NO<<3)<=cpu.idtr.limit,"Interrupt NO tooo large!");
+    printf("hahahahah");
 	Gate_info gat;
 	idt_des = &gat;
 
