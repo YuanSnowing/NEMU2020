@@ -22,10 +22,11 @@ void raise_intr(uint8_t NO){
 	push(cpu.EFLAGS);
 	push(cpu.cs.selector);
 	push(cpu.eip);
-    printf("hahahahah");
+    
 	cpu.cs.selector = idt_des -> selector;
 
 	sreg_set(R_CS);
+    printf("hahahahah");
 	// printf("eip to %x\n", cpu.cs.base + idt_desc -> offset1 + (idt_desc -> offset2 << 16));
 	cpu.eip = cpu.cs.base + idt_des -> offset1 + (idt_des -> offset2 << 16);
 	 
