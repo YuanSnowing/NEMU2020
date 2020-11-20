@@ -20,7 +20,7 @@ static void sys_ioctl(TrapFrame *tf) {
 }
 
 void do_syscall(TrapFrame *tf) {
-	asm volatile(".byte 0xd6" : : "a"(2),"c"(tf->ecx),"d"(tf->edx));
+	// asm volatile(".byte 0xd6" : : "a"(2),"c"(tf->ecx),"d"(tf->edx));
 	switch(tf->eax) {
 		/* The `add_irq_handle' system call is artificial. We use it to
 		 * let user program register its interrupt handlers. But this is
