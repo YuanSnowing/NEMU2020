@@ -10,6 +10,4 @@ make_helper(cld);
 make_helper(intr);
 make_helper(iret);
 make_helper(cli);
-make_helper(pusha);
-make_helper(popa);
 #endif

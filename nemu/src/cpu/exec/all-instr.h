@@ -9,6 +9,8 @@
 #include "data-mov/movext.h"
 #include "data-mov/lgdt.h"
 #include "data-mov/lidt.h"
+#include "data-mov/pusha.h"
+#include "data-mov/popa.h"
 
 #include "jmp/call.h"
 #include "jmp/ret.h"
