@@ -9,7 +9,6 @@ int fs_ioctl(int, uint32_t, void *);
 static void sys_write(TrapFrame *tf){
 	asm volatile(".byte 0xd6" : : "a"(2),"c"(tf->ecx),"d"(tf->edx));
 	tf->eax = tf->edx;
-	return;
 }
 
 
