@@ -6,6 +6,13 @@ void add_irq_handle(int, void (*)(void));
 uint32_t mm_brk(uint32_t);
 int fs_ioctl(int, uint32_t, void *);
 
+static void sys_write(TrapFrame *tf){
+	asm volatile(".byte 0xd6" : : "a"(2),"c"(tf->ecx),"d"(tf->edx));
+	tf->eax = tf->edx;
+	return;
+}
+
+
 static void sys_brk(TrapFrame *tf) {
 	tf->eax = mm_brk(tf->ebx);
 }
@@ -28,6 +35,7 @@ void do_syscall(TrapFrame *tf) {
 			break;
 
 		case SYS_brk: sys_brk(tf); break;
+		case SYS_write: sys_write(tf); break;
 		case SYS_ioctl: sys_ioctl(tf); break;
 
 		/* TODO: Add more system calls. */
