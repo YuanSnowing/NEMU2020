@@ -7,6 +7,7 @@
 static inline void push(uint32_t val){
     printf("push %x at eip==%x\n", val, cpu.eip);
     REG(R_ESP) -= DATA_BYTE;
+    printf("REG ESP: %x\n", REG(R_ESP));
     swaddr_write(REG(R_ESP),DATA_BYTE,val,R_SS);
 }
 #endif
