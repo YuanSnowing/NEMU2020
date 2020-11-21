@@ -14,17 +14,16 @@
 
 #if DATA_BYTE == 2
 static void push_w(uint32_t val){
-    reg_l(R_ESP) -= DATA_BYTE;
-    // printf("REG ESP: %x\n", reg_l(R_ESP));
-    swaddr_write(reg_l(R_ESP),DATA_BYTE,val,R_SS);
+    REG(R_ESP) -= DATA_BYTE;
+    printf("REG ESP: %x\n", REG(R_ESP));
+    swaddr_write(REG(R_ESP),DATA_BYTE,val,R_SS);
 }
 #endif
 
 #if DATA_BYTE == 4
 static void push_l(uint32_t val){
-    // printf("push %x at eip==%x\n", val, cpu.eip);
-    reg_l(R_ESP) -= DATA_BYTE;
-    swaddr_write(reg_l(R_ESP),DATA_BYTE,val,R_SS);
+    REG(R_ESP) -= DATA_BYTE;
+    swaddr_write(REG(R_ESP),DATA_BYTE,val,R_SS);
 }
 #endif
 

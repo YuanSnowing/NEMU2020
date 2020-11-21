@@ -2,9 +2,8 @@
 #include "cpu/reg.h"
 extern jmp_buf jbuf;
 static inline void push(int val){
-	
+	// printf("val:%x\n",val);
 	reg_l(R_ESP) -= 4;
-	// printf("val:%x at %x\n",val,reg_l(R_ESP));
 	swaddr_write(reg_l(R_ESP),4,val, R_SS);
 }
 void raise_intr(uint8_t NO){
@@ -19,7 +18,7 @@ void raise_intr(uint8_t NO){
 	lnaddr_t addr = cpu.idtr.base + (NO << 3);
 	idt_des -> fst = lnaddr_read(addr,4);
 	idt_des -> sec = lnaddr_read(addr+4,4);
-
+	
 	push(cpu.EFLAGS);
 	push(cpu.cs.selector);
 	push(cpu.eip);
