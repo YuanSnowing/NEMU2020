@@ -89,8 +89,8 @@ clean: clean-cpp
 # USERPROG := obj/testcase/HDUtest
 # USERPROG := obj/testcase/print-FLOAT
 
-USERPROG := obj/testcase/hello
-# USERPROG := obj/testcase/hello-inline-asm
+# USERPROG := obj/testcase/hello
+USERPROG := obj/testcase/hello-inline-asm
 # ENTRY := $(USERPROG)
 ENTRY := $(kernel_BIN)
 entry: $(ENTRY)
