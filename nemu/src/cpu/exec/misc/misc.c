@@ -67,7 +67,7 @@ make_helper(iret) {
 		sreg_set(R_CS);
 	}
 	print_asm("iret");
-	printf("hahah");
+	// printf("hahah");
 	return 1;
 }
 
