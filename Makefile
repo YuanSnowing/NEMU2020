@@ -68,7 +68,7 @@ clean: clean-cpp
 # USERPROG := obj/testcase/min3
 # USERPROG := obj/testcase/mov-c
 # USERPROG := obj/testcase/movsx
-# USERPROG := obj/testcase/mul-longlong
+USERPROG := obj/testcase/mul-longlong
 # USERPROG := obj/testcase/pascal
 # USERPROG := obj/testcase/prime
 # USERPROG := obj/testcase/quick-sort
@@ -90,7 +90,7 @@ clean: clean-cpp
 # USERPROG := obj/testcase/print-FLOAT
 
 # USERPROG := obj/testcase/hello
-USERPROG := obj/testcase/hello-inline-asm
+# USERPROG := obj/testcase/hello-inline-asm
 # USERPROG := $(game_BIN)
 # ENTRY := $(USERPROG)
 ENTRY := $(kernel_BIN)
