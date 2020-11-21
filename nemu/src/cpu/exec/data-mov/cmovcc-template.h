@@ -63,7 +63,7 @@ make_cmovcc_helper(e);
 //make_cmovcc_helper(ne)
 //make_cmovcc_helper(be)
 //make_cmovcc_helper(a)
-//make_cmovcc_helper(s)
+make_cmovcc_helper(s)
 //make_cmovcc_helper(ns)
 //make_cmovcc_helper(p)
 //make_cmovcc_helper(np)
