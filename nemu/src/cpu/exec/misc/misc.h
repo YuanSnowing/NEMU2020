@@ -12,4 +12,6 @@ make_helper(cld);
 make_helper(intr);
 make_helper(iret);
 make_helper(cli);
+
+make_helper(hlt);
 #endif
