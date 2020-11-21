@@ -77,6 +77,6 @@ void sreg_set(uint8_t id){
 	ltmp += ((uint32_t)0xfff) << 24;
 	cpu.sreg[id].limit = ltmp;
 	if (sreg_info -> g == 1) cpu.sreg[id].limit <<= 12;//G = 0, unit = 1B;G = 1, unit = 4KB
-	printf("hahah");
+	// printf("hahah");
 }
 
