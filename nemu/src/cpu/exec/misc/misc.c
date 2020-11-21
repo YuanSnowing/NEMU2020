@@ -68,7 +68,7 @@ make_helper(iret) {
 	}
 	print_asm("iret");
 	// printf("hahah");
-	return 1;
+	return 0;
 }
 
 make_helper(cli) {
