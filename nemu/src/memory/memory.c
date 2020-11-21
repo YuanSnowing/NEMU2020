@@ -16,7 +16,7 @@ void mmio_write(hwaddr_t addr, size_t len, uint32_t data, int map_NO);
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	int port = is_mmio(addr);
 	if(~port) {
-		printf("hahah");
+		// printf("hahah");
 		return mmio_read(addr, len, port) & (~0u >> ((4 - len) << 3));
 	}
 	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
