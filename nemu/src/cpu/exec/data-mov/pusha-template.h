@@ -15,7 +15,7 @@
 #if DATA_BYTE == 2
 static void push_w(uint32_t val){
     REG(R_ESP) -= DATA_BYTE;
-    printf("REG ESP: %x\n", REG(R_ESP));
+    // printf("REG ESP: %x\n", REG(R_ESP));
     swaddr_write(REG(R_ESP),DATA_BYTE,val,R_SS);
 }
 #endif
