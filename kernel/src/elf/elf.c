@@ -48,7 +48,8 @@ uint32_t loader() {
 			 */
 			
 			ph -> p_vaddr = mm_malloc(ph -> p_vaddr,ph -> p_memsz);
-			ramdisk_read((uint8_t *)(ph->p_vaddr), ph->p_offset, ph->p_filesz);
+			// void ide_read(uint8_t *, uint32_t, uint32_t);
+			ide_read((uint8_t *)(ph->p_vaddr), ph->p_offset, ph->p_filesz);
 			 
 			/* TODO: zero the memory region 
 			 * [VirtAddr + FileSiz, VirtAddr + MemSiz)
