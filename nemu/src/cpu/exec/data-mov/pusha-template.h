@@ -4,7 +4,7 @@
 
 #ifndef mypush
 #define mypush
-static void push(uint32_t val){
+static inline void push(uint32_t val){
     printf("push %x at eip==%x\n", val, cpu.eip);
     REG(R_ESP) -= DATA_BYTE;
     swaddr_write(REG(R_ESP),DATA_BYTE,val,R_SS);
