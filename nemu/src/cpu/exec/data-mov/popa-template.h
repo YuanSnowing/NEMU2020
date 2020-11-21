@@ -22,6 +22,7 @@ static uint32_t pops_w(){
 #if DATA_BYTE == 4
 static uint32_t pops_l(){
     uint32_t ret = swaddr_read(reg_l(R_ESP),DATA_BYTE,R_SS);
+    printf("pop %x\n",ret);
     reg_l(R_ESP) += DATA_BYTE;
     return ret;
 }
