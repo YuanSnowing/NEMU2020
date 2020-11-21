@@ -62,10 +62,10 @@ void sreg_set(uint8_t id){
 	uint16_t idx = cpu.sreg[id].selector >> 3;//index of sreg
 	lnaddr_t chart_addr = cpu.gdtr.base + (idx << 3);//chart addr
 	sreg_info -> p1 = lnaddr_read(chart_addr, 4);
-	printf("hahahah");
+	printf("hahahah\n");
 	sreg_info -> p2 = lnaddr_read(chart_addr + 4, 4);	
 	uint32_t btmp = 0;
-	
+	printf("hahahah\n");
 	btmp += ((uint32_t)sreg_info -> b1);
 	btmp += ((uint32_t)sreg_info -> b2)<< 16;
 	btmp += ((uint32_t)sreg_info -> b3) << 24;
