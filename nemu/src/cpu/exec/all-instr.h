@@ -11,6 +11,7 @@
 #include "data-mov/lidt.h"
 #include "data-mov/pusha.h"
 #include "data-mov/popa.h"
+#include "data-mov/cmovcc.h"
 
 #include "jmp/call.h"
 #include "jmp/ret.h"
