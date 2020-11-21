@@ -40,7 +40,7 @@ void irq_handle(TrapFrame *tf) {
 	int irq = tf->irq;
 	// printf("tf %x\n", )
 	if (irq < 0) {
-		asm volatile(".byte 0xd6" : : "a"(tf->irq),"c"(tf->ecx),"d"(tf->edx));
+		// asm volatile(".byte 0xd6" : : "a"(tf->irq),"c"(tf->ecx),"d"(tf->edx));
 		panic("Unhandled exception!");
 	} else if (irq == 0x80) {
 		do_syscall(tf);

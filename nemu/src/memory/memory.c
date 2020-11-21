@@ -16,8 +16,8 @@ void mmio_write(hwaddr_t addr, size_t len, uint32_t data, int map_NO);
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	int port = is_mmio(addr);
 	if(~port) return mmio_read(addr, len, port) & (~0u >> ((4 - len) << 3));
-	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	/*
+	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	
     int id, ling=0;
 	uint32_t bia = addr & (CACHE_BLOCK_SIZE - 1);
 	uint8_t ret[2 * BURST_LEN];
@@ -50,8 +50,8 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 		return;
 	}
 	// printf("write %d\n", data);
-	// write_cache(addr, len, data);
-	dram_write(addr, len, data);
+	write_cache(addr, len, data);
+	// dram_write(addr, len, data);
 }
 /////////////////////////////////////////////////////
 
