@@ -50,9 +50,9 @@ make_helper(intr) {
 
 int pop(){
     int ret = swaddr_read(reg_l(R_ESP),4, R_SS);
-	printf("pop ret %x\n", ret);
+	// 
 	swaddr_write(reg_l(R_ESP),4,0,R_SS);
-    reg_l(R_ESP) += 4;
+    reg_l(R_ESP) += 4;printf("pop ret %x\n", ret);
     return ret;
 }
 
