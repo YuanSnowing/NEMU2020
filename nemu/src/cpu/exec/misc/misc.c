@@ -51,7 +51,6 @@ make_helper(intr) {
 uint32_t pop(){
     int ret = swaddr_read(reg_l(R_ESP),4, R_SS);
 	printf("pop ret %x at %x\n", ret, reg_l(R_ESP));
-	swaddr_write(reg_l(R_ESP),4,0,R_SS);
     reg_l(R_ESP) += 4;
     return ret;
 }
