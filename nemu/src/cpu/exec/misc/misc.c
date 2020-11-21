@@ -48,7 +48,7 @@ make_helper(intr) {
 }
 
 
-uint32_t pop(){
+int pop(){
     int ret = swaddr_read(reg_l(R_ESP),4, R_SS);
 	swaddr_write(reg_l(R_ESP),4,0,R_SS);
     reg_l(R_ESP) += 4;
