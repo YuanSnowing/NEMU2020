@@ -2,8 +2,9 @@
 #include "cpu/reg.h"
 extern jmp_buf jbuf;
 static inline void push(int val){
-	printf("val:%x\n",val);
+	
 	reg_l(R_ESP) -= 4;
+	printf("val:%x at %x\n",val,reg_l(R_ESP));
 	swaddr_write(reg_l(R_ESP),4,val, R_SS);
 }
 void raise_intr(uint8_t NO){
