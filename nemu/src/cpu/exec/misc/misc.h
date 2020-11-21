@@ -14,4 +14,5 @@ make_helper(iret);
 make_helper(cli);
 
 make_helper(hlt);
+make_helper(sti);
 #endif

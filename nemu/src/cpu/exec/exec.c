@@ -156,7 +156,7 @@ helper_fun opcode_table [256] = { //2^8, function pointer,某种指令的具体�
 /* 0xec */	in_b, in_v, out_b, out_v,
 /* 0xf0 */	inv, inv, repnz, rep,
 /* 0xf4 */	hlt, inv, group3_b, group3_v,
-/* 0xf8 */	inv, inv, cli, inv,
+/* 0xf8 */	inv, inv, cli, sti,
 /* 0xfc */	cld, std, group4, group5
 };
 
