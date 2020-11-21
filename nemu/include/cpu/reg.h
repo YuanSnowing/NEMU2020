@@ -85,7 +85,7 @@ typedef struct{
 		uint32_t p2;
 	};
 }Sreg_info;
-Sreg_info sreg_info;
+Sreg_info *sreg_info;
 
 typedef struct {
 	union {
