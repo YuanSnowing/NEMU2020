@@ -13,7 +13,7 @@ make_helper(concat(call_i_, SUFFIX)) {
 	reg_l(R_ESP) -= DATA_BYTE;
 	// write return address at esp, 
 	// write(target, length, content)
-	swaddr_write(reg_l(R_ESP), 4, cpu.eip+len, R_SS);
+	swaddr_write(reg_l(R_ESP), 4, cpu.eip+len+1, R_SS);
 	// op_src->val = op_src->imm, 
 	DATA_TYPE_S imm = op_src -> val;
 	print_asm("call 0x%x", cpu.eip+len+1+imm);
