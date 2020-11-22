@@ -19,8 +19,8 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 		// printf("hahah");
 		return mmio_read(addr, len, port) & (~0u >> ((4 - len) << 3));
 	}
-	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	
+	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	/*
     int id, ling=0;
 	uint32_t bia = addr & (CACHE_BLOCK_SIZE - 1);
 	uint8_t ret[2 * BURST_LEN];
@@ -53,8 +53,8 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 		return;
 	}
 	// printf("write %d\n", data);
-	write_cache(addr, len, data);
-	// dram_write(addr, len, data);
+	// write_cache(addr, len, data);
+	dram_write(addr, len, data);
 }
 /////////////////////////////////////////////////////
 
@@ -88,9 +88,9 @@ hwaddr_t page_translate(lnaddr_t addr){
 	// test valid
 	// printf("eip:0x%x\n", cpu.eip);
 	// printf("time to re!!!!\n  addr 0x%x\n", addr);
-	if(addr == 0x20228089) printf("%d\n", is_mmio(addr));
-	// Assert(dir.p == 1, "dir present");
-	// Assert(sec.p == 1, "second present");
+	// if(addr == 0x20228089) printf("%d\n", is_mmio(addr));
+	Assert(dir.p == 1, "dir present");
+	Assert(sec.p == 1, "second present");
 	write_tlb(addr, (sec.addr << 12) + c);
 	return (sec.addr << 12) + c;
 }
