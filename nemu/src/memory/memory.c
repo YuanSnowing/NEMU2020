@@ -89,8 +89,8 @@ hwaddr_t page_translate(lnaddr_t addr){
 	// printf("eip:0x%x\n", cpu.eip);
 	// printf("time to re!!!!\n  addr 0x%x\n", addr);
 	if(addr == 0x20228089) printf("%d\n", is_mmio(addr));
-	Assert(dir.p == 1, "dir present");
-	Assert(sec.p == 1, "second present");
+	// Assert(dir.p == 1, "dir present");
+	// Assert(sec.p == 1, "second present");
 	write_tlb(addr, (sec.addr << 12) + c);
 	return (sec.addr << 12) + c;
 }
