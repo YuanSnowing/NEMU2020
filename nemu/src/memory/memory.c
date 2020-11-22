@@ -121,7 +121,7 @@ hwaddr_t cmd_page_translate(lnaddr_t addr){
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 #ifdef DEBUG
-	assert(len == 1 || len == 2 || len == 4);
+	// assert(len == 1 || len == 2 || len == 4);
 #endif
 // printf("ln:%x\n",addr);
 	uint32_t bia = addr & 0xfff; //low 12 bit
@@ -141,7 +141,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 #ifdef DEBUG
-	assert(len == 1 || len == 2 || len == 4);
+	// assert(len == 1 || len == 2 || len == 4);
 #endif
 	uint32_t bia = addr & 0xfff; //low 12 bit
 	if(bia + len - 1 > 0xfff){ // cross page boundary
@@ -159,7 +159,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 
 uint32_t swaddr_read(swaddr_t addr, size_t len, uint8_t sreg) {
 #ifdef DEBUG
-	assert(len == 1 || len == 2 || len == 4);
+	// assert(len == 1 || len == 2 || len == 4);
 #endif
 	lnaddr_t lnaddr = seg_translate(addr, len, sreg);
 	// if(lnaddr == 0x8137) printf("here here~1\n 0x%x", addr);
