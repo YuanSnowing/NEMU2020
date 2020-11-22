@@ -90,8 +90,8 @@ clean: clean-cpp
 # USERPROG := obj/testcase/print-FLOAT
 
 # USERPROG := obj/testcase/hello
-# USERPROG := obj/testcase/hello-inline-asm
-USERPROG := $(game_BIN)
+USERPROG := obj/testcase/hello-inline-asm
+# USERPROG := $(game_BIN)
 # ENTRY := $(USERPROG)
 ENTRY := $(kernel_BIN)
 entry: $(ENTRY)
