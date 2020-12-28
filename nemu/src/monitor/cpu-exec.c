@@ -53,8 +53,8 @@ void cpu_exec(volatile uint32_t n) {
 	int cccnt = 0;
 	for(; n > 0; n --) {
 
-		if (cpu.eax == 0x203080c0) cccnt ++;
-		if(cccnt < 20) printf("eip: 0x%08x\teax: 0x%08x\tedi:0x%08x\n", cpu.eip, cpu.eax, cpu.edi);
+		if (cpu.eax == 0x203080c0 && cccnt<30) cccnt ++;
+		if(cccnt < 20 && cccnt >0) printf("eip: 0x%08x\teax: 0x%08x\tedi:0x%08x\n", cpu.eip, cpu.eax, cpu.edi);
 		
 #ifdef DEBUG
 		swaddr_t eip_temp = cpu.eip;
