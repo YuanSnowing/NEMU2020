@@ -65,7 +65,7 @@ lnaddr_t seg_translate(swaddr_t addr, size_t len, uint8_t sreg){
 	return cpu.sreg[sreg].base + addr;
 }
 
-hwaddr_t page_translate(lnaddr_t addr){  //addr应该是线性地址，0～0x80000
+hwaddr_t page_translate(lnaddr_t addr){ 
 	if(!cpu.cr0.protect_enable || !cpu.cr0.paging) return addr;
 	// addr: dirctionary | page | offset
 	uint32_t a,b,c, tmp;
