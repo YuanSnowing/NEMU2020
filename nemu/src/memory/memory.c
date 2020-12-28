@@ -37,9 +37,9 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	}
 	// unalign_rw(addr, len);
 	uint32_t retu = unalign_rw(ret+ling, 4) & (~0u >> ((4 - len) << 3));
-	printf("ret is %d\n", retu);
-	uint32_t ans = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	printf("ret should be %d\n", ans);
+	// printf("ret is %d\n", retu);
+	// uint32_t ans = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	// printf("ret should be %d\n", ans);
 	// assert(ans == retu);
 	// printf("tot_time : %d\n", tot_time);
 	return retu;
@@ -87,7 +87,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	sec.val =  hwaddr_read(tmp, 4);
 	// test valid
 	// printf("eip:0x%x\n", cpu.eip);
-	// printf("time to re!!!!\n  addr 0x%x\n", addr);
+	printf("time to re!!!!\n  addr 0x%x\n", addr);
 	// if(addr == 0x20228089) printf("%d\n", is_mmio(addr));
 	Assert(dir.p == 1, "dir present");
 	Assert(sec.p == 1, "second present");
