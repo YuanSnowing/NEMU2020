@@ -50,10 +50,12 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 	setjmp(jbuf);
-
+	int cccnt = 0;
 	for(; n > 0; n --) {
-		// if (cpu.eip == 0xc0100fb0) 
-		printf("eax: 0x%08x\tedi:0x%08x\n", cpu.eax, cpu.edi);
+
+		if (cpu.eax == 0x203080c0) cccnt ++;
+		if(cccnt < 20) printf("eax: 0x%08x\tedi:0x%08x\n", cpu.eax, cpu.edi);
+		
 #ifdef DEBUG
 		swaddr_t eip_temp = cpu.eip;
 		if((n & 0xffff) == 0) {
