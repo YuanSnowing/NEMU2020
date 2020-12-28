@@ -29,6 +29,7 @@
 // 	return 0;
 // }
 int main(){
+	set_bp();
 	int c = 1+2;
 	c += 30;
 	return 0;
