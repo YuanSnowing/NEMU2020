@@ -25,7 +25,7 @@ int read_L2(hwaddr_t addr){
     int g = gid * CACHE_WAY_SIZE_L2;
     for(i = g; i < g + CACHE_WAY_SIZE_L2; ++ i){
         if(tag == L2_Cache[i].tag && L2_Cache[i].valid){
-            tot_time += 20;
+            // tot_time += 20;
             return i;
         }
     }
@@ -52,7 +52,7 @@ int read_L2(hwaddr_t addr){
     return id;
 }
 int read_cache(hwaddr_t addr){
-    init_cache();
+    // init_cache();
     uint32_t tag = (addr >> (CACHE_BLOCK_BIT + CACHE_GROUP_BIT_L1));
     uint32_t gid = (addr >> CACHE_BLOCK_BIT) & (CACHE_GROUP_SIZE_L1 - 1);
     int i;
@@ -60,7 +60,7 @@ int read_cache(hwaddr_t addr){
     int g = gid * CACHE_WAY_SIZE_L1;
     for(i = g; i < g + CACHE_WAY_SIZE_L1; ++ i){
         if(tag == L1_Cache[i].tag && L1_Cache[i].valid){
-            tot_time += 2;
+            // tot_time += 2;
             return i;
         }
     }
@@ -104,7 +104,7 @@ void write_L2(hwaddr_t addr,size_t len, uint32_t data){
 
 
 void write_cache(hwaddr_t addr,size_t len, uint32_t data){
-    init_cache();
+    // init_cache();
     uint32_t tag = (addr >> (CACHE_BLOCK_BIT + CACHE_GROUP_BIT_L1));
     uint32_t gid = (addr >> CACHE_BLOCK_BIT) & (CACHE_GROUP_SIZE_L1 - 1);
     int i, g = gid * CACHE_WAY_SIZE_L1;
