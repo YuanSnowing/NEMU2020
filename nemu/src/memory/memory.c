@@ -44,7 +44,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	// printf("eip: 0x%08x\teax: 0x%08x\tedi:0x%08x\n", cpu.eip, cpu.eax, cpu.edi);
 	assert(ans == retu);
 	// printf("tot_time : %d\n", tot_time);
-	return ans;
+	return retu;
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));*/
 }
 ///////////////////////
@@ -57,9 +57,9 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	}
 	// printf("write %d\n", data);
 	uint32_t ans = hwaddr_read(addr, len);
-	// write_cache(addr, len, data);
+	write_cache(addr, len, data);
 	printf("hah%d",ans);
-	dram_write(addr, len, data);
+	// dram_write(addr, len, data);
 }
 /////////////////////////////////////////////////////
 
