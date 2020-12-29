@@ -38,13 +38,13 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	}
 	// unalign_rw(addr, len);
 	uint32_t retu = unalign_rw(ret+ling, 4) & (~0u >> ((4 - len) << 3));
-	printf("ret is %d\n", retu);
+	// printf("ret is %d\n", retu);
 	uint32_t ans = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	printf("ret should be %d\n", ans);
-	printf("eip: 0x%08x\teax: 0x%08x\tedi:0x%08x\n", cpu.eip, cpu.eax, cpu.edi);
+	// printf("ret should be %d\n", ans);
+	// printf("eip: 0x%08x\teax: 0x%08x\tedi:0x%08x\n", cpu.eip, cpu.eax, cpu.edi);
 	assert(ans == retu);
 	// printf("tot_time : %d\n", tot_time);
-	return retu;
+	return ans;
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));*/
 }
 ///////////////////////
