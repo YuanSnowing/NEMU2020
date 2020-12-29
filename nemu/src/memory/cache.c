@@ -48,7 +48,7 @@ int read_L2(hwaddr_t addr){
     // printf("i value %d\n",i);
     L2_Cache[id].tag = tag;
     L2_Cache[id].valid = 1;
-    L2_Cache[id].dirty = 1;
+    L2_Cache[id].dirty = 0;
     return id;
 }
 int read_cache(hwaddr_t addr){
