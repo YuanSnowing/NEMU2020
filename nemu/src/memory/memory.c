@@ -14,7 +14,7 @@ void mmio_write(hwaddr_t addr, size_t len, uint32_t data, int map_NO);
 /* Memory accessing interfaces */
 ///////////////////////////////////////////////////////
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-	printf("hwaddr read\n");
+	// printf("hwaddr read\n");
 	int port = is_mmio(addr);
 	if(~port) {
 		// printf("hahah");
@@ -49,7 +49,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 }
 ///////////////////////
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
-	printf("hwaddr write\n");
+	// printf("hwaddr write\n");
 	int port = is_mmio(addr);
 	if(~port) {
 		mmio_write(addr, len, data, port);
@@ -57,7 +57,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	}
 	// printf("write %d\n", data);
 	uint32_t ans = hwaddr_read(addr, len);
-	write_cache(addr, len, data);
+	// write_cache(addr, len, data);
 	printf("hah%d",ans);
 	// dram_write(addr, len, data);
 }
