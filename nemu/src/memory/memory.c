@@ -42,7 +42,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	uint32_t ans = dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	printf("ret should be %d\n", ans);
 	printf("eip: 0x%08x\teax: 0x%08x\tedi:0x%08x\n", cpu.eip, cpu.eax, cpu.edi);
-	assert(ans == retu);
+	// assert(ans == retu);
 	// printf("tot_time : %d\n", tot_time);
 	return retu;
 	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));*/
