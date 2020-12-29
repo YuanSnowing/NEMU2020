@@ -88,8 +88,10 @@ void write_L2(hwaddr_t addr,size_t len, uint32_t data){
             // hit, write through, 把数据同时写到Cache和内存中；
             L2_Cache[i].dirty = 1;
             if(bia + len <= CACHE_BLOCK_SIZE){
+                dram_write(addr, len, data);
                 memcpy(L2_Cache[i].block + bia, &data, len);
             }else{ // two block +
+                dram_write(addr,CACHE_BLOCK_SIZE - bia, data);
                 memcpy(L2_Cache[i].block+bia, &data, CACHE_BLOCK_SIZE-bia);
                 write_L2(addr+CACHE_BLOCK_SIZE-bia, len-CACHE_BLOCK_SIZE+bia, data >> (CACHE_BLOCK_SIZE-bia) );
             }

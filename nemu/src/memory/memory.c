@@ -56,10 +56,10 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 		return;
 	}
 	// printf("write %d\n", data);
-	uint32_t ans = hwaddr_read(addr, len);
-	// write_cache(addr, len, data);
-	printf("hah%d",ans);
-	dram_write(addr, len, data);
+	// uint32_t ans = hwaddr_read(addr, len);
+	write_cache(addr, len, data);
+	// printf("hah%d",ans);
+	// dram_write(addr, len, data); 
 }
 /////////////////////////////////////////////////////
 
