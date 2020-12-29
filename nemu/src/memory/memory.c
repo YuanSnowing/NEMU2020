@@ -57,9 +57,9 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	}
 	// printf("write %d\n", data);
 	uint32_t ans = hwaddr_read(addr, len);
-	write_cache(addr, len, data);
+	// write_cache(addr, len, data);
 	printf("hah%d",ans);
-	// dram_write(addr, len, data);
+	dram_write(addr, len, data);
 }
 /////////////////////////////////////////////////////
 
@@ -129,7 +129,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 #ifdef DEBUG
 	// assert(len == 1 || len == 2 || len == 4);
 #endif
-printf("read ln:%x\n",addr);
+// printf("read ln:%x\n",addr);
 	uint32_t bia = addr & 0xfff; //low 12 bit
 	if(bia + len - 1 > 0xfff){ // cross page boundary
 		// Assert(0, "kua ye le");
@@ -149,7 +149,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 #ifdef DEBUG
 	// assert(len == 1 || len == 2 || len == 4);
 #endif
-printf("write ln:%x\n",addr);
+// printf("write ln:%x\n",addr);
 	uint32_t bia = addr & 0xfff; //low 12 bit
 	if(bia + len - 1 > 0xfff){ // cross page boundary
 		// Assert(0, "kua ye le");
