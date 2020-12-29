@@ -14,6 +14,7 @@ void mmio_write(hwaddr_t addr, size_t len, uint32_t data, int map_NO);
 /* Memory accessing interfaces */
 ///////////////////////////////////////////////////////
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
+	printf("hwaddr read\n");
 	int port = is_mmio(addr);
 	if(~port) {
 		// printf("hahah");
@@ -47,6 +48,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 }
 ///////////////////////
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
+	printf("hwaddr write\n");
 	int port = is_mmio(addr);
 	if(~port) {
 		mmio_write(addr, len, data, port);
@@ -124,7 +126,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 #ifdef DEBUG
 	// assert(len == 1 || len == 2 || len == 4);
 #endif
-// printf("ln:%x\n",addr);
+printf("read ln:%x\n",addr);
 	uint32_t bia = addr & 0xfff; //low 12 bit
 	if(bia + len - 1 > 0xfff){ // cross page boundary
 		// Assert(0, "kua ye le");
@@ -144,6 +146,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 #ifdef DEBUG
 	// assert(len == 1 || len == 2 || len == 4);
 #endif
+printf("write ln:%x\n",addr);
 	uint32_t bia = addr & 0xfff; //low 12 bit
 	if(bia + len - 1 > 0xfff){ // cross page boundary
 		// Assert(0, "kua ye le");
