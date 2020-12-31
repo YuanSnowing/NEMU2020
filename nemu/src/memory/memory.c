@@ -22,7 +22,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 	}
 	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	
-    /*int id, ling=0;
+    int id, ling=0;
 	uint32_t bia = addr & (CACHE_BLOCK_SIZE - 1);
 	uint8_t ret[2 * BURST_LEN];
 	// swaddr_write
@@ -58,9 +58,9 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	}
 	// printf("write %d\n", data);
 	// uint32_t ans = hwaddr_read(addr, len);
-	// write_cache(addr, len, data);
+	write_cache(addr, len, data);
 	// printf("hah%d",ans);
-	dram_write(addr, len, data); 
+	// dram_write(addr, len, data); 
 }
 /////////////////////////////////////////////////////
 
