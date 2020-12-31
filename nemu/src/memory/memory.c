@@ -20,7 +20,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 		// printf("hahah");
 		return mmio_read(addr, len, port) & (~0u >> ((4 - len) << 3));
 	}
-	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
+	// return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
 	
     int id, ling=0;
 	uint32_t bia = addr & (CACHE_BLOCK_SIZE - 1);
@@ -60,7 +60,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 	// uint32_t ans = hwaddr_read(addr, len);
 	write_cache(addr, len, data);
 	// printf("hah%d",ans);
-	dram_write(addr, len, data); 
+	// dram_write(addr, len, data); 
 }
 /////////////////////////////////////////////////////
 
