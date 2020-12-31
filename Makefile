@@ -80,7 +80,7 @@ clean: clean-cpp
 # USERPROG := obj/testcase/to-lower-case
 # USERPROG := obj/testcase/wanshu
 
-USERPROG := obj/testcase/struct
+# USERPROG := obj/testcase/struct
 # USERPROG := obj/testcase/string
 # USERPROG := obj/testcase/hello-str
 
@@ -91,7 +91,7 @@ USERPROG := obj/testcase/struct
 
 # USERPROG := obj/testcase/hello
 # USERPROG := obj/testcase/hello-inline-asm
-# USERPROG := $(game_BIN)
+USERPROG := $(game_BIN)
 # ENTRY := $(USERPROG)
 ENTRY := $(kernel_BIN)
 entry: $(ENTRY)
